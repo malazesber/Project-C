@@ -1,0 +1,410 @@
+﻿/* colors -> https://coolors.co/e54b4b-ebebd3-464655-e4b363-e8e9eb */
+
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+body {
+    background: #d9d9d9;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.container {
+    width: 90%;
+    margin-left: 50px;
+}
+
+header {
+    background: #8a3366;
+    color: #FFF;
+    padding: 1em 0;
+    position: relative;
+}
+
+    header::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+.logo {
+    text-decoration: none;
+    float: left;
+    font-size: 1.2rem;
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .logo span {
+        text-decoration: none;
+        color: white;
+        font-weight: 400;
+    }
+
+.site-nav {
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    background: #464655;
+    -webkit-clip-path: circle(0px at top right);
+    clip-path: circle(0px at top right);
+    transition: -webkit-clip-path ease-in-out 700ms;
+    transition: clip-path ease-in-out 700ms;
+    transition: clip-path ease-in-out 700ms, -webkit-clip-path ease-in-out 700ms;
+    /*   display: none; */
+}
+
+.nav2 {
+    background: #993366;
+    width: 100%;
+    height: 45px;
+}
+
+    .nav2 ul {
+        text-align: center;
+        margin: 0px;
+    }
+
+        .nav2 ul li {
+            margin-top: 7px;
+            display: inline-block;
+        }
+
+.site-nav--open {
+    -webkit-clip-path: circle(250% at top right);
+    clip-path: circle(250% at top right);
+    /*   display: block; */
+}
+
+.site-nav {
+    z-index: 9;
+}
+
+    .site-nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .site-nav li {
+        border-bottom: 1px solid #575766;
+    }
+
+        .site-nav li:last-child {
+            border-bottom: none;
+        }
+
+    .site-nav a {
+        color: #FFF;
+        display: block;
+        padding: 2em 4em 2em 1.5em;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+        .site-nav a:hover,
+        .site-nav a:focus {
+            background: #993366;
+        }
+
+.site-nav--icon {
+    display: inline-block;
+    font-size: 1.5em;
+    margin-right: 1em;
+    width: 1.1em;
+    text-align: right;
+    color: rgba(255,255,255,.4);
+}
+
+.menu-toggle {
+    padding: 1em;
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    cursor: pointer;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    display: block;
+    background: #FFF;
+    height: 3px;
+    width: 1.75em;
+    border-radius: 3px;
+    transition: all ease-in-out 500ms;
+}
+
+    .hamburger::before {
+        -webkit-transform: translateY(-6px);
+        transform: translateY(-6px);
+    }
+
+    .hamburger::after {
+        -webkit-transform: translateY(3px);
+        transform: translateY(3px);
+    }
+
+.open .hamburger {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+    .open .hamburger::before {
+        opacity: 0;
+    }
+
+    .open .hamburger::after {
+        -webkit-transform: translateY(-3px) rotate(-90deg);
+        transform: translateY(-3px) rotate(-90deg);
+    }
+
+.searchTerm {
+    width: 150px;
+    border: 1.5px solid #bf9000;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 13px;
+    color: #9DBFAF;
+}
+
+    .searchTerm:focus {
+        color: black;
+    }
+
+.searchButton {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #bf9000;
+    background: #bf9000;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 7px;
+}
+
+#primary_nav_wrap ul {
+    background: #fff;
+    width: 100%;
+    list-style: none;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0px 5px;
+}
+
+    #primary_nav_wrap ul a i {
+        margin-left: 5px;
+    }
+
+    #primary_nav_wrap ul a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 32px;
+        padding: 0px 15px;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    #primary_nav_wrap ul li {
+        position: relative;
+        float: left;
+        margin: 0;
+        padding: 0
+    }
+
+        #primary_nav_wrap ul li:hover {
+            background: #f6f6f6;
+        }
+
+        #primary_nav_wrap ul li a:hover {
+            color: #993366;
+        }
+
+    #primary_nav_wrap ul ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #fff;
+        padding: 0
+    }
+
+        #primary_nav_wrap ul ul li {
+            float: none;
+            background: #fff;
+            width: 200px
+        }
+
+        #primary_nav_wrap ul ul a {
+            line-height: 120%;
+            padding: 10px 15px
+        }
+
+        #primary_nav_wrap ul ul ul {
+            top: 0;
+            left: 100%;
+        }
+
+    #primary_nav_wrap ul li:hover > ul {
+        display: block
+    }
+
+#catSmall {
+    display: block;
+}
+
+#catBig {
+    display: none;
+}
+
+
+
+
+@media only screen and (min-width: 750px) {
+
+    .menu-toggle {
+        display: none;
+    }
+
+    .site-nav {
+        height: auto;
+        position: relative;
+        background: transparent;
+        float: right;
+        -webkit-clip-path: initial;
+        clip-path: initial;
+    }
+
+        .site-nav li {
+            display: inline-block;
+            border: none;
+        }
+
+        .site-nav a {
+            padding: 0;
+            margin-left: 3em;
+        }
+
+            .site-nav a:hover,
+            .site-nav a:focus {
+                background: transparent;
+            }
+
+    .site-nav--icon {
+        display: none;
+    }
+
+    .search {
+        width: 100%;
+        position: relative
+    }
+
+    .searchTerm {
+        width: 400px;
+        border: 1.5px solid #bf9000;
+        padding: 5px;
+        height: 20px;
+        border-radius: 5px;
+        outline: none;
+        font-size: 15px;
+        color: #9DBFAF;
+    }
+
+        .searchTerm:focus {
+            color: black;
+        }
+
+    .searchButton {
+        width: 40px;
+        height: 30px;
+        border: 1px solid #bf9000;
+        background: #bf9000;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        margin-top: 7px;
+    }
+
+    #primary_nav_wrap ul {
+        background: #fff;
+        width: 100%;
+        list-style: none;
+        position: relative;
+        float: left;
+        margin: 0;
+        padding: 0px 35px;
+    }
+
+        #primary_nav_wrap ul a i {
+            margin-left: 5px;
+        }
+
+        #primary_nav_wrap ul a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 32px;
+            padding: 0px 15px;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        #primary_nav_wrap ul li {
+            position: relative;
+            float: left;
+            margin: 0;
+            padding: 0
+        }
+
+            #primary_nav_wrap ul li:hover {
+                background: #f6f6f6
+            }
+
+        #primary_nav_wrap ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 0
+        }
+
+            #primary_nav_wrap ul ul li {
+                float: none;
+                background: #fff;
+                width: 200px
+            }
+
+            #primary_nav_wrap ul ul a {
+                line-height: 120%;
+                padding: 10px 15px
+            }
+
+            #primary_nav_wrap ul ul ul {
+                top: 0;
+                left: 100%;
+            }
+
+        #primary_nav_wrap ul li:hover > ul {
+            display: block
+        }
+
+    #catSmall {
+        display: none;
+    }
+
+    #catBig {
+        display: block;
+    }
+}

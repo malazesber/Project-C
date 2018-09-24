@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/test.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+
+            <a class="logo" href="@Url.Action("Index", "Home")">Boek<span>Store</span></a>
+
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home site-nav--icon"></i>Home</a></li>
+                    <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
+                    <li><a href="@Url.Action("WishList", "Home")"><i class="fa fa-heart site-nav--icon"></i>Wishlist</a></li>
+                    <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Signin/Join</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <div class="hamburger"></div>
+            </div>
+
+        </div>
+    </header>
+
+    <nav class="nav2">
+        <ul>
+            <div class="wrap">
+                <div class="search">
+                    <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </ul>
+    </nav>
+    <nav id="primary_nav_wrap">
+        <ul>
+            <div>
+
+            </div>
+            <li>
+                <a href="#">Categories<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Best Sellers</a></li>
+                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Discounted</a></li>
+                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Bundles</a></li>
+                    <li><a href="@Url.Action("Results", "Product")">Horror</a></li>
+                    <li><a href="@Url.Action("Results", "Product")">Thriller</a></li>
+                    <li><a href="@Url.Action("Results", "Product")">Fantasy</a></li>
+                    <li><a href="@Url.Action("Results", "Product")">Adventure</a></li>
+                    <li><a href="@Url.Action("Results", "Product")">Romance</a></li>
+                    <li>
+                        <a href="#">More Categories <i class="fa fa-caret-down"></i></a>
+                        <ul>
+                            <li><a href="@Url.Action("Results", "Product")">Children's</a></li>
+                            <li><a href="@Url.Action("Results", "Product")">Travel</a></li>
+                            <li><a href="@Url.Action("Results", "Product")">History</a></li>
+                            <li><a href="@Url.Action("Results", "Product")">Science</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li id="catBig"><a href="@Url.Action("Results", "Product")">Best Sellers</a>
+            <li id="catBig"><a href="@Url.Action("Results", "Product")">Discounted</a></li>
+            <li id="catBig"><a href="@Url.Action("Results", "Product")">Bundles</a></li>
+
+
+        </ul>
+    </nav>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+
+    <script src="~/Scripts/Test.js"></script>
+
+
+
+
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
