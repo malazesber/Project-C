@@ -14,12 +14,14 @@ namespace webtest.Models
     
     public partial class User
     {
-        public string User_id { get; set; }
+        public int User_id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Phone_number { get; set; }
         public string Password { get; set; }
         public bool Type { get; set; }
+        public bool IsEmailVerified { get; set; }
+        public System.Guid ActivationCode { get; set; }
     }
 }

@@ -158,6 +158,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,8 +202,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\RegisterModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RegisterModel.Context.cs</LastGenOutput>
       <DependentUpon>RegisterModel.edmx</DependentUpon>
+      <LastGenOutput>RegisterModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\RegisterModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -252,8 +254,11 @@
     <Content Include="Views\Product\Results.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\Register\Registration.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\UserEntities\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

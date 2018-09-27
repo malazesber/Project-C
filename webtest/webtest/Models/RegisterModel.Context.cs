@@ -13,10 +13,10 @@ namespace webtest.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DatabaseEntities : DbContext
+    public partial class DatabaseEntities1 : DbContext
     {
-        public DatabaseEntities()
-            : base("name=DatabaseEntities")
+        public DatabaseEntities1()
+            : base("name=DatabaseEntities1")
         {
         }
     
