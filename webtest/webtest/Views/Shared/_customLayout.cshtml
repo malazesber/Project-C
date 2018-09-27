@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>@ViewBag.Title</title>
-    <link href="~/Content/test.css" rel="stylesheet" />
+    <link href="~/Content/Main.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
 </head>
@@ -13,14 +13,13 @@
     <header>
         <div class="container">
 
-            <a class="logo" href="@Url.Action("Index", "Home")">Boek<span>Store</span></a>
+            <a class="logo" href="@Url.Action("Index", "Home")">Books'<span>R'Us</span></a>
 
             <nav class="site-nav">
                 <ul>
-                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home site-nav--icon"></i>Home</a></li>
                     <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
                     <li><a href="@Url.Action("WishList", "Home")"><i class="fa fa-heart site-nav--icon"></i>Wishlist</a></li>
-                    <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Signin/Join</a></li>
+                    <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
                 </ul>
             </nav>
             <div class="menu-toggle">
@@ -42,40 +41,22 @@
             </div>
         </ul>
     </nav>
-    <nav id="primary_nav_wrap">
-        <ul>
-            <div>
-
+    <div class="nav3">
+        <div class="dropdown">
+            <button class="dropbtn">
+                Categories
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="@Url.Action("Results", "Product")">Romance</a>
+                <a href="@Url.Action("Results", "Product")">Horror</a>
+                <a href="@Url.Action("Results", "Product")">Drama</a>
             </div>
-            <li>
-                <a href="#">Categories<i class="fa fa-caret-down"></i></a>
-                <ul>
-                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Best Sellers</a></li>
-                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Discounted</a></li>
-                    <li id="catSmall"><a href="@Url.Action("Results", "Product")">Bundles</a></li>
-                    <li><a href="@Url.Action("Results", "Product")">Horror</a></li>
-                    <li><a href="@Url.Action("Results", "Product")">Thriller</a></li>
-                    <li><a href="@Url.Action("Results", "Product")">Fantasy</a></li>
-                    <li><a href="@Url.Action("Results", "Product")">Adventure</a></li>
-                    <li><a href="@Url.Action("Results", "Product")">Romance</a></li>
-                    <li>
-                        <a href="#">More Categories <i class="fa fa-caret-down"></i></a>
-                        <ul>
-                            <li><a href="@Url.Action("Results", "Product")">Children's</a></li>
-                            <li><a href="@Url.Action("Results", "Product")">Travel</a></li>
-                            <li><a href="@Url.Action("Results", "Product")">History</a></li>
-                            <li><a href="@Url.Action("Results", "Product")">Science</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li id="catBig"><a href="@Url.Action("Results", "Product")">Best Sellers</a>
-            <li id="catBig"><a href="@Url.Action("Results", "Product")">Discounted</a></li>
-            <li id="catBig"><a href="@Url.Action("Results", "Product")">Bundles</a></li>
-
-
-        </ul>
-    </nav>
+        </div>
+        <a href="@Url.Action("Results", "Product")">Best Sellers</a>
+        <a href="@Url.Action("Results", "Product")">Sale</a>
+        <a href="@Url.Action("Results", "Product")">Bundles</a>
+    </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
