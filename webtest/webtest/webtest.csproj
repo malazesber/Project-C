@@ -254,6 +254,7 @@
     <Content Include="Views\Product\Results.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\Register\Registration.cshtml" />
+    <Content Include="Views\Register\VerifyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\UserEntities\" />

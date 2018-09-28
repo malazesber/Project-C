@@ -30,6 +30,7 @@ namespace webtest.Models
         [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert hier your Password")]
         [DataType(DataType.Password)]
         [MinLength(6,ErrorMessage ="Password must be at least 6 charachters")]
+        [RegularExpression("^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$", ErrorMessage ="Your Password must contain at least one capital letter one number and one small letter")]
         public string Password { get; set; }
 
         [Display(Name= "Confirm PAssword")]

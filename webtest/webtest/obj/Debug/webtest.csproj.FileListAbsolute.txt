@@ -369,3 +369,4 @@ C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.d
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.dll
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.xml
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.xml
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache

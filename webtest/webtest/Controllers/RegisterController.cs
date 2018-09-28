@@ -73,6 +73,29 @@ namespace webtest.Controllers
         }
         //Verify Email
 
+        [HttpGet]
+        public ActionResult VerifyAccount (string id)
+        {
+            bool status = false;
+            using (DatabaseEntities1 dc = new DatabaseEntities1())
+            {
+                dc.Configuration.ValidateOnSaveEnabled = false; //This line will avoid any problems by confirm password 
+                                                                //does not match issue in de save changes section
+                var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
+                if (v != null)
+                {
+                    v.IsEmailVerified = true;
+                    dc.SaveChanges();
+                    status = true;
+                }
+                else
+                {
+                    ViewBag.Message = "Invaild Requist";
+                }
+            }
+            ViewBag.Status = status;
+            return View();
+        }
         //Verify Email LINK
 
         //Login
@@ -94,7 +117,7 @@ namespace webtest.Controllers
         [NonAction]
         public void SendVerificationLinkEmail(string email, string activationCode)
         {
-            var verifyUrl = "/User/VerifyAccount/" + activationCode;
+            var verifyUrl = "/Register/VerifyAccount/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
             var fromEmail = new MailAddress("malazesper19@gmail.com", "BoekStore");
@@ -102,9 +125,9 @@ namespace webtest.Controllers
             var fromEmailPassword = "malaz09493esper";
             string subject = "Your account is successfully created";
 
-            string body = "<br/><br/> Welcome by bookstore your account has been"+
-                "successfuly created. Please click on the link below to verify your account"+
-                "<br/><br/><a herf='"+link+"'>"+link+"</a> ";
+            string body = "<br/><br/> Welcome by bookstore your account has been" +
+                " successfuly created. Please click on the link below to verify your account" +
+                " <br/><br/><a herf='"+link+"'>"+link+"</a> ";
 
             var smtp = new SmtpClient
             {
