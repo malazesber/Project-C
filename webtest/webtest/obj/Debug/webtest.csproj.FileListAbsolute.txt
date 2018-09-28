@@ -365,3 +365,7 @@ C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csproj.CopyComplete
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.dll
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.pdb
+C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.dll
+C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.dll
+C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.xml
+C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.xml

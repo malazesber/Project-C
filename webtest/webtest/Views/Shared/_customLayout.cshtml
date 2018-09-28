@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model webtest.Models.User
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -19,7 +20,15 @@
                 <ul>
                     <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
                     <li><a href="@Url.Action("WishList", "Home")"><i class="fa fa-heart site-nav--icon"></i>Wishlist</a></li>
-                    <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
+                    @if (Session["User_id"] == null)
+                    {
+                        <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Logout", "Login")"><i class="fa fa-user site-nav--icon"></i>Logout</a></li>
+                    }
+
                 </ul>
             </nav>
             <div class="menu-toggle">
@@ -62,9 +71,6 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
 
     <script src="~/Scripts/Test.js"></script>
-
-
-
 
     <div>
         @RenderBody()
