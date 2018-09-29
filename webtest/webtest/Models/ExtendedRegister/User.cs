@@ -33,9 +33,9 @@ namespace webtest.Models
         [RegularExpression("^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$", ErrorMessage ="Your Password must contain at least one capital letter one number and one small letter")]
         public string Password { get; set; }
 
-        [Display(Name= "Confirm PAssword")]
+        [Display(Name= "Confirm Password")]
         [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage ="your Confirm Password does not match your Password ")]
+        [Compare("Password",ErrorMessage ="Your Confirm Password does not match your Password ")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name="Phone Number")]
