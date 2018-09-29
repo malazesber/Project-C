@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\webtest"
+    "\\webtest",
+    "\\webtest\\webtest",
+    "\\webtest\\webtest\\App_Data",
+    "\\webtest\\webtest\\Models",
+    "\\webtest\\webtest\\Models\\ExtendedRegister"
   ],
-  "SelectedNode": "\\webtest\\webtest.sln",
+  "SelectedNode": "\\webtest\\webtest\\Models\\ExtendedRegister\\User.cs",
   "PreviewInSolutionExplorer": false
 }
