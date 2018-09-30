@@ -120,9 +120,9 @@ namespace webtest.Controllers
             var verifyUrl = "/Register/VerifyAccount/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("malazesper19@gmail.com", "BoekStore");
+            var fromEmail = new MailAddress("bookus094@gmail.com", "BookStore");
             var toEmail = new MailAddress(email);
-            var fromEmailPassword = "malaz09493esper";
+            var fromEmailPassword = "Hogeschool_rotterdam1";
             string subject = "Your account is successfully created";
 
             string body = "<br/><br/> Welcome by bookstore your account has been" +

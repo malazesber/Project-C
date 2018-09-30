@@ -369,7 +369,6 @@ C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.d
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.dll
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.xml
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\EntityFramework.SqlServer.xml
-C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\ApplicationInsights.config
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\webtest.dll.config
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\webtest.dll
@@ -465,3 +464,4 @@ C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\vbc.exe
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\vbc.rsp
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\VBCSCompiler.exe
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache
