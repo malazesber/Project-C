@@ -16,21 +16,23 @@ namespace webtest.Models
     {
         [Display(Name = "First Name")]
         [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert your first name")]
+        [RegularExpression("[A-Z][a-z]*", ErrorMessage = "Your name cannot contain any numbers or characters. Please start the name with a capital letter.")]
         public string Name { get; set; }
 
         [Display (Name = "Last Name")]
         [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert your surname")]
+        [RegularExpression("[A-Z][a-z]*", ErrorMessage = "Your surname cannot contain any numbers or characters. Please start the name with a capital letter.")]
         public string Surname { get; set; }
 
         [Display(Name ="Email")]
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your email")]
+        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your email address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your Password")]
+        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your password")]
         [DataType(DataType.Password)]
         [MinLength(6,ErrorMessage ="Password must be at least 6 charachters")]
-        [RegularExpression("^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$", ErrorMessage ="Your Password must contain at least one capital letter, one number and one small letter")]
+        [RegularExpression("^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$", ErrorMessage ="Your password must contain at least one capital letter, one number and one small letter")]
         public string Password { get; set; }
 
         [Display(Name= "Confirm Password")]
@@ -39,7 +41,9 @@ namespace webtest.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name="Phone Number")]
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your Phone Number")]
+        //AllowEmptyString false?
+        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your phone number")]
+        [RegularExpression("((\053?)\053[0-9]{11}|[0-9]{10})", ErrorMessage = "Please enter a valid phone number.")]
         public string Phone_number { get; set; }
     }
 
