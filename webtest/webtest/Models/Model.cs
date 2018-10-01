@@ -27,7 +27,7 @@ namespace Webshop.Models //TODO: Foreign keys & correcte constraints. Ook dataty
         public double Amount { get; set; }
         public string Order_status { get; set; }
         public int PaymentId { get; set; }//Adds Foreign key to Payment(payment_id) http://www.entityframeworktutorial.net/code-first/configure-one-to-one-relationship-in-code-first.aspx
-        public virtual Payment Payment { get; set; } //Ik twijfel of dit goed is 
+        public virtual Payment Payment { get; set; } //Ik twijfel of dit goed is; is bovendien onderdeel van FK
         //TODO: Add Foreign key to Shopping_cart(cart_id)
 
     }
@@ -39,7 +39,7 @@ namespace Webshop.Models //TODO: Foreign keys & correcte constraints. Ook dataty
         public DateTime payment_date { get; set; }
         public double Amount { get; set; }
         public int OrderId { get; set; }//Adds Foreign key naar Orders(Order_id)
-        public virtual Orders Orders { get; set; }
+        public virtual Orders Orders { get; set; } //is bovendien ook onderdeel van FK
     }
 
     public class Wishlist //PK -> List_id
