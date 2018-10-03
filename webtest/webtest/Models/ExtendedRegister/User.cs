@@ -41,9 +41,8 @@ namespace webtest.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name="Phone Number")]
-        //AllowEmptyString false?
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please insert your phone number")]
-        [RegularExpression("((\053?)\053[0-9]{11}|[0-9]{10})", ErrorMessage = "Please enter a valid phone number.")]
+        [Required(AllowEmptyStrings =true,ErrorMessage ="Please insert your phone number")]
+        [RegularExpression("([0-9]{10})", ErrorMessage = "Please enter a valid phone number. Please start with 06.")]
         public string Phone_number { get; set; }
     }
 
