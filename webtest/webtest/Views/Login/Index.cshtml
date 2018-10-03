@@ -22,10 +22,10 @@
         
         <div class="form-group">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            @*Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
 
             @*Html.TextBoxFor(model => model.Password, new { placeholder = "Password", @type = "password" })
-            @Html.ValidationMessageFor(model => model.Password)*@
+        @Html.ValidationMessageFor(model => model.Password)*@
         </div>
 
         <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
