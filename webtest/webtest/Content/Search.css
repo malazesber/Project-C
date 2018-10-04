@@ -1,0 +1,294 @@
+﻿#container {
+    width: 100%;
+    height: 100%;
+    margin-left: 15px
+}
+
+#box1 {
+    background: white;
+    float: left;
+    height: 190px;
+    width: 16%;
+    margin-left: 15px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#box2 {
+    background: white;
+    float: right;
+    min-height: 500px;
+    height: auto;
+    width: 80%;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#box3 {
+    background: white;
+    text-align: center;
+    float: left;
+    height: 285px;
+    width: 16%;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+#txtSearchTitle {
+    font-weight: 700;
+    color: #8a3366;
+    font-size: 20px;
+    margin-top: 10px;
+    display: block;
+}
+
+#txtResultsTitle {
+    font-weight: 700;
+    color: #8a3366;
+    font-size: 20px;
+    margin-top: 10px;
+    display: inline-block;
+    margin-left: 25px;
+}
+
+#btnOrderBy {
+    float: right;
+    margin-top: 10px;
+    margin-right: 25px
+}
+
+#txtTC {
+    color: black;
+    font-size: 16px;
+    margin-top: 10px;
+    display: block;
+    margin-top: 15px;
+}
+
+    #txtTC:hover {
+        color: #8a3366;
+        cursor: pointer;
+    }
+
+#minPrice {
+    width: 30%;
+    float: left;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+#maxPrice {
+    width: 30%;
+    float: right;
+    margin-right: 25px;
+    font-size: 15px;
+}
+
+#box3 label {
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+#priceFilter {
+    margin-top: 17px;
+}
+
+#ratingFilter {
+    margin-top: 3px;
+    width: 90%;
+    color: black;
+}
+
+#btnSaveFilters {
+    background-color: #bf9000;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 8px;
+    margin-top: 85px;
+}
+
+#product {
+    margin: 15px;
+}
+
+#title {
+    display: inline-block;
+    margin-top: 6px
+}
+
+#author {
+    display: block;
+}
+
+#summary {
+    margin-top: 15px;
+    display: block;
+    width: 700px;
+}
+
+#productImg {
+    float: left;
+    margin-right: 15px;
+}
+
+#rating {
+    width: 110px;
+}
+
+#moreInfo {
+    color: #8a3366;
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+#btnCart {
+    float: right;
+    margin-top: 20px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#btnWishList {
+    float: right;
+    margin-top: 20px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#price {
+    float: right;
+    margin-right: 25px;
+}
+
+#stripe {
+    width: 100%;
+    height: 2px;
+}
+
+@media only screen and (max-width: 1290px) {
+    #box1 {
+        display: none;
+    }
+
+    #box3 {
+        display: none;
+    }
+
+    #box2 {
+        width: 100%;
+        display: block;
+        margin-left: 15px;
+    }
+}
+
+@media only screen and (min-width: 1290px) {
+
+    #filtersTop {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    #summary {
+        display: none;
+    }
+
+    #price {
+        display: none;
+    }
+
+    #rating {
+        display: block;
+    }
+
+    #priceSmall {
+        display: block;
+        margin-top: 15px;
+    }
+
+    #btnWishList {
+        float: left;
+    }
+
+    #btnCart {
+        float: left;
+        display: block;
+    }
+
+    #moreInfo {
+        display: none;
+    }
+
+    #moreInfoSmall {
+        margin-right: 100px;
+        color: #8a3366;
+        font-weight: 600;
+        display: block;
+        margin-top: 55px;
+    }
+
+    #priceFilterTop {
+        display: inline-block;
+        width: 130px;
+    }
+
+    #priceTop {
+        width: 40px;
+        font-size: 16px
+    }
+
+    #filterTopTitle {
+        margin-right: 94px;
+        color: white;
+    }
+
+    #filterTopSelect {
+        width: 80px;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    #priceSmall {
+        display: none;
+    }
+
+    #moreInfoSmall {
+        display: none;
+    }
+
+    #priceFilterTop {
+        display: inline-block;
+        width: 250px;
+    }
+
+    #priceTop {
+        width: 80px;
+        font-size: 17px
+    }
+
+    #filterTopTitle {
+        margin-right: 212px;
+        color: white;
+    }
+
+    #filterTopSelect {
+        width: 270px;
+    }
+}
+
+#filtersTop {
+    background: #993366;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 25px;
+}
+
+#btnSaveFiltersTop {
+    float: right;
+}

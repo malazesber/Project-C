@@ -3,6 +3,111 @@
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
+<head>
+    <link href="~/Content/Search.css" rel="stylesheet" />
+</head>
+<!-- COPY THIS -->
+<div id="container">
+    <div id="box1">
+        <a id="txtSearchTitle">TOP CATEGORIES</a>
+        <a id="txtTC">Horror</a><a id="txtTC">Drama</a><a id="txtTC">Romance</a><a id="txtTC">Fantasy</a>
+    </div>
+    <div id="box2">
+        <div>
+            <a id="txtResultsTitle">RESULTS</a>
+            <button id="btnOrderBy">Order By</button>
+        </div>
 
-<h2>Results</h2>
+        <div id="filtersTop">
+            <label id="filterTopTitle">Price</label>
+            <label id="filterTopTitle">Rating</label> <br />
+            <div id="priceFilterTop">
+                <input id="priceTop" type="text" name="FirstName" placeholder="Min">
+                <input id="priceTop" type="text" name="FirstName" placeholder="Max">
+            </div>
 
+            <select id="filterTopSelect">
+                <option>Select</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <button id="btnSaveFiltersTop"><i class="fa fa-check"></i></button> -
+        </div>
+        <img id="stripe" src="~/Content/Images/stripe.png" />
+        <div id="product">
+            <img id="productImg" src="~/Content/Images/test.jpg" />
+            <label id="title">The BFG</label>
+            <label id="price">$15,99</label>
+            <label id="author">Roald Dahl</label>
+            <img id="rating" src="~/Content/Images/Rating4Star.png" />
+            <label id="summary">
+                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
+            </label>
+            <label id="priceSmall">$15,99</label>
+            <a id="moreInfo">More Info</a>
+            <button id="btnWishList"><i class="fa fa-heart"></i></button>
+            <button id="btnCart">ADD TO CART</button>
+            <a id="moreInfoSmall">More Info</a>
+            <img id="stripe" src="~/Content/Images/stripe.png" />
+
+        </div>
+        <div id="product">
+            <img id="productImg" src="~/Content/Images/test.jpg" />
+            <label id="title">The BFG</label>
+            <label id="price">$15,99</label>
+            <label id="author">Roald Dahl</label>
+            <img id="rating" src="~/Content/Images/Rating4Star.png" />
+            <label id="summary">
+                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
+            </label>
+            <label id="priceSmall">$15,99</label>
+            <a id="moreInfo">More Info</a>
+            <button id="btnWishList"><i class="fa fa-heart"></i></button>
+            <button id="btnCart">ADD TO CART</button>
+            <a id="moreInfoSmall">More Info</a>
+            <img id="stripe" src="~/Content/Images/stripe.png" />
+
+        </div>
+        <div id="product">
+            <img id="productImg" src="~/Content/Images/test.jpg" />
+            <label id="title">The BFG</label>
+            <label id="price">$15,99</label>
+            <label id="author">Roald Dahl</label>
+            <img id="rating" src="~/Content/Images/Rating4Star.png" />
+            <label id="summary">
+                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
+            </label>
+            <label id="priceSmall">$15,99</label>
+            <a id="moreInfo">More Info</a>
+            <button id="btnWishList"><i class="fa fa-heart"></i></button>
+            <button id="btnCart">ADD TO CART</button>
+            <a id="moreInfoSmall">More Info</a>
+            <img id="stripe" src="~/Content/Images/stripe.png" />
+
+        </div>
+
+    </div>
+    <div id="box3">
+        <a id="txtSearchTitle">FILTERS</a>
+        <label>Price</label><br />
+        <div id="priceFilter">
+            <input id="minPrice" type="text" name="FirstName" placeholder="Min Price">
+            <input id="maxPrice" type="text" name="FirstName" placeholder="Max Price">
+        </div><br />
+        <label>Rating</label>
+        <select id="ratingFilter">
+            <option>Select Rating</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <button id="btnSaveFilters">Save changes</button>
+
+    </div>
+
+</div>
