@@ -10,6 +10,8 @@ namespace webtest.Models
     public partial class User
     {
         public string ConfirmPassword { get; set; }
+        public string LoginErrorMessage { get; internal set; }
+
     }
 
     public class UserMetadata

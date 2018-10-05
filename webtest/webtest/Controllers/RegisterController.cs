@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using webtest.Models;
 
+
 namespace webtest.Controllers
 {
     public class RegisterController : Controller
@@ -96,13 +97,7 @@ namespace webtest.Controllers
             ViewBag.Status = status;
             return View();
         }
-        //Verify Email LINK
-
-        //Login
-
-        //Login Post
-
-        //Logout
+        
 
         [NonAction]
         public bool IsEmailExist(string email)
@@ -114,21 +109,37 @@ namespace webtest.Controllers
             }
 
         }
+
+        //this fuction will be used to send the verifiction password and the rest link
+        //it can be used also to send email for the user.
+        //you have to provide parameters for the function.
         [NonAction]
-        public void SendVerificationLinkEmail(string email, string activationCode)
+        public void SendVerificationLinkEmail(string email, string activationCode, string emailFor = "VerifyAccount")
         {
-            var verifyUrl = "/Register/VerifyAccount/" + activationCode;
+            var verifyUrl = "/Register/"+emailFor+"/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
             var fromEmail = new MailAddress("bookus094@gmail.com", "BookStore");
             var toEmail = new MailAddress(email);
             var fromEmailPassword = "Hogeschool_rotterdam1";
-            string subject = "Your account is successfully created";
 
-            string body = "<br/><br/> Welcome by bookstore your account has been" +
-                " successfuly created. Please click on the link below to verify your account" +
-                " <br/><br/><a herf='"+link+"'>"+link+"</a> ";
+            string subject = "";
+            string body = "";
+            if (emailFor == "VerifyAccount")
+            {
+                subject = "Your account is successfully created";
 
+                body = "<br/><br/> Welcome by bookstore your account has been" +
+                   " successfuly created. Please click on the link below to verify your account" +
+                   " <br/><br/><a herf='"+link+"'>"+link+"</a> ";
+            }
+
+            else if (emailFor == "ResetPassword")
+            {
+                subject = "Reset Password";
+                body = "Hallo,<br/><br/>Dear User of BookRus we just have got a request to reset your password. If you want realy to reset your password, you can click on the link below"+
+                       "<br/><br/><a herf='"+link+"'>"+link+"</a>";
+            }
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -146,6 +157,99 @@ namespace webtest.Controllers
                 IsBodyHtml = true
             })
             smtp.Send(message);
+        }
+
+        //Forgot Password
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(string Email)
+        {
+            //verify Email
+            //GEnerate Reser Password link
+            //Send Email
+            string message = "";
+            bool status = false;
+            using (DatabaseEntities1 dc = new DatabaseEntities1())
+            {
+                var account = dc.Users.Where(a => a.Email == Email).FirstOrDefault();
+                if (account != null)
+                {
+                    //Send reset password email
+                    string resetCode = Guid.NewGuid().ToString();
+                    SendVerificationLinkEmail(account.Email, resetCode, "ResetPassword");
+                    account.ResetPasswordCode = resetCode;
+                    //
+
+                    //this code wil prevent the website from having issues with password do not match
+                    dc.Configuration.ValidateOnSaveEnabled = false;
+                    dc.SaveChanges();
+                    message = "A link to reset your password has been sent to your Email.";
+                
+                }
+                else
+                {
+                    message = "Account not found";
+                }
+            }
+            ViewBag.Message = message;
+            return View();
+        }
+
+        public ActionResult ResetPassword(string id)
+        {
+            //Verify the reset password link
+            //Find account associated with this link
+            //redirect to reset password page
+            using (DatabaseEntities1 dc = new DatabaseEntities1())
+            {
+                var user = dc.Users.Where(a => a.ResetPasswordCode == id).FirstOrDefault();
+                if (user != null)
+                {
+                    ResetPasswordModel model = new ResetPasswordModel
+                    {
+                        ResetCode = id
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordModel model)
+        {
+            var message = "";
+            if (ModelState.IsValid)
+            {
+                using (DatabaseEntities1 dc = new DatabaseEntities1())
+                {
+                    var user = dc.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.Password = Crypto.Hash(model.NewPassword);
+                        user.ResetPasswordCode = "";
+                        dc.Configuration.ValidateOnSaveEnabled = false;
+                        dc.SaveChanges();
+                        message = "Your Password has been successfully updated";
+                    }
+                }
+            }
+            else
+            {
+                message = "Something invalid";
+            }
+            ViewBag.Message = message;
+            return View(model);
         }
     }
 

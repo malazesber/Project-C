@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="DatabaseModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
           <ScalarProperty Name="User_id" ColumnName="User_id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Name" ColumnName="Name" />

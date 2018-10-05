@@ -464,7 +464,6 @@ C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\vbc.exe
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\vbc.rsp
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\VBCSCompiler.exe
 C:\Users\charl\Source\Repos\Project\Project-C\webtest\webtest\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache
 C:\Users\charl\source\repos\Projectv2\Project-C\webtest\webtest\bin\ApplicationInsights.config
 C:\Users\charl\source\repos\Projectv2\Project-C\webtest\webtest\bin\webtest.dll.config
 C:\Users\charl\source\repos\Projectv2\Project-C\webtest\webtest\bin\webtest.dll
@@ -655,3 +654,4 @@ D:\Frédérique\Documents\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csp
 D:\Frédérique\Documents\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csproj.CopyComplete
 D:\Frédérique\Documents\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.dll
 D:\Frédérique\Documents\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.pdb
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache

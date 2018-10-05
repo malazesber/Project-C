@@ -13,6 +13,7 @@
     <Property Name="Type" Type="bit" Nullable="false" />
     <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
     <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
