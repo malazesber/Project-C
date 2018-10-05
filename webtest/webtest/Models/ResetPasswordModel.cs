@@ -14,7 +14,7 @@ namespace webtest.Models
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare("Newpassword", ErrorMessage ="New password and confirm password does not match")]
+        [Compare("NewPassword", ErrorMessage ="New password and confirm password does not match")]
         public string ConfirmPassword { get; set; }
 
         [Required]
