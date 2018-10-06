@@ -1,6 +1,4 @@
-﻿@*@model webtest.Models.User*@
-@*hier boven heb ik die code comment want het is a sherd custm layout daarom moet het niet gelinkd zijn aan beplade model*@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -21,6 +19,8 @@
                 <ul>
                     <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
                     <li><a href="@Url.Action("WishList", "Home")"><i class="fa fa-heart site-nav--icon"></i>Wishlist</a></li>
+
+                    <!--Check of de user is ingelogd-->
                     @if (Session["User_id"] == null)
                     {
                         <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
@@ -43,10 +43,14 @@
         <ul>
             <div class="wrap">
                 <div class="search">
-                    <input type="text" class="searchTerm" placeholder="What are you looking for?">
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
+                    <!-- GET request aan de Results View van de Product controller.-->
+                    <!-- Data in de zoekbar wordt meegegeven aan de Results Action in de Products Controller-->
+                    @using (Html.BeginForm("Results", "Product", FormMethod.Get))
+                    {
+                        @Html.TextBox("Search") <button type="submit" class="searchButton">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    }
                 </div>
             </div>
         </ul>

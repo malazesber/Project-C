@@ -1,10 +1,14 @@
-﻿
+﻿<!-- Dependencies needed for PagedList-->
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<webtest.Models.User>
 @{
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 <head>
     <link href="~/Content/Search.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
 </head>
 <!-- COPY THIS -->
 <div id="container">
@@ -37,57 +41,42 @@
             <button id="btnSaveFiltersTop"><i class="fa fa-check"></i></button> -
         </div>
         <img id="stripe" src="~/Content/Images/stripe.png" />
-        <div id="product">
-            <img id="productImg" src="~/Content/Images/test.jpg" />
-            <label id="title">The BFG</label>
-            <label id="price">$15,99</label>
-            <label id="author">Roald Dahl</label>
-            <img id="rating" src="~/Content/Images/Rating4Star.png" />
-            <label id="summary">
-                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
-            </label>
-            <label id="priceSmall">$15,99</label>
-            <a id="moreInfo">More Info</a>
-            <button id="btnWishList"><i class="fa fa-heart"></i></button>
-            <button id="btnCart">ADD TO CART</button>
-            <a id="moreInfoSmall">More Info</a>
-            <img id="stripe" src="~/Content/Images/stripe.png" />
 
-        </div>
-        <div id="product">
-            <img id="productImg" src="~/Content/Images/test.jpg" />
-            <label id="title">The BFG</label>
-            <label id="price">$15,99</label>
-            <label id="author">Roald Dahl</label>
-            <img id="rating" src="~/Content/Images/Rating4Star.png" />
-            <label id="summary">
-                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
-            </label>
-            <label id="priceSmall">$15,99</label>
-            <a id="moreInfo">More Info</a>
-            <button id="btnWishList"><i class="fa fa-heart"></i></button>
-            <button id="btnCart">ADD TO CART</button>
-            <a id="moreInfoSmall">More Info</a>
-            <img id="stripe" src="~/Content/Images/stripe.png" />
+        <!-- SHOW PRODUCTS-->
+        <!-- Check of er producten zijn gevonden-->
+        @if (Model.Count == 0)
+        {
+            <text> No products found</text>
+        }
+        <!-- ForEachLoop door alle producten die zijn opgehaald uit de database.-->
+        <!-- Elke product krijgt dezelfde opmaak in <div id="procuct"> ..... </div> -->
+        <!-- Alle waardes worden opgehaald uit de database en ingevuld op de juiste plekken -->
+        @foreach (var m in Model)
+        {
+            <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
+            <div id="product">
+                <img id="productImg" src="~/Content/Images/test.jpg" />
+                <label id="title">@m.Name</label>
+                <label id="price">$15,99</label>
+                <label id="author">Roald Dahl</label>
+                <img id="rating" src="~/Content/Images/Rating4Star.png" />
+                <label id="summary">
+                    THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
+                </label>
+                <label id="priceSmall">$15,99</label>
+                <a id="moreInfo">More Info</a>
+                <button id="btnWishList"><i class="fa fa-heart"></i></button>
+                <button id="btnCart">ADD TO CART</button>
+                <a id="moreInfoSmall">More Info</a>
+                <img id="stripe" src="~/Content/Images/stripe.png" />
 
-        </div>
-        <div id="product">
-            <img id="productImg" src="~/Content/Images/test.jpg" />
-            <label id="title">The BFG</label>
-            <label id="price">$15,99</label>
-            <label id="author">Roald Dahl</label>
-            <img id="rating" src="~/Content/Images/Rating4Star.png" />
-            <label id="summary">
-                THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..THIS IS A SUMMARRY..
-            </label>
-            <label id="priceSmall">$15,99</label>
-            <a id="moreInfo">More Info</a>
-            <button id="btnWishList"><i class="fa fa-heart"></i></button>
-            <button id="btnCart">ADD TO CART</button>
-            <a id="moreInfoSmall">More Info</a>
-            <img id="stripe" src="~/Content/Images/stripe.png" />
-
-        </div>
+            </div>
+        }
+        <!-- Dit is de PagedListPager die  ervoor zorgt dat er maar 3 items per pagina worden laten zien.-->
+        <!-- De PagedListPager past zich automatisch aan en zal de pagina's zelf weergeven.-->
+        <!-- De CSS kan gevonden worden in ~Content\PagedList-->
+        @Html.PagedListPager(Model, page => Url.Action("Results", new { page, search = Request.QueryString["search"] }),
+new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
 
     </div>
     <div id="box3">
