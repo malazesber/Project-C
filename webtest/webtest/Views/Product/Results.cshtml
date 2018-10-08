@@ -7,21 +7,25 @@
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 <head>
-    <link href="~/Content/Search.css" rel="stylesheet" />
+    <link href="~/Content/SearchResults.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" />
 </head>
 <!-- COPY THIS -->
 <div id="container">
-    <div id="box1">
+    <!-- Top Categories: links van het scherm verdwijnt bij 1290px -->
+    <div id="topCategories">
         <a id="txtSearchTitle">TOP CATEGORIES</a>
         <a id="txtTC">Horror</a><a id="txtTC">Drama</a><a id="txtTC">Romance</a><a id="txtTC">Fantasy</a>
     </div>
-    <div id="box2">
+    <!-- Results: hier worden alle resultaten geladen -->
+    <div id="results">
         <div>
             <a id="txtResultsTitle">RESULTS</a>
             <button id="btnOrderBy">Order By</button>
         </div>
 
+        <!-- Filters: Boven de results komt tevoorschijn kleiner dan 1290px -->
+        <!-- PrijsFilter top -->
         <div id="filtersTop">
             <label id="filterTopTitle">Price</label>
             <label id="filterTopTitle">Rating</label> <br />
@@ -29,7 +33,7 @@
                 <input id="priceTop" type="text" name="FirstName" placeholder="Min">
                 <input id="priceTop" type="text" name="FirstName" placeholder="Max">
             </div>
-
+            <!-- Select rating top -->
             <select id="filterTopSelect">
                 <option>Select</option>
                 <option>1</option>
@@ -38,6 +42,7 @@
                 <option>4</option>
                 <option>5</option>
             </select>
+            <!-- save button Top -->
             <button id="btnSaveFiltersTop"><i class="fa fa-check"></i></button> -
         </div>
         <img id="stripe" src="~/Content/Images/stripe.png" />
@@ -79,7 +84,8 @@
 new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
 
     </div>
-    <div id="box3">
+    <!-- filters: links van het scherm onder top categories verdwijnt bij 1290px -->
+    <div id="filters">
         <a id="txtSearchTitle">FILTERS</a>
         <label>Price</label><br />
         <div id="priceFilter">
@@ -98,5 +104,4 @@ new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
         <button id="btnSaveFilters">Save changes</button>
 
     </div>
-
 </div>
