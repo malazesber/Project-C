@@ -169,7 +169,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Book.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Creditcard_details.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExtendedRegister\User.cs" />
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Payment.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RegisterModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,6 +201,9 @@
       <DependentUpon>RegisterModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\Shopping_cart.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>

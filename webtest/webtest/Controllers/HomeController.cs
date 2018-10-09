@@ -16,15 +16,23 @@ namespace webtest.Controllers
         public ActionResult WishList()
         {
             ViewBag.Message = "THIS IS THE WISHLIST PAGE";
-
             return View();
+
         }
 
         public ActionResult OrderStatus()
         {
             ViewBag.Message = "THIS IS THE ORDER STATUS PAGE";
 
-            return View();
+            if (Session["User_id"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+
+                return View();
+            }
         }
     }
 }

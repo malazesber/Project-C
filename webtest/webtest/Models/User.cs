@@ -14,6 +14,12 @@ namespace webtest.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Creditcard_details = new HashSet<Creditcard_details>();
+        }
+    
         public int User_id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
@@ -24,5 +30,12 @@ namespace webtest.Models
         public bool IsEmailVerified { get; set; }
         public System.Guid ActivationCode { get; set; }
         public string ResetPasswordCode { get; set; }
+        public Nullable<int> Address_id { get; set; }
+        public Nullable<int> Cart_id { get; set; }
+    
+        public virtual Address Address { get; set; }
+        public virtual Shopping_cart Shopping_cart { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Creditcard_details> Creditcard_details { get; set; }
     }
 }

@@ -1,5 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Address_id" />
+    </Key>
+    <Property Name="Address_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Street_name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="House_number" Type="int" Nullable="false" />
+    <Property Name="Postcode" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="ISBN" />
+    </Key>
+    <Property Name="ISBN" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Summary" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Image" Type="varchar" MaxLength="255" />
+    <Property Name="Category" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Price" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Author" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Publisher" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Rating" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Creditcard_details">
+    <Key>
+      <PropertyRef Name="CC_number" />
+    </Key>
+    <Property Name="CC_number" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Owner_name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Expiry_date" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="CVV" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_id" />
+    </Key>
+    <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Order_status" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Cart_id" Type="int" Nullable="false" />
+    <Property Name="Payment_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Payment_id" />
+    </Key>
+    <Property Name="Payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Payment_date" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Order_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shopping_cart">
+    <Key>
+      <PropertyRef Name="Cart_id" />
+    </Key>
+    <Property Name="Cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shopping_cart_contains">
+    <Key>
+      <PropertyRef Name="Book_ISBN" />
+      <PropertyRef Name="Cart_id" />
+    </Key>
+    <Property Name="Book_ISBN" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Cart_id" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="User_id" />
@@ -14,8 +83,129 @@
     <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
     <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address_id" Type="int" />
+    <Property Name="Cart_id" Type="int" />
   </EntityType>
+  <Association Name="FK_Address_id">
+    <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="Address_id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Address_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_id">
+    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shopping_cart">
+        <PropertyRef Name="Cart_id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CREDITCARD_USER">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Creditcard_details" Type="Self.Creditcard_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Creditcard_details">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERS_PAYMENT">
+    <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Payment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERS_SHOPPINGCART">
+    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shopping_cart">
+        <PropertyRef Name="Cart_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SHOPPINGCONTAINS_BOOK">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="Shopping_cart_contains">
+        <PropertyRef Name="Book_ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SHOPPINGCONTAINS_SHOPPINGCART">
+    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="1" />
+    <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shopping_cart">
+        <PropertyRef Name="Cart_id" />
+      </Principal>
+      <Dependent Role="Shopping_cart_contains">
+        <PropertyRef Name="Cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseModelStoreContainer">
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shopping_cart" EntityType="Self.Shopping_cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shopping_cart_contains" EntityType="Self.Shopping_cart_contains" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Address_id" Association="Self.FK_Address_id">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_id" Association="Self.FK_Cart_id">
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CREDITCARD_USER" Association="Self.FK_CREDITCARD_USER">
+      <End Role="User" EntitySet="User" />
+      <End Role="Creditcard_details" EntitySet="Creditcard_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERS_PAYMENT" Association="Self.FK_ORDERS_PAYMENT">
+      <End Role="Payment" EntitySet="Payment" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERS_SHOPPINGCART" Association="Self.FK_ORDERS_SHOPPINGCART">
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SHOPPINGCONTAINS_BOOK" Association="Self.FK_SHOPPINGCONTAINS_BOOK">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SHOPPINGCONTAINS_SHOPPINGCART" Association="Self.FK_SHOPPINGCONTAINS_SHOPPINGCART">
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+      <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

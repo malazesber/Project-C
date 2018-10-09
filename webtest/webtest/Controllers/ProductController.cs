@@ -28,9 +28,9 @@ namespace webtest.Controllers
             // Het is belangrijk dat de View Een .ToList().TopPagedList() returned zodat er door de producten geloopt kan worden en zodat de PagedList goed werkt.
             if (search == "")
             {
-                return View(db.Users.Where(m => m.Name.Contains("*#*#*@")).ToList().ToPagedList(page ?? 1, 3));
+                return View(db.Books.Where(m => m.Name.Contains("*#*#*@")).ToList().ToPagedList(page ?? 1, 3));
             }
-            return View(db.Users.Where(m => m.Name.Contains(search)).ToList().ToPagedList(page ?? 1, 3));
+            return View(db.Books.Where(m => m.Name.Contains(search)).ToList().ToPagedList(page ?? 1, 3));
         }
     }
 }

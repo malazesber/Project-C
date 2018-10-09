@@ -132,6 +132,8 @@
 #productImg {
     float: left;
     margin-right: 15px;
+    width: 113px;
+    height: 173px;
 }
 
 #rating {

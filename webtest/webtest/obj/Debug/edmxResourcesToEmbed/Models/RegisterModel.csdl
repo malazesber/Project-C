@@ -14,8 +14,177 @@
     <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
     <Property Name="ActivationCode" Type="Guid" Nullable="false" />
     <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Address_id" Type="Int32" />
+    <Property Name="Cart_id" Type="Int32" />
+    <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
+    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_Cart_id" FromRole="User" ToRole="Shopping_cart" />
+    <NavigationProperty Name="Creditcard_details" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="User" ToRole="Creditcard_details" />
   </EntityType>
   <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Payments" EntityType="DatabaseModel.Payment" />
+    <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
+    <EntitySet Name="Addresses" EntityType="DatabaseModel.Address" />
+    <EntitySet Name="Shopping_cart" EntityType="DatabaseModel.Shopping_cart" />
+    <AssociationSet Name="FK_Address_id" Association="DatabaseModel.FK_Address_id">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_id" Association="DatabaseModel.FK_Cart_id">
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="Creditcard_details" EntityType="DatabaseModel.Creditcard_details" />
+    <AssociationSet Name="FK_CREDITCARD_USER" Association="DatabaseModel.FK_CREDITCARD_USER">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Creditcard_details" EntitySet="Creditcard_details" />
+    </AssociationSet>
+    <AssociationSet Name="Shopping_cart_contains" Association="DatabaseModel.Shopping_cart_contains">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="DatabaseModel.Order" />
+    <AssociationSet Name="FK_ORDERS_PAYMENT" Association="DatabaseModel.FK_ORDERS_PAYMENT">
+      <End Role="Payment" EntitySet="Payments" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERS_SHOPPINGCART" Association="DatabaseModel.FK_ORDERS_SHOPPINGCART">
+      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Payment_id" />
+    </Key>
+    <Property Name="Payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Payment_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Amount" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Order_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Payment" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="ISBN" />
+    </Key>
+    <Property Name="ISBN" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Summary" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Author" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Publisher" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.Shopping_cart_contains" FromRole="Book" ToRole="Shopping_cart" />
+  </EntityType>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Address_id" />
+    </Key>
+    <Property Name="Address_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Street_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="House_number" Type="Int32" Nullable="false" />
+    <Property Name="Postcode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Address_id" FromRole="Address" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Shopping_cart">
+    <Key>
+      <PropertyRef Name="Cart_id" />
+    </Key>
+    <Property Name="Cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Cart_id" FromRole="Shopping_cart" ToRole="User" />
+    <NavigationProperty Name="Books" Relationship="DatabaseModel.Shopping_cart_contains" FromRole="Shopping_cart" ToRole="Book" />
+    <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_SHOPPINGCART" FromRole="Shopping_cart" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Address_id">
+    <End Type="DatabaseModel.Address" Role="Address" Multiplicity="0..1" />
+    <End Type="DatabaseModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="Address_id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Address_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_id">
+    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="0..1" />
+    <End Type="DatabaseModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shopping_cart">
+        <PropertyRef Name="Cart_id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Creditcard_details">
+    <Key>
+      <PropertyRef Name="CC_number" />
+    </Key>
+    <Property Name="CC_number" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Owner_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Expiry_date" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CVV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="Creditcard_details" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_CREDITCARD_USER">
+    <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="DatabaseModel.Creditcard_details" Role="Creditcard_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Creditcard_details">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Shopping_cart_contains">
+    <End Type="DatabaseModel.Book" Role="Book" Multiplicity="*" />
+    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Order_id" />
+    </Key>
+    <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Order_status" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Cart_id" Type="Int32" Nullable="false" />
+    <Property Name="Payment_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Payment" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Order" ToRole="Payment" />
+    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_ORDERS_SHOPPINGCART" FromRole="Order" ToRole="Shopping_cart" />
+  </EntityType>
+  <Association Name="FK_ORDERS_PAYMENT">
+    <End Type="DatabaseModel.Payment" Role="Payment" Multiplicity="1" />
+    <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Payment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERS_SHOPPINGCART">
+    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="1" />
+    <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shopping_cart">
+        <PropertyRef Name="Cart_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

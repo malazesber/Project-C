@@ -17,7 +17,11 @@
 
             <nav class="site-nav">
                 <ul>
-                    <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
+                    @if (Session["User_id"] != null)
+                    {
+                        <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
+                    }
+
                     <li><a href="@Url.Action("WishList", "Home")"><i class="fa fa-heart site-nav--icon"></i>Wishlist</a></li>
 
                     <!--Check of de user is ingelogd-->
