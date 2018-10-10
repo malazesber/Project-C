@@ -754,3 +754,7 @@ C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\PagedList.dll
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\PagedList.Mvc.dll
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\PagedList.xml
 C:\Users\Berkay\Documents\GitHub\Project-C\webtest\webtest\bin\PagedList.Mvc.xml
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\bin\PagedList.dll
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\bin\PagedList.Mvc.dll
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\bin\PagedList.xml
+C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\bin\PagedList.Mvc.xml
