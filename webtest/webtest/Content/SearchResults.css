@@ -51,7 +51,7 @@
     display: inline-block;
     margin-left: 25px;
 }
-/* ADD STYLE */
+
 #btnOrderBy {
     float: right;
     margin-top: 10px;
@@ -147,19 +147,29 @@
     margin-top: 20px;
     display: inline-block;
 }
-/* ADD STYLE */
+
 #btnCart {
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
     display: inline-block;
     margin-right: 15px;
+    background-color: #bf9000;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 6px;
 }
-/* ADD STYLE */
+
 #btnWishList {
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
     display: inline-block;
     margin-right: 15px;
+    background-color: #bf9000;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
 }
 
 #price {
@@ -180,12 +190,16 @@
     margin-right: 15px;
     padding: 15px;
 }
-/* ADD STYLE */
+
 #btnSaveFiltersTop {
     float: right;
+    background-color: white;
+    color: #bf9000;
+    padding: 7px 20px;
+    border-radius: 4px;
 }
-/* Scherm kleiner dan 1290px */
-@media only screen and (max-width: 1290px) {
+/* Scherm kleiner dan 1100px */
+@media only screen and (max-width: 1100px) {
     #topCategories {
         display: none;
     }
@@ -200,8 +214,8 @@
         margin-left: 15px;
     }
 }
-/* Scherm groter dan 1290px */
-@media only screen and (min-width: 1290px) {
+/* Scherm groter dan 11000px */
+@media only screen and (min-width: 1100px) {
 
     #filtersTop {
         display: none;
@@ -226,14 +240,17 @@
         display: block;
         margin-top: 15px;
     }
-    /* ADD STYLE */
+
     #btnWishList {
-        float: left;
-    }
-    /* ADD STYLE */
-    #btnCart {
-        float: left;
         display: block;
+        margin-bottom: 40px;
+        padding: 5px 8px;
+    }
+    
+    #btnCart {
+        display: block;
+        margin-bottom: 10px;
+        padding: 5px 8px;
     }
 
     #moreInfo {

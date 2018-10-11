@@ -13,7 +13,7 @@
 </head>
 <!-- COPY THIS -->
 <div id="container">
-    <!-- Top Categories: links van het scherm verdwijnt bij 1290px -->
+    <!-- Top Categories: links van het scherm verdwijnt bij 1100px -->
     <div id="topCategories">
         <a id="txtSearchTitle">TOP CATEGORIES</a>
         <a id="txtTC">Horror</a><a id="txtTC">Drama</a><a id="txtTC">Romance</a><a id="txtTC">Fantasy</a>
@@ -22,10 +22,16 @@
     <div id="results">
         <div>
             <a id="txtResultsTitle">RESULTS</a>
-            <button id="btnOrderBy">Order By</button>
+   @*         <button id="btnOrderBy">Order By</button>*@
+            <select id="btnOrderBy">
+                <option>Order By</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
         </div>
 
-        <!-- Filters: Boven de results komt tevoorschijn kleiner dan 1290px -->
+        <!-- Filters: Boven de results komt tevoorschijn kleiner dan 1100px -->
         <!-- PrijsFilter top -->
         <div id="filtersTop">
             <label id="filterTopTitle">Price</label>
@@ -103,7 +109,7 @@
 new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
 
     </div>
-    <!-- filters: links van het scherm onder top categories verdwijnt bij 1290px -->
+    <!-- filters: links van het scherm onder top categories verdwijnt bij 1100px -->
     <div id="filters">
         <a id="txtSearchTitle">FILTERS</a>
         <label>Price</label><br />
