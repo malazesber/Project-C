@@ -13,7 +13,7 @@
 </head>
 <!-- COPY THIS -->
 <div id="container">
-    <!-- Top Categories: links van het scherm verdwijnt bij 1290px -->
+    <!-- Top Categories: links van het scherm verdwijnt bij 1100px -->
     <div id="topCategories">
         <a id="txtSearchTitle">TOP CATEGORIES</a>
         <a id="txtTC">Horror</a><a id="txtTC">Drama</a><a id="txtTC">Romance</a><a id="txtTC">Fantasy</a>
@@ -22,10 +22,16 @@
     <div id="results">
         <div>
             <a id="txtResultsTitle">RESULTS</a>
-            <button id="btnOrderBy">Order By</button>
+            @*  <button id="btnOrderBy">Order By</button>*@
+            <select id="btnOrderBy">
+                <option>Order By</option>
+                <option>Rating</option>
+                <option>Price ascending</option>
+                <option>Price descending</option>
+            </select>
         </div>
 
-        <!-- Filters: Boven de results komt tevoorschijn kleiner dan 1290px -->
+        <!-- Filters: Boven de results komt tevoorschijn kleiner dan 1100px -->
         <!-- PrijsFilter top -->
         <div id="filtersTop">
             <label id="filterTopTitle">Price</label>
@@ -40,9 +46,9 @@
                 <!-- Select rating top -->
                 <select id="filterTopSelect">
                     <option>Select Rating</option>
-                    <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }> 1</option>
+                    <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }>1</option>
                     <option value="2" @if (@Request.QueryString["Rating"] == "2") { <text> selected="selected" </text> }>2</option>
-                    <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }> 3</option>
+                    <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }>3</option>
                     <option value="4" @if (@Request.QueryString["Rating"] == "4") { <text> selected="selected" </text> }>4</option>
                     <option value="5" @if (@Request.QueryString["Rating"] == "5") { <text> selected="selected" </text> }>5</option>
                 </select>
@@ -65,48 +71,48 @@
         @foreach (var m in Model)
         {
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
-            <div id="product">
-                <img id="productImg" src="@m.Image_src" />
-                <label id="title">@m.Name</label>
-                <label id="price">$@m.Price</label>
-                <label id="author">@m.Author</label>
-                @switch (m.Rating)
-                {
-                    case 1:
-                        <img id="rating" src="~/Content/Images/Rating1Star.png" />
-                        break;
-                    case 2:
-                        <img id="rating" src="~/Content/Images/Rating2Star.png" />
-                        break;
-                    case 3:
-                        <img id="rating" src="~/Content/Images/Rating3Star.png" />
-                        break;
-                    case 4:
-                        <img id="rating" src="~/Content/Images/Rating4Star.png" />
-                        break;
-                    case 5:
-                        <img id="rating" src="~/Content/Images/Rating5Star.png" />
-                        break;
-                }
+        <div id="product">
+            <img id="productImg" src="@m.Image_src" />
+            <label id="title">@m.Name</label>
+            <label id="price">€@m.Price</label>
+            <label id="author">@m.Author</label>
+            @switch (m.Rating)
+            {
+                case 1:
+                    <img id="rating" src="~/Content/Images/Rating1Star.png" />
+                    break;
+                case 2:
+                    <img id="rating" src="~/Content/Images/Rating2Star.png" />
+                    break;
+                case 3:
+                    <img id="rating" src="~/Content/Images/Rating3Star.png" />
+                    break;
+                case 4:
+                    <img id="rating" src="~/Content/Images/Rating4Star.png" />
+                    break;
+                case 5:
+                    <img id="rating" src="~/Content/Images/Rating5Star.png" />
+                    break;
+            }
 
-                <label id="summary">
-                    @{string mktText = m.Summary;
-                        if (mktText.Length > 250)
-                        {
-                            int pos = mktText.LastIndexOf(" ", 250);
+            <label id="summary">
+                @{string mktText = m.Summary;
+                    if (mktText.Length > 250)
+                    {
+                        int pos = mktText.LastIndexOf(" ", 250);
 
-                            mktText = mktText.Substring(0, pos) + "...";
-                        }}
-                    @mktText;
-                </label>
-                <label id="priceSmall">$@m.Price</label>
-                <a id="moreInfo">More Info</a>
-                <button id="btnWishList"><i class="fa fa-heart"></i></button>
-                <button id="btnCart">ADD TO CART</button>
-                <a id="moreInfoSmall">More Info</a>
-                <img id="stripe" src="~/Content/Images/stripe.png" />
+                        mktText = mktText.Substring(0, pos) + "...";
+                    }}
+                @mktText;
+            </label>
+            <label id="priceSmall">$@m.Price</label>
+            <a id="moreInfo">More Info</a>
+            <button id="btnWishList"><i class="fa fa-heart"></i></button>
+            <button id="btnCart">ADD TO CART</button>
+            <a id="moreInfoSmall">More Info</a>
+            <img id="stripe" src="~/Content/Images/stripe.png" />
 
-            </div>
+        </div>
         }
         <!-- Dit is de PagedListPager die  ervoor zorgt dat er maar 3 items per pagina worden laten zien.-->
         <!-- De PagedListPager past zich automatisch aan en zal de pagina's zelf weergeven.-->
@@ -115,7 +121,7 @@
        MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"]}), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
 
     </div>
-    <!-- filters: links van het scherm onder top categories verdwijnt bij 1290px -->
+    <!-- filters: links van het scherm onder top categories verdwijnt bij 1100px -->
     <div id="filters">
         <a id="txtSearchTitle">FILTERS</a>
         <label>Price</label><br />

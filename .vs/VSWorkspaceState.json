@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\webtest",
-    "\\webtest\\webtest",
-    "\\webtest\\webtest\\App_Data",
-    "\\webtest\\webtest\\Models",
-    "\\webtest\\webtest\\Models\\ExtendedRegister"
+    "\\webtest\\webtest"
   ],
-  "SelectedNode": "\\webtest\\webtest.sln",
+  "SelectedNode": "\\webtest\\webtest\\webtest.sln",
   "PreviewInSolutionExplorer": false
 }
