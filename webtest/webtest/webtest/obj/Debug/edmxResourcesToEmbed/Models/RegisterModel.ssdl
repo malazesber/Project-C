@@ -12,18 +12,16 @@
   </EntityType>
   <EntityType Name="Book">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="ISBN" />
     </Key>
-    <Property Name="Category" Type="nvarchar" MaxLength="50" />
-    <Property Name="Name" Type="nvarchar" MaxLength="250" />
-    <Property Name="Summary" Type="nvarchar" MaxLength="750" />
+    <Property Name="Category" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar(max)" />
+    <Property Name="Summary" Type="varchar(max)" />
     <Property Name="Date" Type="datetime2" Precision="7" />
-    <Property Name="Image_src" Type="nvarchar" MaxLength="100" />
-    <Property Name="ISBN" Type="float" />
-    <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="Author" Type="nvarchar" MaxLength="50" />
-    <Property Name="Publisher" Type="nvarchar" MaxLength="50" />
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Author" Type="varchar" MaxLength="50" />
+    <Property Name="Image_src" Type="varchar(max)" />
+    <Property Name="ISBN" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Rating" Type="int" />
   </EntityType>
   <EntityType Name="Creditcard_details">

@@ -190,18 +190,16 @@
   </Association>
   <EntityType Name="Book">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="ISBN" />
     </Key>
-    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="Summary" Type="String" MaxLength="750" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Date" Type="DateTime" Precision="7" />
-    <Property Name="Image_src" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="ISBN" Type="Double" />
-    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image_src" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ISBN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Rating" Type="Int32" />
   </EntityType>
 </Schema>

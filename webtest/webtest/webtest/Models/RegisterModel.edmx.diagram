@@ -18,7 +18,7 @@
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_SHOPPINGCART" />
         <EntityTypeShape EntityType="DatabaseModel.Shopping_cart_contains" Width="1.5" PointX="5.125" PointY="0.75" />
         <AssociationConnector Association="DatabaseModel.FK_SHOPPINGCONTAINS_SHOPPINGCART" />
-        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="5.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

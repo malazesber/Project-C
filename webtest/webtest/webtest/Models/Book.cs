@@ -18,12 +18,10 @@ namespace webtest.Models
         public string Name { get; set; }
         public string Summary { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public string Image_src { get; set; }
-        public Nullable<double> ISBN { get; set; }
-        public Nullable<decimal> Price { get; set; }
         public string Author { get; set; }
-        public string Publisher { get; set; }
-        public int Id { get; set; }
+        public string Image_src { get; set; }
+        public string ISBN { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public Nullable<int> Rating { get; set; }
     }
 }

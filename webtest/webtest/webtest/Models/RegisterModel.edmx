@@ -17,18 +17,16 @@
         </EntityType>
         <EntityType Name="Book">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ISBN" />
           </Key>
-          <Property Name="Category" Type="nvarchar" MaxLength="50" />
-          <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Summary" Type="nvarchar" MaxLength="750" />
+          <Property Name="Category" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar(max)" />
+          <Property Name="Summary" Type="varchar(max)" />
           <Property Name="Date" Type="datetime2" Precision="7" />
-          <Property Name="Image_src" Type="nvarchar" MaxLength="100" />
-          <Property Name="ISBN" Type="float" />
-          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="Author" Type="nvarchar" MaxLength="50" />
-          <Property Name="Publisher" Type="nvarchar" MaxLength="50" />
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Author" Type="varchar" MaxLength="50" />
+          <Property Name="Image_src" Type="varchar(max)" />
+          <Property Name="ISBN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="Creditcard_details">
@@ -391,18 +389,16 @@
         </Association>
         <EntityType Name="Book">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ISBN" />
           </Key>
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Summary" Type="String" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="7" />
-          <Property Name="Image_src" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ISBN" Type="Double" />
-          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image_src" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Rating" Type="Int32" />
         </EntityType>
         </Schema>
@@ -491,12 +487,10 @@
             <EntityTypeMapping TypeName="DatabaseModel.Book">
               <MappingFragment StoreEntitySet="Book">
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ISBN" ColumnName="ISBN" />
                 <ScalarProperty Name="Image_src" ColumnName="Image_src" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
