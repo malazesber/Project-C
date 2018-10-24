@@ -51,6 +51,11 @@
                     <!-- Data in de zoekbar wordt meegegeven aan de Results Action in de Products Controller-->
                     @using (Html.BeginForm("Results", "Product", FormMethod.Get))
                     {
+                        <input type="text" name="MinPrice" , value="@Request.QueryString["MinPrice"]" , style="display:none">
+                        <input type="text" name="MaxPrice" , value="@Request.QueryString["MaxPrice"]" , style="display:none">
+                        <input type="text" name="Order" , value="@Request.QueryString["Order"]" , style="display:none">
+                        <input type="text" name="Rating" , style="display:none" , value="@Request.QueryString["Rating"]">
+                        <input type="text" name="Category" , style="display:none" , value="@Request.QueryString["Category"]">
                         @Html.TextBox("Search") <button type="submit" class="searchButton">
                             <i class="fa fa-search"></i>
                         </button>
@@ -67,17 +72,132 @@
             </button>
             <div class="dropdown-content">
                 @Html.ActionLink(
-         "Romance",                                                  // linkText
+         "Parenting",                                                  // linkText
          "Results",                                    // actionName
          "Product",                                                   // controllerName
          new {                                                     // routeValues
-             Category = "Romance"
-                },
+             Category = "Parenting"
+         },
                     null                                                      // htmlAttributes
                 )
-                <a href="@Url.Action("Results", "Product")">Romance</a>
-                <a href="@Url.Action("Results", "Product")">Horror</a>
-                <a href="@Url.Action("Results", "Product")">Drama</a>
+                @Html.ActionLink(
+         "Food & Drink",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Food & Drink"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+        "History & Politics",                                                  // linkText
+        "Results",                                    // actionName
+        "Product",                                                   // controllerName
+        new {                                                     // routeValues
+            Category = "History & Politics"
+        },
+                   null                                                      // htmlAttributes
+               )
+                @Html.ActionLink(
+         "Home & Garden",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Home & Garden"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Mind Body Spirit",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Mind Body Spirit"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Science & Nature",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Science & Nature"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Sports",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Sports"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Style & Beauty",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Style & Beauty"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Fiction",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Fiction"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Education",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Education"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Diet & Fitness",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Diet & Fitness"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+         "Business",                                                  // linkText
+         "Results",                                    // actionName
+         "Product",                                                   // controllerName
+         new {                                                     // routeValues
+             Category = "Business"
+         },
+                    null                                                      // htmlAttributes
+                )
+                @Html.ActionLink(
+        "Biography",                                                  // linkText
+        "Results",                                    // actionName
+        "Product",                                                   // controllerName
+        new {                                                     // routeValues
+            Category = "Biography"
+        },
+                   null                                                      // htmlAttributes
+               )
+                @Html.ActionLink(
+       "Art & Photography",                                                  // linkText
+       "Results",                                    // actionName
+       "Product",                                                   // controllerName
+       new {                                                     // routeValues
+           Category = "Art & Photography"
+       },
+                  null                                                      // htmlAttributes
+              )
+
             </div>
         </div>
         <a href="@Url.Action("Results", "Product")">Best Sellers</a>
