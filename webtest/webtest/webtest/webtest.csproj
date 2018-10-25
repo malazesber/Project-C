@@ -233,6 +233,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\ProductPage.css" />
     <Content Include="Content\Registration.css" />
     <Content Include="Content\ResetPassword.css" />
     <Content Include="Content\SearchResults.css" />

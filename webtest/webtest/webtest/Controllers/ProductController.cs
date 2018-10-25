@@ -14,10 +14,15 @@ namespace webtest.Controllers
         //COnnectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(string Title)
         {
-            return View();
+            string bookTitle = Title;
+
+            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 
+            //Id of ISBN zou beter zijn, maar wist niet welke we nou als PK hadden. Is makkelijk aan te passen later.
+            return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
         }
+
         public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order)
         {
             // De producten zullen op de jusite manier worden laten zien en de PagedList werkt ook gewoon nog.

@@ -1,8 +1,33 @@
-﻿
+﻿@model webtest.Models.Book
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-<h2>PRODUCT</h2>
+<head>
+    <link href="~/Content/ProductPage.css" rel="stylesheet" />
+</head>
+
+<div id="container">
+    <div id="result">
+        <div id="product">
+            <img id="productImg" src="@Model.Image_src" />
+            <label id="title">@Model.Name</label>
+            <label id="author_date">By @Model.Author | @Model.Date</label>
+            <label id="isbn">ISBN: @Model.ISBN</label>
+            <label id="summary">@Model.Summary</label>
+
+        </div>
+    </div>
+
+
+    <div id="orderBox">
+        <label id="price">€@Model.Price</label>
+
+        <button id="btnWishList">Add to Wishlist</button>
+        <button id="btnCart">Add to Cart</button>
+
+    </div>
+</div>
 

@@ -11,7 +11,7 @@
     <link href="~/Content/SearchResults.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" />
 </head>
-<!-- COPY THIS -->
+
 <div id="container">
     <!-- Top Categories: links van het scherm verdwijnt bij 1100px -->
     <div id="topCategories">
@@ -142,7 +142,7 @@
 
             <label id="summary">
                 @{string mktText = m.Summary;
-                    if(mktText == null)
+                    if (mktText == null)
                     {
                         mktText = "";
                     }
@@ -155,14 +155,14 @@
                             mktText = mktText.Substring(0, pos) + "...";
                         }
                     }
-                    }
+                }
                 @mktText;
             </label>
-            <label id="priceSmall">$@m.Price</label>
-            <a id="moreInfo">More Info</a>
+            <label id="priceSmall">@m.Price</label>
+            <a href="@Url.Action("Index", "Product", new {Title = m.Name}) " id="moreInfo">More info</a>
             <button id="btnWishList"><i class="fa fa-heart"></i></button>
             <button id="btnCart">ADD TO CART</button>
-            <a id="moreInfoSmall">More Info</a>
+            <a href="@Url.Action("Index", "Product", new {Title = m.Name})" id="moreInfoSmall">More info</a>
             <img id="stripe" src="~/Content/Images/stripe.png" />
 
         </div>
@@ -191,9 +191,9 @@
             <label>Rating</label>
             <select id="ratingFilter" ,>
                 <option>Select Rating</option>
-                <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }> 1</option>
+                <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }>1</option>
                 <option value="2" @if (@Request.QueryString["Rating"] == "2") { <text> selected="selected" </text> }>2</option>
-                <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }> 3</option>
+                <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }>3</option>
                 <option value="4" @if (@Request.QueryString["Rating"] == "4") { <text> selected="selected" </text> }>4</option>
                 <option value="5" @if (@Request.QueryString["Rating"] == "5") { <text> selected="selected" </text> }>5</option>
             </select>
