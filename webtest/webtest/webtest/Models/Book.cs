@@ -20,7 +20,7 @@ namespace webtest.Models
         public Nullable<System.DateTime> Date { get; set; }
         public string Author { get; set; }
         public string Image_src { get; set; }
-        public string ISBN { get; set; }
+        public double ISBN { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Rating { get; set; }
     }
