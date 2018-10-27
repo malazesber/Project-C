@@ -17,7 +17,7 @@
 #results {
     background: white;
     float: right;
-    min-height: 500px;
+    min-height: 540.5px;
     height: auto;
     width: 80%;
     margin-right: 15px;
@@ -29,10 +29,11 @@
     background: white;
     text-align: center;
     float: left;
-    height: 285px;
+    height: auto;
     width: 16%;
     margin-left: 15px;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #txtSearchTitle {
@@ -52,11 +53,11 @@
     margin-left: 25px;
 }
 
-#btnOrderBy {
+/*#btnOrderBy {
     float: right;
     margin-top: 10px;
     margin-right: 25px
-}
+}*/
 
 #txtTC {
     color: black;
@@ -64,26 +65,13 @@
     margin-top: 10px;
     display: block;
     margin-top: 15px;
+    text-decoration: none;
 }
 
     #txtTC:hover {
         color: #8a3366;
         cursor: pointer;
     }
-
-#minPrice {
-    width: 30%;
-    float: left;
-    margin-left: 10px;
-    font-size: 15px;
-}
-
-#maxPrice {
-    width: 30%;
-    float: right;
-    margin-right: 25px;
-    font-size: 15px;
-}
 
 #filters label {
     float: left;
@@ -93,11 +81,34 @@
 
 #priceFilter {
     margin-top: 17px;
+    color: black;
 }
 
-#ratingFilter {
+/*#ratingFilter {
     margin-top: 3px;
     width: 90%;
+    color: black;
+}*/
+
+#dropdownFilters {
+    width: 90%;
+    color: black;
+    margin-top: 3px;
+}
+
+#minPrice {
+    width: 35%;
+    float: left;
+    margin-left: 10px;
+    font-size: 15px;
+    color: black;
+}
+
+#maxPrice {
+    width: 35%;
+    float: right;
+    margin-right: 10px;
+    font-size: 15px;
     color: black;
 }
 
@@ -107,7 +118,9 @@
     color: white;
     padding: 10px 30px;
     border-radius: 8px;
-    margin-top: 85px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    width: 90%;
 }
 
 #product {
@@ -119,7 +132,9 @@
     margin-top: 6px;
     font-weight: bold;
     font-size: 18px;
-    width:75%;
+    width: 75%;
+    text-decoration: none;
+    color: black;
 }
 
 #author {
@@ -149,6 +164,7 @@
     display: block;
     margin-top: 20px;
     display: inline-block;
+    text-decoration: none;
 }
 
 #btnCart {
