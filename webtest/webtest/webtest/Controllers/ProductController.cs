@@ -32,6 +32,9 @@ namespace webtest.Controllers
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
             List<string> orders = new List<string>() { "Price ascending", "Price descending" };
 
+
+            
+
             // ALS SEARCH LEEG IS
             if (search == "" || search == null)
             {
@@ -728,21 +731,6 @@ namespace webtest.Controllers
                 return View(results.ToPagedList(page ?? 1, 3));
             }
 
-        }
-
-        [NonAction]
-        public List<Book> SetOrder(List<Book> result, string order)
-        {
-            if(order == "Price descending")
-            {
-                result.OrderByDescending(x => x.Price);
-            }
-            else
-            {
-                result.OrderBy(x => x.Price);
-            }
-
-            return result;
         }
 
 

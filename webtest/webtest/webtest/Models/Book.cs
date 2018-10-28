@@ -7,11 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+
 namespace webtest.Models
 {
     using System;
-    using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Book
     {
         public string Category { get; set; }
@@ -23,5 +24,6 @@ namespace webtest.Models
         public double ISBN { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Rating { get; set; }
+
     }
 }

@@ -183,6 +183,7 @@
 
         @using (Html.BeginForm("Results", "Product", FormMethod.Get))
         {
+            
             @Html.Hidden("search", Request.QueryString["search"])
 
             <label>Price</label><br />
@@ -192,7 +193,7 @@
             </div>
 
             <label>Category</label>
-            <select id="dropdownFilters">
+            <select id="categoryFilter" , class="dropdownFilters">
                 <option>Select Category</option>
                 <option value="Art & Photography" @if (@Request.QueryString["Category"] == "Art & Photography") { <text> selected="selected" </text> }> Art & Photography</option>
                 <option value="Biography" @if (@Request.QueryString["Category"] == "Biography") { <text> selected="selected" </text> }> Biography</option>
@@ -211,7 +212,7 @@
             </select>
 
             <label>Rating</label>
-            <select id="dropdownFilters" ,>
+            <select id="ratingFilter" , class="dropdownFilters">
                 <option>Select Rating</option>
                 <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }>1</option>
                 <option value="2" @if (@Request.QueryString["Rating"] == "2") { <text> selected="selected" </text> }>2</option>
@@ -221,7 +222,7 @@
             </select>
 
             <label>Order By</label>
-            <select id="dropdownFilters">
+            <select id="orderFilter" , class="dropdownFilters">
                 <option>Order By</option>
                 <option value="Price ascending" @if (@Request.QueryString["Order"] == "Price ascending") { <text> selected="selected" </text> }> Price ascending</option>
                 <option value="Price descending" @if (@Request.QueryString["Order"] == "Price descending") { <text> selected="selected" </text> }> Price descending</option>
