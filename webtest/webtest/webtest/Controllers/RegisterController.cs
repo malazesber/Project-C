@@ -81,7 +81,7 @@ namespace webtest.Controllers
             using (DatabaseEntities1 dc = new DatabaseEntities1())
             {
                 dc.Configuration.ValidateOnSaveEnabled = false; //This line will avoid any problems by confirm password 
-                                                                //does not match issue in de save changes section
+                                                                //does not match issue in the save changes section
                 var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
                 if (v != null)
                 {
