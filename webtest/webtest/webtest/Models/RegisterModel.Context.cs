@@ -28,10 +28,9 @@ namespace webtest.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
-        public virtual DbSet<Shopping_cart> Shopping_cart { get; set; }
         public virtual DbSet<Creditcard_details> Creditcard_details { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Shopping_cart_contains> Shopping_cart_contains { get; set; }
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Shopping_cart> Shopping_cart { get; set; }
     }
 }

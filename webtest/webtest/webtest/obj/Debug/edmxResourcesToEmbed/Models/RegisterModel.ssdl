@@ -61,10 +61,10 @@
   </EntityType>
   <EntityType Name="Shopping_cart_contains">
     <Key>
-      <PropertyRef Name="Book_ISBN" />
+      <PropertyRef Name="ISBN" />
       <PropertyRef Name="Cart_id" />
     </Key>
-    <Property Name="Book_ISBN" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ISBN" Type="float" Nullable="false" />
     <Property Name="Cart_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
@@ -144,7 +144,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SHOPPINGCONTAINS_SHOPPINGCART">
+  <Association Name="FK_Shopping_cart_contains_ToBook">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="Shopping_cart_contains">
+        <PropertyRef Name="ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shopping_cart_contains_ToShopping_cart">
     <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="1" />
     <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
     <ReferentialConstraint>
@@ -185,7 +197,11 @@
       <End Role="Shopping_cart" EntitySet="Shopping_cart" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
-    <AssociationSet Name="FK_SHOPPINGCONTAINS_SHOPPINGCART" Association="Self.FK_SHOPPINGCONTAINS_SHOPPINGCART">
+    <AssociationSet Name="FK_Shopping_cart_contains_ToBook" Association="Self.FK_Shopping_cart_contains_ToBook">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shopping_cart_contains_ToShopping_cart" Association="Self.FK_Shopping_cart_contains_ToShopping_cart">
       <End Role="Shopping_cart" EntitySet="Shopping_cart" />
       <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
     </AssociationSet>

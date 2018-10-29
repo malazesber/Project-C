@@ -6,19 +6,18 @@
     <edmx:Diagrams>
       <Diagram DiagramId="68a9945e6e0c41b1a6f10e855914594e" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="6" PointY="2.625" />
+        <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="3.25" PointY="4.125" />
         <EntityTypeShape EntityType="DatabaseModel.Address" Width="1.5" PointX="1.5" PointY="5.5" />
-        <EntityTypeShape EntityType="DatabaseModel.Shopping_cart" Width="1.5" PointX="2.875" PointY="0.875" />
         <AssociationConnector Association="DatabaseModel.FK_Address_id" />
-        <AssociationConnector Association="DatabaseModel.FK_Cart_id" />
         <EntityTypeShape EntityType="DatabaseModel.Creditcard_details" Width="1.5" PointX="3" PointY="8.625" />
         <AssociationConnector Association="DatabaseModel.FK_CREDITCARD_USER" />
-        <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="8.25" PointY="1.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="6.125" PointY="3" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
+        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="8.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Shopping_cart" Width="1.5" PointX="3" PointY="1.5" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_SHOPPINGCART" />
-        <EntityTypeShape EntityType="DatabaseModel.Shopping_cart_contains" Width="1.5" PointX="5.125" PointY="0.75" />
-        <AssociationConnector Association="DatabaseModel.FK_SHOPPINGCONTAINS_SHOPPINGCART" />
-        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="5.375" PointY="5.75" />
+        <AssociationConnector Association="DatabaseModel.FK_Cart_id" />
+        <AssociationConnector Association="DatabaseModel.Shopping_cart_contains1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -40,13 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Shopping_cart">
-      <EntityTypeMapping TypeName="DatabaseModel.Shopping_cart">
-        <MappingFragment StoreEntitySet="Shopping_cart">
-          <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Creditcard_details">
       <EntityTypeMapping TypeName="DatabaseModel.Creditcard_details">
         <MappingFragment StoreEntitySet="Creditcard_details">
@@ -69,14 +62,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Shopping_cart_contains">
-      <EntityTypeMapping TypeName="DatabaseModel.Shopping_cart_contains">
-        <MappingFragment StoreEntitySet="Shopping_cart_contains">
-          <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
-          <ScalarProperty Name="Book_ISBN" ColumnName="Book_ISBN" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Books">
       <EntityTypeMapping TypeName="DatabaseModel.Book">
         <MappingFragment StoreEntitySet="Book">
@@ -92,5 +77,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Shopping_cart">
+      <EntityTypeMapping TypeName="DatabaseModel.Shopping_cart">
+        <MappingFragment StoreEntitySet="Shopping_cart">
+          <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Shopping_cart_contains1" TypeName="DatabaseModel.Shopping_cart_contains1" StoreEntitySet="Shopping_cart_contains">
+      <EndProperty Name="Shopping_cart">
+        <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
+      </EndProperty>
+      <EndProperty Name="Book">
+        <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
