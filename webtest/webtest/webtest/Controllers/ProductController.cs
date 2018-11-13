@@ -11,7 +11,7 @@ namespace webtest.Controllers
 {
     public class ProductController : Controller
     {
-        //COnnectie met database
+        //Connectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Product
         public ActionResult Index(string Title)
@@ -30,10 +30,47 @@ namespace webtest.Controllers
             List<string> ratings = new List<string>() { "1", "2", "3", "4", "5" };
             List<string> categories = new List<string>() { "Parenting", "Food & Drink", "History & Politics", "Home & Garden", "Mind Body Spirit",
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
-            List<string> orders = new List<string>() { "Price ascending", "Price descending" };
+            List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A"  };
 
+            List<Book> OrderCheck(string GivenOrder, List<Book> results)
+            {
+                if (GivenOrder == "Price: Descending")
+                {
+                    results = results.OrderByDescending(x => x.Price).ToList();
+                    return results;
+                }
+                else if (GivenOrder == "Price: Ascending")
+                {
+                    results = results.OrderBy(x => x.Price).ToList();
+                    return results;
+                }
+                else if (GivenOrder == "Title: A - Z")
+                {
+                    results = results.OrderBy(x => x.Name).ToList();
+                    return results;
+                }
+                else if (GivenOrder == "Title: Z - A")
+                {
+                    results = results.OrderByDescending(x => x.Name).ToList();
+                    return results;
+                }
+                else if (GivenOrder == "Author: A - Z")
+                {
+                    results = results.OrderBy(x => x.Author).ToList();
+                    return results;
+                }
+                else if (GivenOrder == "Author: Z - A")
+                {
+                    results = results.OrderByDescending(x => x.Author).ToList();
+                    return results;
+                }
+                else
+                {
+                    Console.WriteLine("Could not find the OrderBy value");
+                    return results;
+                }
+            }
 
-            
 
             // ALS SEARCH LEEG IS
             if (search == "" || search == null)
@@ -45,21 +82,19 @@ namespace webtest.Controllers
 
                         return View(db.Books.Where(m => m.Category.Contains(Category)).ToList().ToPagedList(page ?? 1, 3));
                     }
-                        
+
                 }
                 else
                 {
                     return View(db.Books.Where(m => m.Name.Contains("####@")).ToList().ToPagedList(page ?? 1, 3));
                 }
-                
             }
-  
+
             //FILTERS
             if (MinPrice != null && MinPrice != "")
             {
                 if (MaxPrice != null && MaxPrice != "")
                 {
-
                     if (ratings.Contains(Rating))
                     {
                         if (categories.Contains(Category))
@@ -70,7 +105,7 @@ namespace webtest.Controllers
                                 decimal MinPriceD = Convert.ToDecimal(MinPrice);
                                 decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
                                 int rating = Convert.ToInt32(Rating);
-                               
+
                                 // ALS SEARCH LEEG IS
                                 if (search == "" || search == null)
                                 {
@@ -79,14 +114,7 @@ namespace webtest.Controllers
                                     var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -99,19 +127,12 @@ namespace webtest.Controllers
                                     var results = select3.Where(m => m.Price <= MaxPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
-                                    
+
                                 }
-                               
+
 
                             }
                             catch (FormatException)
@@ -133,14 +154,7 @@ namespace webtest.Controllers
                                 var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
 
@@ -150,7 +164,7 @@ namespace webtest.Controllers
 
                             }
                         }
-                        
+
                     }
                     else
                     {
@@ -169,14 +183,7 @@ namespace webtest.Controllers
                                     var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -188,14 +195,7 @@ namespace webtest.Controllers
                                     var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
 
@@ -220,14 +220,7 @@ namespace webtest.Controllers
                                 var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                             }
@@ -236,7 +229,7 @@ namespace webtest.Controllers
 
                             }
                         }
-                        
+
                     }
 
                 }
@@ -248,7 +241,7 @@ namespace webtest.Controllers
 
                 else
                 {
-                    
+
                     if (ratings.Contains(Rating))
                     {
                         if (categories.Contains(Category))
@@ -266,14 +259,7 @@ namespace webtest.Controllers
                                     var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -285,14 +271,7 @@ namespace webtest.Controllers
                                     var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
 
@@ -316,14 +295,7 @@ namespace webtest.Controllers
                                 var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                             }
@@ -332,7 +304,7 @@ namespace webtest.Controllers
 
                             }
                         }
-                        
+
                     }
                     else
                     {
@@ -349,34 +321,20 @@ namespace webtest.Controllers
                                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
                                 {
-                                var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    if (Order == "Price descending")
+                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
+                                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
+                                    if (orders.Contains(Order))
                                     {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
+                                        results = OrderCheck(Order, results);
                                     }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
-                                }
-                                return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
 
                                 }
 
@@ -396,14 +354,7 @@ namespace webtest.Controllers
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                             }
@@ -421,7 +372,7 @@ namespace webtest.Controllers
             {
                 if (MaxPrice != null && MaxPrice != "")
                 {
-                   
+
                     if (!ratings.Contains(Rating))
                     {
                         if (categories.Contains(Category))
@@ -437,14 +388,7 @@ namespace webtest.Controllers
                                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -455,14 +399,7 @@ namespace webtest.Controllers
                                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
 
@@ -484,14 +421,7 @@ namespace webtest.Controllers
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
                             }
@@ -519,14 +449,7 @@ namespace webtest.Controllers
                                     var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -538,14 +461,7 @@ namespace webtest.Controllers
                                     var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
 
@@ -567,14 +483,7 @@ namespace webtest.Controllers
                             var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
                             if (orders.Contains(Order))
                             {
-                                if (Order == "Price descending")
-                                {
-                                    results = results.OrderByDescending(x => x.Price).ToList();
-                                }
-                                else
-                                {
-                                    results = results.OrderBy(x => x.Price).ToList();
-                                }
+                                results = OrderCheck(Order, results);
                             }
                             return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                         }
@@ -583,7 +492,7 @@ namespace webtest.Controllers
 
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -602,14 +511,7 @@ namespace webtest.Controllers
                                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -620,14 +522,7 @@ namespace webtest.Controllers
                                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
                                     if (orders.Contains(Order))
                                     {
-                                        if (Order == "Price descending")
-                                        {
-                                            results = results.OrderByDescending(x => x.Price).ToList();
-                                        }
-                                        else
-                                        {
-                                            results = results.OrderBy(x => x.Price).ToList();
-                                        }
+                                        results = OrderCheck(Order, results);
                                     }
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                                 }
@@ -648,14 +543,7 @@ namespace webtest.Controllers
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 if (orders.Contains(Order))
                                 {
-                                    if (Order == "Price descending")
-                                    {
-                                        results = results.OrderByDescending(x => x.Price).ToList();
-                                    }
-                                    else
-                                    {
-                                        results = results.OrderBy(x => x.Price).ToList();
-                                    }
+                                    results = OrderCheck(Order, results);
                                 }
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
                             }
@@ -664,7 +552,7 @@ namespace webtest.Controllers
 
                             }
                         }
-                       
+
                     }
 
                 }
@@ -677,41 +565,27 @@ namespace webtest.Controllers
             {
 
 
-                    // ALS SEARCH LEEG IS
-                    if (search == "" || search == null)
+                // ALS SEARCH LEEG IS
+                if (search == "" || search == null)
+                {
+                    var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
+                    if (orders.Contains(Order))
                     {
-                        var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                        if (orders.Contains(Order))
-                        {
-                            if (Order == "Price descending")
-                            {
-                                results = results.OrderByDescending(x => x.Price).ToList();
-                            }
-                            else
-                            {
-                                results = results.OrderBy(x => x.Price).ToList();
-                            }
-                        }
+                        results = OrderCheck(Order, results);
+                    }
                     return View(results.ToPagedList(page ?? 1, 3));
-                    }
-                    //ALS SEARCH ACTIEF IS
-                    else
+                }
+                //ALS SEARCH ACTIEF IS
+                else
+                {
+                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
+                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
+                    if (orders.Contains(Order))
                     {
-                        var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                        var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                        if (orders.Contains(Order))
-                        {
-                            if (Order == "Price descending")
-                            {
-                                results = results.OrderByDescending(x => x.Price).ToList();
-                            }
-                            else
-                            {
-                                results = results.OrderBy(x => x.Price).ToList();
-                            }
-                        }
-                        return View(results.ToPagedList(page ?? 1, 3));
+                        results = OrderCheck(Order, results);
                     }
+                    return View(results.ToPagedList(page ?? 1, 3));
+                }
 
             }
             else
@@ -719,14 +593,7 @@ namespace webtest.Controllers
                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                 if (orders.Contains(Order))
                 {
-                    if (Order == "Price descending")
-                    {
-                        results = results.OrderByDescending(x => x.Price).ToList();
-                    }
-                    else
-                    {
-                        results = results.OrderBy(x => x.Price).ToList();
-                    }
+                    results = OrderCheck(Order, results);
                 }
                 return View(results.ToPagedList(page ?? 1, 3));
             }
