@@ -23,14 +23,14 @@ namespace webtest.Controllers
             return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
         }
 
-        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order)
+        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, int Pagination = 5)
         {
             // De producten zullen op de jusite manier worden laten zien en de PagedList werkt ook gewoon nog.
             // Het is belangrijk dat de View Een .ToList().TopPagedList() returned zodat er door de producten geloopt kan worden en zodat de PagedList goed werkt.
             List<string> ratings = new List<string>() { "1", "2", "3", "4", "5" };
             List<string> categories = new List<string>() { "Parenting", "Food & Drink", "History & Politics", "Home & Garden", "Mind Body Spirit",
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
-            List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A"  };
+            List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A" };
 
             List<Book> OrderCheck(string GivenOrder, List<Book> results)
             {
@@ -80,13 +80,13 @@ namespace webtest.Controllers
                     if (!((MinPrice != null && MinPrice != "") || (MaxPrice != null && MaxPrice != "") || ratings.Contains(Rating) || orders.Contains(Order)))
                     {
 
-                        return View(db.Books.Where(m => m.Category.Contains(Category)).ToList().ToPagedList(page ?? 1, 3));
+                        return View(db.Books.Where(m => m.Category.Contains(Category)).ToList().ToPagedList(page ?? 1, Pagination));
                     }
 
                 }
                 else
                 {
-                    return View(db.Books.Where(m => m.Name.Contains("####@")).ToList().ToPagedList(page ?? 1, 3));
+                    return View(db.Books.Where(m => m.Name.Contains("####@")).ToList().ToPagedList(page ?? 1, Pagination));
                 }
             }
 
@@ -116,7 +116,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -129,7 +129,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -156,7 +156,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                             }
                             catch (FormatException)
@@ -185,7 +185,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -197,7 +197,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -222,7 +222,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
                             {
@@ -261,7 +261,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -273,7 +273,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -297,7 +297,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
                             {
@@ -323,7 +323,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -334,7 +334,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -356,7 +356,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
                             {
@@ -390,7 +390,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -401,7 +401,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -423,7 +423,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
                             {
@@ -451,7 +451,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -463,7 +463,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
 
@@ -485,7 +485,7 @@ namespace webtest.Controllers
                             {
                                 results = OrderCheck(Order, results);
                             }
-                            return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                            return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                         }
                         catch (FormatException)
                         {
@@ -513,7 +513,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
                                 else
@@ -524,7 +524,7 @@ namespace webtest.Controllers
                                     {
                                         results = OrderCheck(Order, results);
                                     }
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
 
 
@@ -545,7 +545,7 @@ namespace webtest.Controllers
                                 {
                                     results = OrderCheck(Order, results);
                                 }
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, 3));
+                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
                             {
@@ -573,7 +573,7 @@ namespace webtest.Controllers
                     {
                         results = OrderCheck(Order, results);
                     }
-                    return View(results.ToPagedList(page ?? 1, 3));
+                    return View(results.ToPagedList(page ?? 1, Pagination));
                 }
                 //ALS SEARCH ACTIEF IS
                 else
@@ -584,7 +584,7 @@ namespace webtest.Controllers
                     {
                         results = OrderCheck(Order, results);
                     }
-                    return View(results.ToPagedList(page ?? 1, 3));
+                    return View(results.ToPagedList(page ?? 1, Pagination));
                 }
 
             }
@@ -595,7 +595,7 @@ namespace webtest.Controllers
                 {
                     results = OrderCheck(Order, results);
                 }
-                return View(results.ToPagedList(page ?? 1, 3));
+                return View(results.ToPagedList(page ?? 1, Pagination));
             }
 
         }
