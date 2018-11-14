@@ -22,7 +22,8 @@
                         <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
                     }
 
-                        <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-heart site-nav--icon"></i>Favorites</a></li>
+                    <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-heart site-nav--icon"></i>Favorites</a></li>
+                    <li><a href="@Url.Action("ShoppingCart", "Home")"><i class="fa fa-heart site-nav--icon"></i>Cart</a></li>
 
                     <!--Check of de user is ingelogd-->
                     @if (Session["User_id"] == null)
@@ -211,9 +212,9 @@
                 )
             </div>
         </div>
-        <a href="@Url.Action("Results", "Product")">Best Sellers</a>
+        @*<a href="@Url.Action("Results", "Product")">Best Sellers</a>
         <a href="@Url.Action("Results", "Product")">Sale</a>
-        <a href="@Url.Action("Results", "Product")">Bundles</a>
+        <a href="@Url.Action("Results", "Product")">Bundles</a>*@
     </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 

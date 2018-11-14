@@ -14,12 +14,23 @@ namespace webtest.Controllers
         //Connectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Product
-        public ActionResult Index(string Title)
+        public ActionResult Index(string Title, double isbn = 0)
         {
-            string bookTitle = Title;
+            //Als er op de knop gedrukt wordt wordt er een isbn meegegeven die dan in een string opgeslagen wordt.
+            if (isbn != 0)
+            {
+                if (Session["shoppingCart"] == null)
+                {
+                    Session["shoppingCart"] = isbn.ToString();
+                }
+                else
+                {
+                    Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                }
+            }
 
-            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt.
-            //Id of ISBN zou beter zijn, maar wist niet welke we nou als PK hadden. Is makkelijk aan te passen later.
+            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 
+            string bookTitle = Title;
             return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
         }
 
@@ -38,7 +49,19 @@ namespace webtest.Controllers
             {
                 if (Session["User_id"] == null)
                 {
-                    TempData["msg"] = "<script>alert('You need to login first.');</script>";
+                    //TempData["msg"] = "<script>alert('You need to login first.');</script>";
+
+
+                    //Voor de shopping cart session voor de ongeregistreerde grbuiker
+                    //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
+                        if (Session["shoppingCart"] == null)
+                        {
+                            Session["shoppingCart"] = isbn.ToString();
+                        }
+                        else
+                        {
+                            Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                        }
                 }
                 else
                 {

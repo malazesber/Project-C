@@ -1,4 +1,5 @@
 ﻿<!-- Dependencies needed for PagedList-->
+@using webtest.Models;
 @using PagedList;
 @using PagedList.Mvc;
 @using webtest.Models
@@ -186,7 +187,8 @@
        MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString()}) " id="moreInfo">Add</a>
                     }
                 }
-                <button id="btnCart">ADD TO CART</button>
+                        <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN})" id="btnCart">Add to Cart</a>
                 <a href="@Url.Action("Index", "Product", new {Title = m.Name})" id="moreInfoSmall">More info</a>
                 <img id="stripe" src="~/Content/Images/stripe.png" />
 
@@ -253,16 +255,17 @@
                 <option value="Author: A - Z" @if (@Request.QueryString["Order"] == "Author: A - Z") { <text> selected="selected" </text> }> Author: A - Z</option>
                 <option value="Author: Z - A" @if (@Request.QueryString["Order"] == "Author: Z - A") { <text> selected="selected" </text> }> Author: Z - A</option>
             </select>
-            
+
             <label>Items per page</label>
-            <div id="PaginationFilter"><br />
-                <input id="Pagination" type="number" name="Pagination" , value="@Request.QueryString["Pagination"]" >
+            <div id="PaginationFilter">
+                <br />
+                <input id="Pagination" type="number" name="Pagination" , value="@Request.QueryString["Pagination"]">
             </div>
 
             <input id="orderInput" type="text" name="Order" , style="display:none">
             <input id="categoryInput" type="text" name="Category" , style="display:none">
             <input id="ratingInput" type="text" name="Rating" , style="display:none">
-            <input id="PaginationInput" type="number" name="Pagination", style="display:none">
+            <input id="PaginationInput" type="number" name="Pagination" , style="display:none">
 
             <button id="btnSaveFilters" , onclick="setRating()">Apply Filters</button>
             @Html.Raw(TempData["msg"])

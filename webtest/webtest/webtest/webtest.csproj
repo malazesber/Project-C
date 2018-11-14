@@ -238,6 +238,7 @@
     <Content Include="Content\Registration.css" />
     <Content Include="Content\ResetPassword.css" />
     <Content Include="Content\SearchResults.css" />
+    <Content Include="Content\ShoppingCart.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -299,6 +300,7 @@
     <Content Include="Views\Register\ForgotPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Favorites\Index.cshtml" />
+    <None Include="Views\Home\ShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\UserEntities\" />
