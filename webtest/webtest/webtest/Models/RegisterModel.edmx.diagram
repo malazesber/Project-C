@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="68a9945e6e0c41b1a6f10e855914594e" Name="Diagram1">
+      <Diagram DiagramId="68a9945e6e0c41b1a6f10e855914594e" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="3.25" PointY="4.125" />
         <EntityTypeShape EntityType="DatabaseModel.Address" Width="1.5" PointX="1.5" PointY="5.5" />
@@ -18,6 +18,8 @@
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_SHOPPINGCART" />
         <AssociationConnector Association="DatabaseModel.FK_Cart_id" />
         <AssociationConnector Association="DatabaseModel.Shopping_cart_contains1" />
+        <EntityTypeShape EntityType="DatabaseModel.Favorite" Width="1.5" PointX="3" PointY="11.875" />
+        <AssociationConnector Association="DatabaseModel.FK_User" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

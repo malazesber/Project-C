@@ -39,6 +39,14 @@
           <Property Name="CVV" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="User_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+          <Property Name="ISBN" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="Order_id" />
@@ -173,10 +181,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shopping_cart" EntityType="Self.Shopping_cart" Schema="dbo" store:Type="Tables" />
@@ -210,6 +231,10 @@
             <End Role="Shopping_cart" EntitySet="Shopping_cart" />
             <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
           </AssociationSet>
+          <AssociationSet Name="FK_User" Association="Self.FK_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -234,6 +259,7 @@
           <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Creditcard_details" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="User" ToRole="Creditcard_details" />
           <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_Cart_id" FromRole="User" ToRole="Shopping_cart" />
+          <NavigationProperty Name="Favorites" Relationship="DatabaseModel.FK_User" FromRole="User" ToRole="Favorite" />
         </EntityType>
         <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -266,6 +292,11 @@
           <AssociationSet Name="Shopping_cart_contains1" Association="DatabaseModel.Shopping_cart_contains1">
             <End Role="Book" EntitySet="Books" />
             <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+          </AssociationSet>
+          <EntitySet Name="Favorites" EntityType="DatabaseModel.Favorite" />
+          <AssociationSet Name="FK_User" Association="DatabaseModel.FK_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Favorite" EntitySet="Favorites" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Payment">
@@ -400,6 +431,27 @@
           <End Type="DatabaseModel.Book" Role="Book" Multiplicity="*" />
           <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="*" />
         </Association>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <Property Name="ISBN" Type="Double" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK_User" FromRole="Favorite" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Favorite" Role="Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -497,6 +549,15 @@
               <ScalarProperty Name="ISBN" ColumnName="ISBN" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="DatabaseModel.Favorite">
+              <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

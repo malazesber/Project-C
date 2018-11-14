@@ -19,6 +19,7 @@
     <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
     <NavigationProperty Name="Creditcard_details" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="User" ToRole="Creditcard_details" />
     <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_Cart_id" FromRole="User" ToRole="Shopping_cart" />
+    <NavigationProperty Name="Favorites" Relationship="DatabaseModel.FK_User" FromRole="User" ToRole="Favorite" />
   </EntityType>
   <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="Self.User" />
@@ -51,6 +52,11 @@
     <AssociationSet Name="Shopping_cart_contains1" Association="DatabaseModel.Shopping_cart_contains1">
       <End Role="Book" EntitySet="Books" />
       <End Role="Shopping_cart" EntitySet="Shopping_cart" />
+    </AssociationSet>
+    <EntitySet Name="Favorites" EntityType="DatabaseModel.Favorite" />
+    <AssociationSet Name="FK_User" Association="DatabaseModel.FK_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Favorite" EntitySet="Favorites" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Payment">
@@ -184,5 +190,26 @@
   <Association Name="Shopping_cart_contains1">
     <End Type="DatabaseModel.Book" Role="Book" Multiplicity="*" />
     <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Favorite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <Property Name="ISBN" Type="Double" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DatabaseModel.FK_User" FromRole="Favorite" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_User">
+    <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="DatabaseModel.Favorite" Role="Favorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Favorite">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>
