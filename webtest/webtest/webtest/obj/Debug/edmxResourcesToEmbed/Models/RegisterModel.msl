@@ -92,5 +92,14 @@
         <ScalarProperty Name="ISBN" ColumnName="ISBN" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Favorites">
+      <EntityTypeMapping TypeName="DatabaseModel.Favorite">
+        <MappingFragment StoreEntitySet="Favorites">
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

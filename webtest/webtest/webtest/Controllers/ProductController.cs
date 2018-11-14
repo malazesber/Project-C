@@ -18,12 +18,12 @@ namespace webtest.Controllers
         {
             string bookTitle = Title;
 
-            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 
+            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt.
             //Id of ISBN zou beter zijn, maar wist niet welke we nou als PK hadden. Is makkelijk aan te passen later.
             return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
         }
 
-        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, int Pagination = 5)
+        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, string isbn, int Pagination = 5)
         {
             // De producten zullen op de jusite manier worden laten zien en de PagedList werkt ook gewoon nog.
             // Het is belangrijk dat de View Een .ToList().TopPagedList() returned zodat er door de producten geloopt kan worden en zodat de PagedList goed werkt.
@@ -31,6 +31,49 @@ namespace webtest.Controllers
             List<string> categories = new List<string>() { "Parenting", "Food & Drink", "History & Politics", "Home & Garden", "Mind Body Spirit",
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
             List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A" };
+
+
+            // CHECK OF ER EEN ISBN IS MEEGEGEVEN
+            if (isbn != "" && isbn != null)
+            {
+                if (Session["User_id"] == null)
+                {
+                    TempData["msg"] = "<script>alert('You need to login first.');</script>";
+                }
+                else
+                {
+
+
+                    var list = db.Favorites.Select(s => s);
+                    double isbnD = Convert.ToDouble(isbn);
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                    if (has)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                            db.SaveChanges();
+                        }
+                        TempData["msg"] = "<script>alert('Removed from favorites');</script>";
+                    }
+                    else
+                    {
+                        // ISBN TOEVOEGEN AAN FAVORIETEN
+                        TempData["msg"] = "<script>alert('Added to Favorites');</script>";
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var favo = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                            db.Favorites.Add(favo);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
+
+            }
 
             List<Book> OrderCheck(string GivenOrder, List<Book> results)
             {

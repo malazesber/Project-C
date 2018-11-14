@@ -34,6 +34,14 @@
     <Property Name="CVV" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="User_id" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Favorites">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
+    <Property Name="ISBN" Type="float" Nullable="false" />
+  </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="Order_id" />
@@ -168,10 +176,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Favorites">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shopping_cart" EntityType="Self.Shopping_cart" Schema="dbo" store:Type="Tables" />
@@ -204,6 +225,10 @@
     <AssociationSet Name="FK_Shopping_cart_contains_ToShopping_cart" Association="Self.FK_Shopping_cart_contains_ToShopping_cart">
       <End Role="Shopping_cart" EntitySet="Shopping_cart" />
       <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User" Association="Self.FK_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Favorites" EntitySet="Favorites" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

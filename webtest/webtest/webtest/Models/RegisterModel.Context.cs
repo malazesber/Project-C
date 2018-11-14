@@ -32,5 +32,6 @@ namespace webtest.Models
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Shopping_cart> Shopping_cart { get; set; }
+        public virtual DbSet<Favorite> Favorites { get; set; }
     }
 }
