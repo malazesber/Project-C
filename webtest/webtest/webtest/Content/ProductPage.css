@@ -92,6 +92,7 @@
     margin-right: 10px;
     text-decoration: none;
     width: 80%;
+    cursor: pointer;
 }
 
 #btnWishList {
@@ -103,6 +104,7 @@
     color: #8a3366;
     padding: 10px 26px;
     border-radius: 6px;
+    cursor: pointer;
 }
 
 #price {

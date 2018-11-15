@@ -15,23 +15,17 @@
         <div class="form-group">
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control, email", placeholder = "Email" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
-            @*Html.TextBoxFor(model => model.Email, new { placeholder = "Email" })
-            @Html.ValidationMessageFor(model => model.Email)*@
         </div>
         
         <div class="form-group">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
             @*Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
-
-            @*Html.TextBoxFor(model => model.Password, new { placeholder = "Password", @type = "password" })
-        @Html.ValidationMessageFor(model => model.Password)*@
         </div>
 
         <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
         <input type="submit" name="name" class="login login-submit" value="login" />
         <div class="login-help">
-            <a href="@Url.Action("ForgotPassword", "Register")">> Forgot Password?</a>
+            <a href="@Url.Action("ForgotPassword", "Register")"> Forgot Password?</a>
         </div>
 
         <div class="login-join">
@@ -42,4 +36,3 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</body>

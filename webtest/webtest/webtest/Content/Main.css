@@ -187,7 +187,14 @@ header {
     border-radius: 5px;
     cursor: pointer;
     font-size: 20px;
-    margin-top: 7px;
+}
+
+#Search {
+    width: 400px;
+    border: 2px solid #bf9000;
+    height: 23px;
+    border-radius: 5px;
+    outline: none;
 }
 
 #catSmall {

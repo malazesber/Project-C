@@ -52,55 +52,39 @@
                     <!-- Data in de zoekbar wordt meegegeven aan de Results Action in de Products Controller-->
                     @using (Html.BeginForm("Results", "Product", FormMethod.Get))
                     {
-                        <input type="text" name="MinPrice" , value="@Request.QueryString["MinPrice"]" , style="display:none">
-                        <input type="text" name="MaxPrice" , value="@Request.QueryString["MaxPrice"]" , style="display:none">
-                        <input type="text" name="Order" , value="@Request.QueryString["Order"]" , style="display:none">
-                        <input type="text" name="Rating" , style="display:none" , value="@Request.QueryString["Rating"]">
-                        <input type="text" name="Category" , style="display:none" , value="@Request.QueryString["Category"]">
-                        @Html.TextBox("Search") <button type="submit" class="searchButton">
+                        <input type="text" name="MinPrice" , value="@Request.QueryString["MinPrice"]" style="display:none">
+                        <input type="text" name="MaxPrice" , value="@Request.QueryString["MaxPrice"]" style="display:none">
+                        <input type="text" name="Order" , value="@Request.QueryString["Order"]" style="display:none">
+                        <input type="text" name="Rating" , style="display:none" value="@Request.QueryString["Rating"]">
+                        <input type="text" name="Category" , style="display:none" value="@Request.QueryString["Category"]">
+                        <div id="searchBar">
+                        @Html.TextBox("Search")
+                        <button type="submit" class="searchButton">
                             <i class="fa fa-search"></i>
                         </button>
+                        </div>
                     }
                 </div>
             </div>
         </ul>
     </nav>
     <div class="nav3">
+        <a href="@Url.Action("Results", "Product", new {Category = "Fiction"}, null)">Fiction</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Biography"}, null)">Biography</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Sports"}, null)">Sports</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Art & Photography"}, null)">Art & Photography</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Science & Nature"}, null)">Science & Nature</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Business"}, null)">Business</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Education"}, null)">Education</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Food & Drink"}, null)">Food & Drink</a>
+        <a href="@Url.Action("Results", "Product", new {Category = "Style & Beauty"}, null)">Style & Beauty</a>
+
         <div class="dropdown">
             <button class="dropbtn">
                 Categories
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                @Html.ActionLink(
-                   "Art & Photography",                                                  // linkText
-                   "Results",                                    // actionName
-                   "Product",                                                   // controllerName
-                   new {                                                     // routeValues
-                       Category = "Art & Photography"
-                   },
-                   null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                    "Biography",                                                  // linkText
-                    "Results",                                    // actionName
-                    "Product",                                                   // controllerName
-                    new {                                                     // routeValues
-                        Category = "Biography"
-                    },
-                    null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                     "Business",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Business"
-                     },
-                     null                                                      // htmlAttributes
-                )
 
                 @Html.ActionLink(
                      "Diet & Fitness",                                                  // linkText
@@ -108,36 +92,6 @@
                      "Product",                                                   // controllerName
                      new {                                                     // routeValues
                          Category = "Diet & Fitness"
-                     },
-                     null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                     "Education",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Education"
-                     },
-                     null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                     "Fiction",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Fiction"
-                     },
-                     null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                     "Food & Drink",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Food & Drink"
                      },
                      null                                                      // htmlAttributes
                 )
@@ -181,40 +135,8 @@
                      },
                      null                                                      // htmlAttributes
                 )
-
-                @Html.ActionLink(
-                     "Science & Nature",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Science & Nature"
-                     },
-                     null                                                      // htmlAttributes
-                )
-
-                @Html.ActionLink(
-                     "Sports",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Sports"
-                     },
-                    null                                                      // htmlAttributes
-                )
-                @Html.ActionLink(
-                     "Style & Beauty",                                                  // linkText
-                     "Results",                                    // actionName
-                     "Product",                                                   // controllerName
-                     new {                                                     // routeValues
-                         Category = "Style & Beauty"
-                     },
-                     null                                                      // htmlAttributes
-                )
             </div>
         </div>
-        @*<a href="@Url.Action("Results", "Product")">Best Sellers</a>
-        <a href="@Url.Action("Results", "Product")">Sale</a>
-        <a href="@Url.Action("Results", "Product")">Bundles</a>*@
     </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 

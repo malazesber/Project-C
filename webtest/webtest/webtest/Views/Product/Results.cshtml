@@ -15,62 +15,7 @@
 </head>
 
 <div id="container">
-    <!-- Top Categories: links van het scherm verdwijnt bij 1100px -->
-    <div id="topCategories">
-        <a id="txtSearchTitle">TOP CATEGORIES</a>
-        @Html.ActionLink(
-       "Fiction",                                                  // linkText
-       "Results",                                    // actionName
-       "Product",                                                   // controllerName
-       new {                                                     // routeValues
-           Category = "Fiction",
-           Pagination = "5"
-       },
-                  new
-                  {
-                      id = "txtTC"
-                  }// htmlAttributes
-              )
-        @Html.ActionLink(
-       "Science & Nature",                                                  // linkText
-       "Results",                                    // actionName
-       "Product",                                                   // controllerName
-       new {                                                     // routeValues
-           Category = "Science & Nature",
-           Pagination = "5"
-       },
-                  new
-                  {
-                      id = "txtTC"
-                  }// htmlAttributes
-              )
-        @Html.ActionLink(
-       "Biography",                                                  // linkText
-       "Results",                                    // actionName
-       "Product",                                                   // controllerName
-       new {                                                     // routeValues
-           Category = "Biography",
-           Pagination = "5"
-       },
-                  new
-                  {
-                      id = "txtTC"
-                  }// htmlAttributes
-              )
-        @Html.ActionLink(
-       "Art & Photography",                                                  // linkText
-       "Results",                                    // actionName
-       "Product",                                                   // controllerName
-       new {                                                     // routeValues
-           Category = "Art & Photography"
-       },
-                  new
-                  {
-                      id = "txtTC"
-                  }// htmlAttributes
-              )
-
-    </div>
+    
     <!-- Results: hier worden alle resultaten geladen -->
     <div id="results">
         <div>
@@ -156,9 +101,9 @@
                         }
                         else
                         {
-                            if (mktText.Length > 250)
+                            if (mktText.Length > 200)
                             {
-                                int pos = mktText.LastIndexOf(" ", 250);
+                                int pos = mktText.LastIndexOf(" ", 200);
 
                                 mktText = mktText.Substring(0, pos) + "...";
                             }
