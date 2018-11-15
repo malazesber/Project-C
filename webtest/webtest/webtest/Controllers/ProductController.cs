@@ -14,8 +14,9 @@ namespace webtest.Controllers
         //Connectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Product
-        public ActionResult Index(string Title, double isbn = 0)
+        public ActionResult Index(string Title, string summary, double isbn = 0, int readMore = 0)
         {
+
             //Als er op de knop gedrukt wordt wordt er een isbn meegegeven die dan in een string opgeslagen wordt.
             if (isbn != 0)
             {
@@ -27,6 +28,33 @@ namespace webtest.Controllers
                 {
                     Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
                 }
+            }
+
+            // Read more button
+            if (readMore == 0)
+            {
+                if (summary.Length > 625)
+                {
+                    int pos = summary.LastIndexOf(" ", 625);
+
+                    summary = summary.Substring(0, pos) + "...";
+
+                    ViewBag.summary = summary;
+                    ViewBag.Text = "Read more";
+                    ViewBag.Code = 1;
+                }
+                else
+                {
+                    ViewBag.summary = summary;
+                    ViewBag.Text = "Read more";
+                    ViewBag.Code = 1;
+                }
+            }
+            else
+            {
+                ViewBag.summary = summary;
+                ViewBag.Text = "Read less";
+                ViewBag.Code = 0;
             }
 
             //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 

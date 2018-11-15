@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_customLayout.cshtml";
+
 }
 
 <head>
@@ -10,24 +11,56 @@
 </head>
 
 <div id="container">
+
+    @*Box waar de basis info van het boek staat*@
     <div id="result">
         <div id="product">
             <img id="productImg" src="@Model.Image_src" />
             <label id="title">@Model.Name</label>
-            <label id="author_date">By @Model.Author | @Model.Date</label>
-            <label id="isbn">ISBN: @Model.ISBN</label>
-            <label id="summary">@Model.Summary</label>
-
+            <label id="author">By @Model.Author</label>
+            <label id="summary">@ViewBag.summary</label>
+            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
         </div>
     </div>
 
-
+    @*Box waar de prijs en knoppen staan*@
     <div id="orderBox">
         <label id="price">€@Model.Price</label>
 
-        <button id="btnWishList">Add to Wishlist</button>
-        <button id="btnCart">Add to Cart</button>
+        <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, isbn = Model.ISBN})" id="btnCart">Add to Cart</a>
 
+        <button id="btnWishList">Add to Wishlist</button>
+    </div>
+
+    @*More information box*@
+    <div id="moreInfo">
+        <label id="miTitle">More Information</label>
+        <label id="miLabel"><b>Publish Date:</b> @Model.Date</label>
+        <label id="miLabel"><b>ISBN:</b> @Model.ISBN</label>
+        <label id="miLabel"><b>Author:</b> @Model.Author</label>
+
+        <label id="miLabel">
+            <b>Rating:</b>
+            @switch (Model.Rating)
+            {
+                case 1:
+                    <img id="rating" src="~/Content/Images/Rating1Star.png" />
+                    break;
+                case 2:
+                    <img id="rating" src="~/Content/Images/Rating2Star.png" />
+                    break;
+                case 3:
+                    <img id="rating" src="~/Content/Images/Rating3Star.png" />
+                    break;
+                case 4:
+                    <img id="rating" src="~/Content/Images/Rating4Star.png" />
+                    break;
+                case 5:
+                    <img id="rating" src="~/Content/Images/Rating5Star.png" />
+                    break;
+            }
+        </label>
+
+        <label id="miLabel"><b>Category:</b> @Model.Category</label>
     </div>
 </div>
-
