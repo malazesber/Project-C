@@ -43,8 +43,14 @@
 
     <div id="checkout">
         <label id="payment">Payment</label>
-        <label id="delivery">Delivery</label>
-        <label id="totalPrice">Total Price</label>
+        <div id="priceBox">
+            <label id="deliveryPrice">€0</label>
+            <label id="totalPrice">€@ViewBag.totalPrice</label>
+        </div>
+        <div id="totalBox">
+            <label id="delivery">Delivery</label>
+            <label id="total">Total Price</label>
+        </div>
     </div>
 </div>
 

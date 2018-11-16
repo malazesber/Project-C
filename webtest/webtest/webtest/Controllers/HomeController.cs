@@ -33,19 +33,21 @@ namespace webtest.Controllers
             {
                 List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
 
+                var total = 0;
                 foreach (var x in isbns)
                 {
-                    double abc = Convert.ToDouble(x);
-                    bookList.Add(db.Books.Where(m => m.ISBN == abc).FirstOrDefault());
+                    double add = Convert.ToDouble(x);
+                    bookList.Add(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
+                    
+                    total = total + Decimal.ToInt32(db.Books.Where(m => m.ISBN == add).Sum(m => m.Price));
+
                 }
+                ViewBag.totalPrice = total;
+
 
                 if (delete != 0)
                 {
-                    foreach (string y in isbns)
-                    {
-                        double xyz = Convert.ToDouble(y);
-                        bookList.Remove(db.Books.Where(m => m.ISBN == delete).FirstOrDefault()); 
-                    }
+                    bookList.Remove(db.Books.Where(m => m.ISBN == delete).FirstOrDefault());
                     
                 }
             }

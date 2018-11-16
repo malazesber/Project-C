@@ -15,7 +15,7 @@
 
 #checkout {
     background: white;
-    min-height: 150px;
+    min-height: 100px;
     height: auto;
     width: 100%;
     margin-right: 15px;
@@ -136,28 +136,53 @@
 #payment {
     display: inline-block;
     margin-top: 6px;
-    margin-left: 15px;
+    margin-left: 30px;
     font-weight: bold;
     font-size: 18px;
-    width: 75%;
+    /*width: 75%;*/
     text-decoration: none;
     color: #8a3366;
+}
+
+#totalBox {
+    display: inline-block;
+    /*border: 1px red solid;*/
+    width: 120px;
+    height: 100px;
+    float: right;
+    margin-right:13%;
+    margin-top: 25px;
+}
+
+#priceBox {
+    display: inline-block;
+    /*border: 1px red solid;*/
+    width: 50px;
+    height: 100px;
+    float: right;
+    margin-right: 7%;
+    margin-top: 25px;
 }
 
 #delivery {
     color: black;
     text-decoration: none;
     font-size: 15px;
-    float: right;
-    margin-right: 40px;
+    font-weight: bold;
+
+}
+
+#deliveryPrice {
+    font-size: 17px;
+}
+
+#total {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
     font-weight: bold;
 }
 
 #totalPrice {
-    color: black;
-    text-decoration: none;
-    font-size: 15px;
-    float: right;
-    margin-top: 25px;
-    font-weight: bold;
+    font-size: 17px;
 }
