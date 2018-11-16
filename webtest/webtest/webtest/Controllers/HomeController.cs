@@ -24,35 +24,48 @@ namespace webtest.Controllers
 
         }
 
-        public ActionResult ShoppingCart(double delete = 0)
+        public ActionResult ShoppingCart()
         {
-
             List<Book> bookList = new List<Book>();
-
-            if (Session["shoppingCart"] != null)
+            if (Session["User_id"] != null)
             {
-                List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                int User_id = Convert.ToInt32(Session["User_id"]);
+                var result = (from cart in db.Carts
+                              from book in db.Books
+                              from user in db.Users
+                              where cart.ISBN == book.ISBN &&
+                              user.User_id == User_id
+                              select book).ToList();
 
-                var total = 0;
-                foreach (var x in isbns)
+                return View(result);
+            }
+            else
+            {
+                if (Session["shoppingCart"] != null)
                 {
-                    double add = Convert.ToDouble(x);
-                    bookList.Add(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
-                    
-                    total = total + Decimal.ToInt32(db.Books.Where(m => m.ISBN == add).Sum(m => m.Price));
+                    List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
 
-                }
-                ViewBag.totalPrice = total;
+                    try
+                    {
+                        foreach (string x in isbns)
+                        {
+
+                            double abc = Convert.ToDouble(x);
+                            bookList.Add(db.Books.Where(m => m.ISBN == abc).FirstOrDefault());
+                        }
+                    }
+                    catch (FormatException)
+                    {
+
+                    }
 
 
-                if (delete != 0)
-                {
-                    bookList.Remove(db.Books.Where(m => m.ISBN == delete).FirstOrDefault());
-                    
                 }
             }
 
+
             return View(bookList);
+
         }
 
         public ActionResult OrderStatus()

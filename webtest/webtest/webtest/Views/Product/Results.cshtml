@@ -15,7 +15,7 @@
 </head>
 
 <div id="container">
-    
+
     <!-- Results: hier worden alle resultaten geladen -->
     <div id="results">
         <div>
@@ -109,10 +109,12 @@
                             }
                         }
                     }
-                    @mktText
+                    @mktText;
                 </label>
                 <label id="priceSmall">@m.Price</label>
                 <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary}) " id="moreInfo">More info</a>
+
+                @*LOAD FAVORITE BUTTONS*@
                 @{
                     var db = new DatabaseEntities1();
                     var list = db.Favorites.Select(s => s);
@@ -124,16 +126,70 @@
                     if (has)
                     {
                         <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString()}) " id="moreInfo">Remove</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList">Remove Favo</a>
                     }
                     else
                     {
                         <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString()}) " id="moreInfo">Add</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList">Add Favo</a>
                     }
                 }
-                        <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN})" id="btnCart">Add to Cart</a>
+
+                @** LOAD ADD CART BUTTONS*@
+
+                @{
+                    if (Session["User_id"] != null)
+                    {
+                        var dbCart = new DatabaseEntities1();
+                        var listCart = db.Carts.Select(s => s);
+                        double isbnDCart = Convert.ToDouble(m.ISBN);
+                        int User_id_Cart = Convert.ToInt32(Session["User_id"]);
+
+                        bool hasCart = listCart.Any(cus => cus.ISBN == isbnDCart && cus.User_id == User_id_Cart);
+
+                        if (hasCart)
+                        {
+                            <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+                        }
+
+                    }
+                    else
+                    {
+                        if (Session["shoppingCart"] == null)
+                        {
+                            <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+                        }
+                        else
+                        {
+                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+
+                            if (isbns.Contains(m.ISBN.ToString()))
+                            {
+                                <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+                            }
+                        }
+                    }
+
+                }
+
+
+                }
+
+
+
                 <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary})" id="moreInfoSmall">More info</a>
                 <img id="stripe" src="~/Content/Images/stripe.png" />
 
@@ -213,7 +269,8 @@
             <input id="PaginationInput" type="number" name="Pagination" , style="display:none">
 
             <button id="btnSaveFilters" , onclick="setRating()">Apply Filters</button>
-            @Html.Raw(TempData["msg"])
+            @Html.Raw(TempData["favo"])
+
         }
         <script>
             function setRating() {

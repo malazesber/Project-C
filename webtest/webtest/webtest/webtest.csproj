@@ -176,6 +176,9 @@
     <Compile Include="Models\Book.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Creditcard_details.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
@@ -205,9 +208,6 @@
       <DependentUpon>RegisterModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ResetPasswordModel.cs" />
-    <Compile Include="Models\Shopping_cart.cs">
-      <DependentUpon>RegisterModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>

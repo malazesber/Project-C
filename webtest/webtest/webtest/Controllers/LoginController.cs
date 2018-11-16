@@ -27,14 +27,14 @@ namespace webtest.Controllers
                  && x.Password == userPassword).FirstOrDefault();
                 if (userData == null)
                 {
-                    
+
                     userModel.LoginErrorMessage = "Wrong Email or Password";
                     return View("Index", userModel);
                 }
-               else if (userData.IsEmailVerified == false)
+                else if (userData.IsEmailVerified == false)
                 {
                     userModel.LoginErrorMessage = "your email must be verified first before you can log in a new verification link has been sent tot your email ";
-                    SendVerificationLinkEmail(userData.Email,userData.ActivationCode.ToString());
+                    SendVerificationLinkEmail(userData.Email, userData.ActivationCode.ToString());
                     return View("Index", userModel);
                 }
                 else
@@ -103,7 +103,7 @@ namespace webtest.Controllers
 
         public ActionResult LogOut()
         {
-            Session.Abandon();
+            Session["User_id"] = null;
             return RedirectToAction("Index", "Home");
         }
     }

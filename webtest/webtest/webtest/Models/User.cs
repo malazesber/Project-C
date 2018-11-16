@@ -19,6 +19,7 @@ namespace webtest.Models
         {
             this.Creditcard_details = new HashSet<Creditcard_details>();
             this.Favorites = new HashSet<Favorite>();
+            this.Carts = new HashSet<Cart>();
         }
     
         public int User_id { get; set; }
@@ -37,8 +38,9 @@ namespace webtest.Models
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Creditcard_details> Creditcard_details { get; set; }
-        public virtual Shopping_cart Shopping_cart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Favorite> Favorites { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

@@ -18,8 +18,8 @@
     <Property Name="Cart_id" Type="Int32" />
     <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
     <NavigationProperty Name="Creditcard_details" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="User" ToRole="Creditcard_details" />
-    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_Cart_id" FromRole="User" ToRole="Shopping_cart" />
     <NavigationProperty Name="Favorites" Relationship="DatabaseModel.FK_User" FromRole="User" ToRole="Favorite" />
+    <NavigationProperty Name="Carts" Relationship="DatabaseModel.FK_User_cart" FromRole="User" ToRole="Cart" />
   </EntityType>
   <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="Self.User" />
@@ -40,23 +40,15 @@
       <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
-    <EntitySet Name="Shopping_cart" EntityType="DatabaseModel.Shopping_cart" />
-    <AssociationSet Name="FK_ORDERS_SHOPPINGCART" Association="DatabaseModel.FK_ORDERS_SHOPPINGCART">
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Cart_id" Association="DatabaseModel.FK_Cart_id">
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
-      <End Role="User" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="Shopping_cart_contains1" Association="DatabaseModel.Shopping_cart_contains1">
-      <End Role="Book" EntitySet="Books" />
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
-    </AssociationSet>
     <EntitySet Name="Favorites" EntityType="DatabaseModel.Favorite" />
     <AssociationSet Name="FK_User" Association="DatabaseModel.FK_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Favorite" EntitySet="Favorites" />
+    </AssociationSet>
+    <EntitySet Name="Carts" EntityType="DatabaseModel.Cart" />
+    <AssociationSet Name="FK_User_cart" Association="DatabaseModel.FK_User_cart">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Carts" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Payment">
@@ -125,7 +117,6 @@
     <Property Name="Cart_id" Type="Int32" Nullable="false" />
     <Property Name="Payment_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Payment" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Order" ToRole="Payment" />
-    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.FK_ORDERS_SHOPPINGCART" FromRole="Order" ToRole="Shopping_cart" />
   </EntityType>
   <Association Name="FK_ORDERS_PAYMENT">
     <End Type="DatabaseModel.Payment" Role="Payment" Multiplicity="1" />
@@ -152,45 +143,7 @@
     <Property Name="ISBN" Type="Double" Nullable="false" />
     <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="Rating" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Shopping_cart" Relationship="DatabaseModel.Shopping_cart_contains1" FromRole="Book" ToRole="Shopping_cart" />
   </EntityType>
-  <EntityType Name="Shopping_cart">
-    <Key>
-      <PropertyRef Name="Cart_id" />
-    </Key>
-    <Property Name="Cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_SHOPPINGCART" FromRole="Shopping_cart" ToRole="Order" />
-    <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Cart_id" FromRole="Shopping_cart" ToRole="User" />
-    <NavigationProperty Name="Books" Relationship="DatabaseModel.Shopping_cart_contains1" FromRole="Shopping_cart" ToRole="Book" />
-  </EntityType>
-  <Association Name="FK_ORDERS_SHOPPINGCART">
-    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="1" />
-    <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shopping_cart">
-        <PropertyRef Name="Cart_id" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="Cart_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Cart_id">
-    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="0..1" />
-    <End Type="DatabaseModel.User" Role="User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shopping_cart">
-        <PropertyRef Name="Cart_id" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="Cart_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Shopping_cart_contains1">
-    <End Type="DatabaseModel.Book" Role="Book" Multiplicity="*" />
-    <End Type="DatabaseModel.Shopping_cart" Role="Shopping_cart" Multiplicity="*" />
-  </Association>
   <EntityType Name="Favorite">
     <Key>
       <PropertyRef Name="Id" />
@@ -208,6 +161,27 @@
         <PropertyRef Name="User_id" />
       </Principal>
       <Dependent Role="Favorite">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <Property Name="ISBN" Type="Double" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DatabaseModel.FK_User_cart" FromRole="Cart" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_User_cart">
+    <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="DatabaseModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Cart">
         <PropertyRef Name="User_id" />
       </Dependent>
     </ReferentialConstraint>

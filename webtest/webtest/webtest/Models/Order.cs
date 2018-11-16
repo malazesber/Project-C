@@ -21,6 +21,5 @@ namespace webtest.Models
         public int Payment_id { get; set; }
     
         public virtual Payment Payment { get; set; }
-        public virtual Shopping_cart Shopping_cart { get; set; }
     }
 }

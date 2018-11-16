@@ -13,6 +13,7 @@ namespace webtest.Controllers
     {
         //Connectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
+        List<string> cart = new List<string>();
         // GET: Product
         public ActionResult Index(string Title, string summary, double isbn = 0, int readMore = 0)
         {
@@ -26,6 +27,7 @@ namespace webtest.Controllers
                 }
                 else
                 {
+
                     Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
                 }
             }
@@ -33,7 +35,7 @@ namespace webtest.Controllers
             // Read more button
             if (readMore == 0)
             {
-                if (summary.Length >= 625)
+                if (summary.Length > 625)
                 {
                     int pos = summary.LastIndexOf(" ", 625);
 
@@ -46,6 +48,8 @@ namespace webtest.Controllers
                 else
                 {
                     ViewBag.summary = summary;
+                    ViewBag.Text = "Read more";
+                    ViewBag.Code = 1;
                 }
             }
             else
@@ -60,7 +64,7 @@ namespace webtest.Controllers
             return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
         }
 
-        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, string isbn, int Pagination = 5)
+        public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, string isbn, string type, int Pagination = 5)
         {
             // De producten zullen op de jusite manier worden laten zien en de PagedList werkt ook gewoon nog.
             // Het is belangrijk dat de View Een .ToList().TopPagedList() returned zodat er door de producten geloopt kan worden en zodat de PagedList goed werkt.
@@ -73,54 +77,113 @@ namespace webtest.Controllers
             // CHECK OF ER EEN ISBN IS MEEGEGEVEN
             if (isbn != "" && isbn != null)
             {
-                if (Session["User_id"] == null)
+
+                if (type == "cart")
                 {
-                    //TempData["msg"] = "<script>alert('You need to login first.');</script>";
+                    if (Session["User_id"] != null)
+                    {
+                        var list = db.Carts.Select(s => s);
+                        double isbnD = Convert.ToDouble(isbn);
+                        int User_id = Convert.ToInt32(Session["User_id"]);
+
+                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+
+                        if (has)
+                        {
+                            using (DatabaseEntities1 db = new DatabaseEntities1())
+                            {
+                                db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                                db.SaveChanges();
+                            }
+
+                        }
+                        else
+                        {
+                            // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                            using (DatabaseEntities1 db = new DatabaseEntities1())
+                            {
+                                var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                                db.Carts.Add(cart);
+                                db.SaveChanges();
+                            }
+                        }
 
 
-                    //Voor de shopping cart session voor de ongeregistreerde grbuiker
-                    //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
-                        if (Session["shoppingCart"] == null)
+
+                    }
+                    else
+                    {
+                        // UNREGISTERED USER
+                        if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
                         {
                             Session["shoppingCart"] = isbn.ToString();
                         }
                         else
                         {
-                            Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                            //Check of die al in je cart zit.
+                            if (isbns.Contains(isbn))
+                            {
+                                isbns.Remove(isbn);
+                                var newcart = String.Join(",", isbns);
+                                Session["shoppingCart"] = newcart;
+
+                            }
+                            else
+                            {
+                                Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                            }
+
                         }
+                    }
+
+
+
                 }
-                else
+                else if (type == "favorite")
                 {
-
-
-                    var list = db.Favorites.Select(s => s);
-                    double isbnD = Convert.ToDouble(isbn);
-                    int User_id = Convert.ToInt32(Session["User_id"]);
-
-                    bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
-                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
-                    if (has)
+                    if (Session["User_id"] == null)
                     {
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
-                        {
-                            db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
-                            db.SaveChanges();
-                        }
-                        TempData["msg"] = "<script>alert('Removed from favorites');</script>";
+                        TempData["favo"] = "<script>alert('You need to login first.');</script>";
+
+
+                        //Voor de shopping cart session voor de ongeregistreerde grbuiker
+                        //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
+
                     }
                     else
                     {
-                        // ISBN TOEVOEGEN AAN FAVORIETEN
-                        TempData["msg"] = "<script>alert('Added to Favorites');</script>";
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
+
+
+                        var list = db.Favorites.Select(s => s);
+                        double isbnD = Convert.ToDouble(isbn);
+                        int User_id = Convert.ToInt32(Session["User_id"]);
+
+                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                        //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                        if (has)
                         {
-                            var favo = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
-                            db.Favorites.Add(favo);
-                            db.SaveChanges();
+                            using (DatabaseEntities1 db = new DatabaseEntities1())
+                            {
+                                db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                                db.SaveChanges();
+                            }
+
+                        }
+                        else
+                        {
+                            // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                            using (DatabaseEntities1 db = new DatabaseEntities1())
+                            {
+                                var favo = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                                db.Favorites.Add(favo);
+                                db.SaveChanges();
+                            }
                         }
                     }
                 }
-
 
             }
 

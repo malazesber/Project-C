@@ -24,6 +24,14 @@
     <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Rating" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
+    <Property Name="ISBN" Type="float" Nullable="false" />
+  </EntityType>
   <EntityType Name="Creditcard_details">
     <Key>
       <PropertyRef Name="CC_number" />
@@ -61,20 +69,6 @@
     <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Order_id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Shopping_cart">
-    <Key>
-      <PropertyRef Name="Cart_id" />
-    </Key>
-    <Property Name="Cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Shopping_cart_contains">
-    <Key>
-      <PropertyRef Name="ISBN" />
-      <PropertyRef Name="Cart_id" />
-    </Key>
-    <Property Name="ISBN" Type="float" Nullable="false" />
-    <Property Name="Cart_id" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="User_id" />
@@ -104,18 +98,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Cart_id">
-    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="0..1" />
-    <End Role="User" Type="Self.User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shopping_cart">
-        <PropertyRef Name="Cart_id" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="Cart_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_CREDITCARD_USER">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Creditcard_details" Type="Self.Creditcard_details" Multiplicity="*" />
@@ -140,42 +122,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ORDERS_SHOPPINGCART">
-    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shopping_cart">
-        <PropertyRef Name="Cart_id" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="Cart_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Shopping_cart_contains_ToBook">
-    <End Role="Book" Type="Self.Book" Multiplicity="1" />
-    <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Book">
-        <PropertyRef Name="ISBN" />
-      </Principal>
-      <Dependent Role="Shopping_cart_contains">
-        <PropertyRef Name="ISBN" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Shopping_cart_contains_ToShopping_cart">
-    <End Role="Shopping_cart" Type="Self.Shopping_cart" Multiplicity="1" />
-    <End Role="Shopping_cart_contains" Type="Self.Shopping_cart_contains" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shopping_cart">
-        <PropertyRef Name="Cart_id" />
-      </Principal>
-      <Dependent Role="Shopping_cart_contains">
-        <PropertyRef Name="Cart_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
@@ -188,22 +134,29 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User_cart">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Shopping_cart" EntityType="Self.Shopping_cart" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Shopping_cart_contains" EntityType="Self.Shopping_cart_contains" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Address_id" Association="Self.FK_Address_id">
       <End Role="Address" EntitySet="Address" />
-      <End Role="User" EntitySet="User" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Cart_id" Association="Self.FK_Cart_id">
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
     <AssociationSet Name="FK_CREDITCARD_USER" Association="Self.FK_CREDITCARD_USER">
@@ -214,21 +167,13 @@
       <End Role="Payment" EntitySet="Payment" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
-    <AssociationSet Name="FK_ORDERS_SHOPPINGCART" Association="Self.FK_ORDERS_SHOPPINGCART">
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Shopping_cart_contains_ToBook" Association="Self.FK_Shopping_cart_contains_ToBook">
-      <End Role="Book" EntitySet="Book" />
-      <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Shopping_cart_contains_ToShopping_cart" Association="Self.FK_Shopping_cart_contains_ToShopping_cart">
-      <End Role="Shopping_cart" EntitySet="Shopping_cart" />
-      <End Role="Shopping_cart_contains" EntitySet="Shopping_cart_contains" />
-    </AssociationSet>
     <AssociationSet Name="FK_User" Association="Self.FK_User">
       <End Role="User" EntitySet="User" />
       <End Role="Favorites" EntitySet="Favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_cart" Association="Self.FK_User_cart">
+      <End Role="User" EntitySet="User" />
+      <End Role="Cart" EntitySet="Cart" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -12,16 +12,12 @@ namespace webtest.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Book
+    public partial class Cart
     {
-        public string Category { get; set; }
-        public string Name { get; set; }
-        public string Summary { get; set; }
-        public System.DateTime Date { get; set; }
-        public string Author { get; set; }
-        public string Image_src { get; set; }
+        public int Id { get; set; }
+        public int User_id { get; set; }
         public double ISBN { get; set; }
-        public decimal Price { get; set; }
-        public int Rating { get; set; }
+    
+        public virtual User User { get; set; }
     }
 }
