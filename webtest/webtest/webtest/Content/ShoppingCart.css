@@ -5,7 +5,17 @@
 
 #results {
     background: white;
-    min-height: 500px;
+    min-height: 200px;
+    height: auto;
+    width: 100%;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#checkout {
+    background: white;
+    min-height: 150px;
     height: auto;
     width: 100%;
     margin-right: 15px;
@@ -51,6 +61,7 @@
 #title {
     display: inline-block;
     margin-top: 6px;
+    margin-left:15px;
     font-weight: bold;
     font-size: 18px;
     width: 75%;
@@ -59,17 +70,19 @@
 }
 
 #author {
-    display: block;
+    display: inline-block;
+    margin-left: 15px;
 }
 
 #productImg {
     float: left;
     margin-right: 15px;
+    margin-left:15px;
     width: 113px;
     height: 173px;
 }
 
-#btnCart {
+/*#btnCart {
     float: right;
     margin-top: 10px;
     display: inline-block;
@@ -91,139 +104,60 @@
     color: white;
     padding: 10px 15px;
     border-radius: 6px;
-}
+}*/
 
 #price {
     float: right;
-    margin-right: 25px;
+    margin-right: 7%;
+    margin-top:20px;
+    font-size:17px;
 }
 
 #stripe {
     width: 100%;
     height: 2px;
+    margin-bottom: 5px;
 }
 
-#btnSaveFiltersTop {
-    float: right;
-    background-color: white;
+#deleteButton {
     color: #bf9000;
-    padding: 7px 20px;
-    border-radius: 4px;
-}
-/* Scherm kleiner dan 1100px */
-@media only screen and (max-width: 1100px) {
-    #topCategories {
-        display: none;
-    }
-
-    #filters {
-        display: none;
-    }
-
-    #results {
-        width: 100%;
-        display: block;
-        margin-left: 15px;
-    }
-}
-/* Scherm groter dan 1100px */
-@media only screen and (min-width: 1100px) {
-
-    #filtersTop {
-        display: none;
-    }
+    text-decoration: none;
+    font-size: 15px;
+    float: right;
+    margin-right: 25%;
+    margin-top: 50px;
+    font-weight: bold;
 }
 
-/* Scherm kleiner dan 750px */
-@media only screen and (max-width: 750px) {
-    #summary {
-        display: none;
+    #deleteButton:hover {
+        text-decoration: underline;
     }
 
-    #price {
-        display: none;
-    }
-
-    #rating {
-        display: block;
-    }
-
-    #priceSmall {
-        display: block;
-        margin-top: 15px;
-    }
-
-    #btnWishList {
-        display: block;
-        margin-bottom: 40px;
-        padding: 5px 8px;
-    }
-
-    #btnCart {
-        display: block;
-        margin-bottom: 10px;
-        padding: 5px 8px;
-    }
-
-    #moreInfo {
-        display: none;
-    }
-
-    #moreInfoSmall {
-        margin-right: 100px;
-        color: #8a3366;
-        font-weight: 600;
-        display: block;
-        margin-top: 55px;
-    }
-
-    #priceFilterTop {
-        display: inline-block;
-        width: 130px;
-    }
-
-    #priceTop {
-        width: 40px;
-        font-size: 16px
-    }
-
-    #filterTopTitle {
-        margin-right: 94px;
-        color: white;
-    }
-
-    #filterTopSelect {
-        width: 80px;
-    }
-
-    /* Scherm groter dan 750px */
+#payment {
+    display: inline-block;
+    margin-top: 6px;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 75%;
+    text-decoration: none;
+    color: #8a3366;
 }
 
-@media only screen and (min-width: 750px) {
-    #priceSmall {
-        display: none;
-    }
+#delivery {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+    float: right;
+    margin-right: 40px;
+    font-weight: bold;
+}
 
-    #moreInfoSmall {
-        display: none;
-    }
-
-    #priceFilterTop {
-        display: inline-block;
-        width: 250px;
-    }
-
-    #priceTop {
-        width: 80px;
-        font-size: 17px
-    }
-
-    #filterTopTitle {
-        margin-right: 212px;
-        color: white;
-    }
-
-    #filterTopSelect {
-        width: 270px;
-    }
+#totalPrice {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+    float: right;
+    margin-top: 25px;
+    font-weight: bold;
 }

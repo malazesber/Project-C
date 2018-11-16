@@ -24,18 +24,29 @@ namespace webtest.Controllers
 
         }
 
-        public ActionResult ShoppingCart()
+        public ActionResult ShoppingCart(double delete = 0)
         {
+
             List<Book> bookList = new List<Book>();
 
             if (Session["shoppingCart"] != null)
             {
                 List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
 
-                foreach (string x in isbns)
+                foreach (var x in isbns)
                 {
                     double abc = Convert.ToDouble(x);
                     bookList.Add(db.Books.Where(m => m.ISBN == abc).FirstOrDefault());
+                }
+
+                if (delete != 0)
+                {
+                    foreach (string y in isbns)
+                    {
+                        double xyz = Convert.ToDouble(y);
+                        bookList.Remove(db.Books.Where(m => m.ISBN == delete).FirstOrDefault()); 
+                    }
+                    
                 }
             }
 

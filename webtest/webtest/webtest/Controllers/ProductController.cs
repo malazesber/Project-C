@@ -33,7 +33,7 @@ namespace webtest.Controllers
             // Read more button
             if (readMore == 0)
             {
-                if (summary.Length > 625)
+                if (summary.Length >= 625)
                 {
                     int pos = summary.LastIndexOf(" ", 625);
 
@@ -46,8 +46,6 @@ namespace webtest.Controllers
                 else
                 {
                     ViewBag.summary = summary;
-                    ViewBag.Text = "Read more";
-                    ViewBag.Code = 1;
                 }
             }
             else

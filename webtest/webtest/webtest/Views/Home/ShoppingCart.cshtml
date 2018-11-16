@@ -36,8 +36,15 @@
                 <!-- Change to author-->
                 <label id="author">@m.Author</label>
             </div>
+            <a href="@Url.Action("ShoppingCart", "Home", new {delete = m.ISBN})" id="deleteButton">Delete Product</a>
             <img id="stripe" src="~/Content/Images/stripe.png" />
         }
+    </div>
+
+    <div id="checkout">
+        <label id="payment">Payment</label>
+        <label id="delivery">Delivery</label>
+        <label id="totalPrice">Total Price</label>
     </div>
 </div>
 
