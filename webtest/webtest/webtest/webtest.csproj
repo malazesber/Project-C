@@ -161,6 +161,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CheckoutUnregisteredController.cs" />
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\Register\ForgotPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Favorites\Index.cshtml" />
+    <Content Include="Views\CheckoutUnregistered\Index.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
