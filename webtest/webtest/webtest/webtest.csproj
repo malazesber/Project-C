@@ -165,6 +165,7 @@
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Crypto.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Content\Images\test.jpg" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Main.css" />
+    <Content Include="Content\Order.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\ProductPage.css" />
     <Content Include="Content\Registration.css" />
@@ -303,6 +305,7 @@
     <Content Include="Views\Favorites\Index.cshtml" />
     <Content Include="Views\CheckoutUnregistered\Index.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\UserEntities\" />

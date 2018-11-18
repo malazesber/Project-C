@@ -2,7 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\webtest",
-    "\\webtest\\webtest"
+    "\\webtest\\webtest",
+    "\\webtest\\webtest\\webtest",
+    "\\webtest\\webtest\\webtest\\Content",
+    "\\webtest\\webtest\\webtest\\Controllers",
+    "\\webtest\\webtest\\webtest\\Views",
+    "\\webtest\\webtest\\webtest\\Views\\CheckoutUnregistered"
   ],
   "SelectedNode": "\\webtest\\webtest\\webtest.sln",
   "PreviewInSolutionExplorer": false
