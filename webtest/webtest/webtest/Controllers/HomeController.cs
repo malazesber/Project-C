@@ -24,7 +24,7 @@ namespace webtest.Controllers
 
         }
 
-        public ActionResult ShoppingCart()
+        public ActionResult ShoppingCart(string isbn, bool delete = false, bool plus = false, bool min = false)
         {
             List<Book> bookList = new List<Book>();
             if (Session["User_id"] != null)
@@ -44,15 +44,69 @@ namespace webtest.Controllers
                 if (Session["shoppingCart"] != null)
                 {
                     List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                    var total = 0;
+
+
+                    //Deletes product from cart
+                    if (isbns.Contains(isbn) && delete)
+                    {
+                        isbns.Remove(isbn);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+
+                        delete = false;
+                    }
+
+                    if (plus)
+                    {
+                        isbns.Add(isbn);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+
+                        plus = false;
+                    }
+
+                    if (min)
+                    {
+                        isbns.Remove(isbn);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+
+                        plus = false;
+                    }
 
                     try
                     {
                         foreach (string x in isbns)
                         {
+                            double add = Convert.ToDouble(x);
 
-                            double abc = Convert.ToDouble(x);
-                            bookList.Add(db.Books.Where(m => m.ISBN == abc).FirstOrDefault());
+                            //Voegt de boeken uit de isbn lijst toe aan de lijst voor de view.
+                            bookList.Add(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
+
+                            //Checkt of het boek al getoont wordt.
+                            if (bookList.GroupBy(m => m.ISBN).Any(c => c.Count() > 1))
+                            {
+                                bookList.Remove(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
+                            }
+
+                            // Berekent de totale prijs van alle boeken.
+                            total = total + Decimal.ToInt32(db.Books.Where(m => m.ISBN == add).Sum(m => m.Price));
+
+                            // Berekent het aantal van het gekozen boek.
+                            var bookAmount = 0;
+                            foreach (var y in isbns)
+                            {
+                                if (y == x)
+                                {
+                                    bookAmount = bookAmount + 1;
+                                }
+                            }
+                            ViewData[x] = bookAmount;
+
                         }
+
+                        ViewBag.totalPrice = total;
                     }
                     catch (FormatException)
                     {

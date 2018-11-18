@@ -107,10 +107,16 @@
 }*/
 
 #price {
+    font-size: 17px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+#priceBookTotal {
     float: right;
     margin-right: 7%;
-    margin-top:20px;
-    font-size:17px;
+    margin-top: 20px;
+    font-size: 17px;
 }
 
 #stripe {
@@ -185,4 +191,65 @@
 
 #totalPrice {
     font-size: 17px;
+}
+
+#amountBox {
+    float: right;
+    margin-right: -8%;
+    margin-top: -15px;
+}
+
+#minButton {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #bf9000;
+    background: #bf9000;
+    text-align: center;
+    color: #fff;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 7px;
+    padding-left: 10px;
+    padding-right: 7px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-decoration: none;
+    margin-right: -4px;
+}
+
+#plusButton {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #bf9000;
+    background: #bf9000;
+    text-align: center;
+    color: #fff;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 7px;
+    padding-left: 7px;
+    padding-right: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-decoration: none;
+    margin-left: -5px;
+}
+
+
+#amount {
+    width: 40px;
+    height: 30px;
+    border: 2px solid #bf9000;
+    background: #fff;
+    text-align: center;
+    color: #bf9000;
+    font-size: 20px;
+    margin-top: 7px;
+    padding-left: 9px;
+    padding-right: 9px;
+    text-decoration: none;
 }

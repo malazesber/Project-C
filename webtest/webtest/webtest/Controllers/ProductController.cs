@@ -147,15 +147,9 @@ namespace webtest.Controllers
                     {
                         TempData["favo"] = "<script>alert('You need to login first.');</script>";
 
-
-                        //Voor de shopping cart session voor de ongeregistreerde grbuiker
-                        //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
-
                     }
                     else
                     {
-
-
                         var list = db.Favorites.Select(s => s);
                         double isbnD = Convert.ToDouble(isbn);
                         int User_id = Convert.ToInt32(Session["User_id"]);
