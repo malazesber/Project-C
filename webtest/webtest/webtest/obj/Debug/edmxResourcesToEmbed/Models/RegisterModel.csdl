@@ -173,6 +173,7 @@
     <Property Name="User_id" Type="Int32" Nullable="false" />
     <Property Name="ISBN" Type="Double" Nullable="false" />
     <NavigationProperty Name="User" Relationship="DatabaseModel.FK_User_cart" FromRole="Cart" ToRole="User" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_User_cart">
     <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />

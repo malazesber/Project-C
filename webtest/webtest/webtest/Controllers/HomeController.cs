@@ -24,12 +24,56 @@ namespace webtest.Controllers
 
         }
 
-        public ActionResult ShoppingCart(string isbn, bool delete = false, bool plus = false, bool min = false)
+        public ActionResult ShoppingCart(string isbn, double? del, bool delete = false, bool plus = false, bool min = false)
         {
+            decimal totalPrice = 0;
+            string deleteISBN = del.ToString();
             List<Book> bookList = new List<Book>();
+
             if (Session["User_id"] != null)
             {
                 int User_id = Convert.ToInt32(Session["User_id"]);
+                //Verwijder item voor geregistreerde user
+                if (deleteISBN != "" && deleteISBN != null)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Carts.Remove(db.Carts.Single(x => x.ISBN == del));
+                        db.SaveChanges();
+                    }
+                }
+
+               
+
+                if (plus)
+                {
+                    double isbnD = Convert.ToDouble(isbn);
+                    var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
+                    book.Quantity += 1;
+                    db.SaveChanges();
+                    
+                }
+
+                if (min)
+                {
+                    double isbnD = Convert.ToDouble(isbn);
+                    var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
+                    if(book.Quantity == 1)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Carts.Remove(db.Carts.Single(x => x.ISBN == isbnD));
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        book.Quantity -= 1;
+                    }
+                    
+                    db.SaveChanges();
+                }
+
                 var result = (from cart in db.Carts
                               from book in db.Books
                               from user in db.Users
@@ -37,8 +81,21 @@ namespace webtest.Controllers
                               user.User_id == User_id
                               select book).ToList();
 
+
+                foreach (var i in result)
+                {
+                    var item = db.Carts.Where(x => x.ISBN == i.ISBN).FirstOrDefault();
+                    for(int j = 0; j < item.Quantity; j++)
+                    {
+                        totalPrice += i.Price;
+                    }
+                    
+                }
+
+                ViewBag.totalPrice = totalPrice;
                 return View(result);
             }
+        
             else
             {
                 if (Session["shoppingCart"] != null)

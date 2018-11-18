@@ -11,16 +11,61 @@ namespace webtest.Controllers
     {
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Favorites
-        public ActionResult Index()
+        public ActionResult Index(double? delete, double? cart)
         {
-            ////Selecteer alle boeken en favorieten
-            //var listFavo = db.Favorites.Select(s => s);
-            //var listBooks = db.Books.Select(s => s);
-
-            ////filter favorieten op user id
+            if (Session["User_id"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+           
             int User_id = Convert.ToInt32(Session["User_id"]);
-            //var select = listFavo.Where(x => x.User_id == User_id).ToList();
+            var list = db.Favorites.Select(s => s);
+            string deleteISBN = delete.ToString();
+            string CartISBN = cart.ToString();
 
+
+            // VERWIJDER UIT FAVORIETEN
+            if (deleteISBN != "" && deleteISBN != null)
+            {
+                using (DatabaseEntities1 db = new DatabaseEntities1())
+                {
+                    db.Favorites.Remove(db.Favorites.Single(x => x.ISBN == delete && x.User_id == User_id));
+                    db.SaveChanges();
+                }
+            }
+
+            if (CartISBN != "" && CartISBN != null)
+            {
+                var listCart = db.Carts.Select(s => s);
+                int User_idCart = Convert.ToInt32(Session["User_id"]);
+
+                bool has = listCart.Any(x => x.ISBN == cart && x.User_id == User_id);
+
+                if (has)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Carts.Remove(db.Carts.Single(x => x.ISBN == cart && x.User_id == User_id));
+                        db.SaveChanges();
+                    }
+
+                }
+                else
+                {
+                    // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart), Quantity = 1 };
+                        db.Carts.Add(cartObj);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            //VERWIJDEREN UIT WINKELWAGEN
+
+            // laad favorieten
             var result = (from favo in db.Favorites
                           from book in db.Books
                           from user in db.Users

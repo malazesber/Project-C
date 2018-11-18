@@ -17,6 +17,7 @@ namespace webtest.Models
         public int Id { get; set; }
         public int User_id { get; set; }
         public double ISBN { get; set; }
+        public int Quantity { get; set; }
     
         public virtual User User { get; set; }
     }

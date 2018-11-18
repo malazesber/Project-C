@@ -15,9 +15,115 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         List<string> cart = new List<string>();
         // GET: Product
-        public ActionResult Index(string Title, string summary, double isbn = 0, int readMore = 0)
+        public ActionResult Index(string Title, string summary, double? favo, double? cart, double isbn = 0, int readMore = 0)
         {
+            string favoISBN = favo.ToString();
+            string cartISBN = cart.ToString();
 
+            if (favoISBN != "" && favoISBN != null)
+            {
+                if (Session["User_id"] == null)
+                {
+                    TempData["favo"] = "<script>alert('You need to login first.');</script>";
+
+
+                    //Voor de shopping cart session voor de ongeregistreerde grbuiker
+                    //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
+
+                }
+                else
+                {
+
+
+                    var list = db.Favorites.Select(s => s);
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == favo && cus.User_id == User_id);
+                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                    if (has)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == favo && cus.User_id == User_id));
+                            db.SaveChanges();
+                        }
+
+                    }
+                    else
+                    {
+                        // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var favoObj = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(favo)};
+                            db.Favorites.Add(favoObj);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            //Cart button toevoegen
+            if (cartISBN != "" && cartISBN != null)
+            {
+                if (Session["User_id"] != null)
+                {
+                    var list = db.Carts.Select(s => s);
+
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == cart && cus.User_id == User_id);
+
+                    if (has)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == cart && cus.User_id == User_id));
+                            db.SaveChanges();
+                        }
+
+                    }
+                    else
+                    {
+                        // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart) , Quantity = 1};
+                            db.Carts.Add(cartObj);
+                            db.SaveChanges();
+                        }
+                    }
+
+
+
+                }
+                else
+                {
+                    // UNREGISTERED USER
+                    if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
+                    {
+                        Session["shoppingCart"] = cartISBN;
+                    }
+                    else
+                    {
+                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                        //Check of die al in je cart zit.
+                        if (isbns.Contains(cartISBN))
+                        {
+                            isbns.Remove(cartISBN);
+                            var newcart = String.Join(",", isbns);
+                            Session["shoppingCart"] = newcart;
+
+                        }
+                        else
+                        {
+                            Session["shoppingCart"] = Session["shoppingCart"] + "," + cartISBN;
+                        }
+
+                    }
+                }
+            }
             //Als er op de knop gedrukt wordt wordt er een isbn meegegeven die dan in een string opgeslagen wordt.
             if (isbn != 0)
             {
@@ -35,6 +141,7 @@ namespace webtest.Controllers
             // Read more button
             if (readMore == 0)
             {
+
                 if (summary.Length > 625)
                 {
                     int pos = summary.LastIndexOf(" ", 625);
@@ -103,7 +210,7 @@ namespace webtest.Controllers
 
                             using (DatabaseEntities1 db = new DatabaseEntities1())
                             {
-                                var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                                var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn), Quantity = 1 };
                                 db.Carts.Add(cart);
                                 db.SaveChanges();
                             }

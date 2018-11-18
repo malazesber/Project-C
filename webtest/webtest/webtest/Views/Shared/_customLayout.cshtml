@@ -20,9 +20,10 @@
                     @if (Session["User_id"] != null)
                     {
                         <li><a href="@Url.Action("OrderStatus", "Home")"><i class="fa fa-eye site-nav--icon"></i>Order Status</a></li>
+                        <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-heart site-nav--icon"></i>Favorites</a></li>
                     }
 
-                    <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-heart site-nav--icon"></i>Favorites</a></li>
+
                     <li><a href="@Url.Action("ShoppingCart", "Home")"><i class="fa fa-heart site-nav--icon"></i>Cart</a></li>
 
                     <!--Check of de user is ingelogd-->

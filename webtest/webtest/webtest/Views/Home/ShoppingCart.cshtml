@@ -2,6 +2,7 @@
 @using PagedList;
 @using PagedList.Mvc;
 @model List<webtest.Models.Book>
+@using webtest.Models;
 
 @{
     ViewBag.Title = "ShoppingCart";
@@ -29,21 +30,52 @@
         @foreach (var m in Model)
         {
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
-            <div id="product">
-                <img id="productImg" src="@m.Image_src" />
-                <label id="priceBookTotal">€@(m.Price * Convert.ToInt32(ViewData[m.ISBN.ToString()]))</label>
-                <label id="title">@m.Name</label>
-                <label id="author">@m.Author</label> <br />
-                <label id="price">€@m.Price</label>
-            </div>
+        <div id="product">
+            <img id="productImg" src="@m.Image_src" />
+            @{
+                if (Session["User_id"] != null)
+                {
+                    var db = new DatabaseEntities1();
+                    var item = db.Carts.Where(x => x.ISBN == m.ISBN).FirstOrDefault();
+            <label id="priceBookTotal">€@(m.Price * item.Quantity
+    )</label>
+                }
+                else
+                {
+                    <label id="priceBookTotal">€@(m.Price * Convert.ToInt32(ViewData[m.ISBN.ToString()]))</label>
+                }
+            }
+            
+            <label id="title">@m.Name</label>
+            <label id="author">@m.Author</label> <br />
+            <label id="price">€@m.Price</label>
+        </div>
+            if (Session["User_id"] != null)
+            {
+                <a href="@Url.Action("ShoppingCart", "Home", new {del = m.ISBN})" id="deleteButton">Delete Product</a>
+            }
+            else
+            {
+                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, delete = true})" id="deleteButton">Delete Product</a>
+            }
 
-            <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, delete = true})" id="deleteButton">Delete Product</a>
 
-            <div id="amountBox">
-                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, min = true})" id="minButton">-</a>
-                <a id="amount">@ViewData[m.ISBN.ToString()]</a>
-                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, plus = true})" id="plusButton">+</a>
-            </div>
+                <div id="amountBox">
+                    <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, min = true})" id="minButton">-</a>
+                    @{
+                        if (Session["User_id"] != null)
+                        {
+                            var db = new DatabaseEntities1();
+                            var item = db.Carts.Where(x => x.ISBN == m.ISBN).FirstOrDefault();
+                            <a id="amount">@item.Quantity</a>
+                        }
+                        else
+                        {
+                            <a id="amount">@ViewData[m.ISBN.ToString()]</a>
+                        }
+                    }
+                    <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, plus = true})" id="plusButton">+</a>
+                </div>
 
             <img id="stripe" src="~/Content/Images/stripe.png" />
         }

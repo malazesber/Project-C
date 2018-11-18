@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<webtest.Models.Book>
+@using webtest.Models
 @{
     ViewBag.Title = "Favorites";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-
+<link href="~/Content/SearchResults.css" rel="stylesheet" />
 
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
@@ -59,11 +60,36 @@
             @mktText;
         </label>
 
-        <button id="btnCart">ADD TO CART</button>
+        <a href="@Url.Action("Index", "Favorites", new { delete = m.ISBN}) " id="btnWishList">Remove Favo</a>
+        @*<button id="btnCart">ADD TO CART</button>*@
+        @{
+            if (Session["User_id"] != null)
+            {
+                var dbCart = new DatabaseEntities1();
+                var listCart = dbCart.Carts.Select(s => s);
+                double isbnDCart = Convert.ToDouble(m.ISBN);
+                int User_id_Cart = Convert.ToInt32(Session["User_id"]);
+
+                bool hasCart = listCart.Any(cus => cus.ISBN == isbnDCart && cus.User_id == User_id_Cart);
+
+                if (hasCart)
+                {
+                    <a href="@Url.Action("Index", "Favorites", new {cart = m.ISBN})" id="btnCart">Remove From Cart</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Favorites", new {cart = m.ISBN})" id="btnCart">Add to Cart</a>
+                }
+
+
+            }
+        }
+
+        }
 
 
         <label id="priceSmall">@m.Price</label>
-        <a href="@Url.Action("Index", "Product", new { Title = m.Name }) " id="moreInfo">More info</a>
+        <a href="@Url.Action("Index", "Product", new { Title = m.Name , summary = m.Summary}) " id="moreInfo">More info</a>
 
 
         <a href="" id="moreInfoSmall">More info</a>
