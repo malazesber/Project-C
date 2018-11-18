@@ -127,18 +127,19 @@ namespace webtest.Controllers
             string body = "";
             if (emailFor == "VerifyAccount")
             {
-                subject = "Your account is successfully created";
+                subject = "Your account has been created";
 
-                body = "<br/><br/> Welcome by bookstore your account has been" +
-                   " successfuly created. Please click on the link below to verify your account" +
-                   " <br/><br/><a herf='"+link+"'>"+link+"</a> ";
+                body = "Dear customer,<br/><br/> Welcome to Books'R'US. Your account has been successfully created. " +
+                    "Please click the link below to verify your account." +
+                   " <br/><br/><a herf='" +link+"'>"+link+"</a> ";
             }
 
             else if (emailFor == "ResetPassword")
             {
                 subject = "Reset Password";
-                body = "Hallo,<br/><br/>Dear User of BookRus we just have got a request to reset your password. If you want realy to reset your password, you can click on the link below"+
-                       "<br/><br/><a herf='"+link+"'>"+link+"</a>";
+                body = "Dear customer,<br/><br/>We have received a request to change your password. Please click the link below to change your password." +
+                    "<br/><br/>If it wasn’t you, you can ignore this email. Your password has not been changed yet." +
+                       "<br/><br/><a herf='" +link+"'>"+link+"</a>";
             }
             var smtp = new SmtpClient
             {

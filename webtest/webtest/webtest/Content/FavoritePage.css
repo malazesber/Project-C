@@ -1,0 +1,86 @@
+﻿#container {
+    width: 100%;
+    height: 100%;
+}
+
+#results {
+    background: white;
+    min-height: 200px;
+    height: auto;
+    width: 100%;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#product {
+    display: inline-block;
+    /*border: 1px solid red;*/
+    width: 18%;
+    height: 350px;
+    margin-top: 15px;
+}
+
+#title {
+    display: inline-block;
+    margin-top: 6px;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 75%;
+    text-decoration: none;
+    color: black;
+}
+
+#author {
+    display: inline-block;
+    margin-left: 15px;
+    color: #8a3366;
+    font-weight: bold;
+}
+
+#productImg {
+    float: left;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 113px;
+    height: 173px;
+    margin-top: 10px;
+}
+
+#price {
+    font-size: 17px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+#rating {
+    width: 110px;
+    margin-left: 15px;
+}
+
+#btnCart {
+    float: left;
+    margin-top: 10px;
+    display: inline-block;
+    margin-left: 15px;
+    background-color: #bf9000;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#btnWishList {
+    float: left;
+    margin-top: -10px;
+    font-size: 25px;
+    color: #bf9000;
+    font-weight: bold;
+    margin-left: 15px;
+    text-decoration:none;
+}
+    #btnWishList:hover{
+        cursor:pointer;
+    }

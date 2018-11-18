@@ -58,7 +58,7 @@
     margin-right: 25px
 }*/
 
-#txtTC {
+/*#txtTC {
     color: black;
     font-size: 16px;
     margin-top: 10px;
@@ -70,7 +70,7 @@
     #txtTC:hover {
         color: #8a3366;
         cursor: pointer;
-    }
+    }*/
 
 #filters label {
     float: left;
@@ -94,8 +94,14 @@
     margin-top: 3px;
 }
 
+#Pagination {
+    width: 90%;
+    color: black;
+    margin-top: 3px;
+}
+
 #minPrice {
-    width: 35%;
+    width: 40%;
     float: left;
     margin-left: 10px;
     font-size: 15px;
@@ -103,7 +109,7 @@
 }
 
 #maxPrice {
-    width: 35%;
+    width: 40%;
     float: right;
     margin-right: 10px;
     font-size: 15px;
@@ -120,6 +126,12 @@
     margin-bottom: 15px;
     width: 90%;
 }
+
+    #btnSaveFilters:hover {
+        background-color: #977200;
+        cursor: pointer;
+    }
+    
 
 #product {
     margin: 15px;
@@ -165,6 +177,10 @@
     text-decoration: none;
 }
 
+    #moreInfo:hover{
+        text-decoration: underline;
+    }
+
 #btnCart {
     float: right;
     margin-top: 10px;
@@ -178,6 +194,11 @@
     text-decoration: none;
 }
 
+    #btnCart:hover {
+        background-color: #977200;
+        cursor: pointer;
+    }
+
 #btnWishList {
     float: right;
     margin-top: 10px;
@@ -188,7 +209,14 @@
     color: #8a3366;
     padding: 8px 15px;
     border-radius: 6px;
+    text-decoration: none;
 }
+
+    #btnWishList:hover {
+        background-color: #8a3366;
+        color: white;
+        cursor:pointer;
+    }
 
 #price {
     float: right;

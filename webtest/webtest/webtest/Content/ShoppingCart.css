@@ -23,7 +23,7 @@
     margin-bottom: 15px;
 }
 
-#txtSearchTitle {
+/*#txtSearchTitle {
     font-weight: 700;
     color: #8a3366;
     font-size: 20px;
@@ -52,7 +52,7 @@
     #txtTC:hover {
         color: #8a3366;
         cursor: pointer;
-    }
+    }*/
 
 #product {
     margin: 15px;

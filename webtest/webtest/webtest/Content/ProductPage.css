@@ -10,7 +10,7 @@
     height: 190px;
     width: 25%;
     margin-right: 15px;
-    margin-top: 10px;
+    margin-top: 15px;
     text-align: center;
 }
 
@@ -94,18 +94,32 @@
     width: 80%;
     cursor: pointer;
 }
+    #btnCart:hover {
+        background-color: #977200;
+        cursor: pointer;
+    }
 
 #btnWishList {
-    margin: auto;
-    width: 90%;
     display: inline-block;
+    margin: auto;
     background-color: white;
     border: #8a3366 2px solid;
     color: #8a3366;
-    padding: 10px 26px;
+    padding: 10px 15px;
     border-radius: 6px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    width: 80%;
     cursor: pointer;
 }
+
+    #btnWishList:hover {
+        background-color: #8a3366;
+        color: white;
+        cursor: pointer;
+    }
 
 #price {
     color: #8a3366;

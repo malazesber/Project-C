@@ -224,6 +224,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\FavoritePage.css" />
     <Content Include="Content\ForgotPassword.css" />
     <Content Include="Content\Images\house.PNG" />
     <Content Include="Content\Images\Rating1Star.png" />
