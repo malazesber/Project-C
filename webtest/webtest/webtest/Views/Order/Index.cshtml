@@ -8,48 +8,30 @@
     <link href="~/Content/Order.css" rel="stylesheet" type="text/css" />
 </head>
 
-<div class="main">
-    <!--<div class="steps">
-        <ol class="step-indicator">
-
-            <li class="step-indicator__steps one-third  ">
-                <span class="step-indicator__step sb-counter">
-
-                    Order
-
-                </span>
-            </li>
-
-            <li class="step-indicator__steps one-third  ">
-                <span class="step-indicator__step sb-counter">
-
-                    Payment
-
-                </span>
-            </li>
-
-            <li class="step-indicator__steps one-third  ">
-                <span class="step-indicator__step sb-counter">
-
-                    Confirmation
-
-                </span>
-            </li>
-
-        </ol>
-    </div> -->
-    <div class="information">
-        <form action="/Payment" method="get">
-            <div class="form">
-                <div class="inf">
-                    <h1> Personal information</h1>
-                    <input type="text" id="name" name="name" placeholder="Name">
-                    <input type="text" id="surname" name="surname" placeholder="Surname">
-                    <input type="text" id="email" name="email" placeholder="Email">
-                    <input type="text" id="phone" name="phone" placeholder="Phone number">
-                </div>
+<div class="order-card">
+    <form action="/Payment" method="get">
+        <div class="info-card">
+            <div class="info-form">
+                <h1> Personal information</h1>
+                <input type="text" id="name" name="name" placeholder="Name">
+                <input type="text" id="surname" name="surname" placeholder="Surname">
+                <input type="text" id="email" name="email" placeholder="Email">
+                <input type="text" id="phone" name="phone" placeholder="Phone number">
             </div>
-        </form>
-    </div>
 
+            <div class="info-form">
+                <h1>Address information</h1>
+                <input type="text" id="street" name="street" placeholder="Street">
+                <input type="text" id="housenumber" name="housenumber" placeholder="House number">
+                <input type="text" id="city" name="city" placeholder="City">
+                <input type="text" id="zipcode" name="zipcode" placeholder="Zip code">
+                <input type="text" id="country" name="country" placeholder="Country">
+            </div>
+            <label>
+                <input type="checkbox" name="saveinfo"> 
+                    "Save information for next time"
+            </label>
+        </div>
+        <input type="submit" value="Continue to Payment" class="btn">
+    </form>
 </div>
