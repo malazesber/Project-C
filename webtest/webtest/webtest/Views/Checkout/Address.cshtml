@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Address";
+    Layout = "~/Views/Shared/_customLayout.cshtml";
+}
+
+<h2>INPUT ADDRESS HERE</h2>
+<div id="wrapper">
+    <div id="personal">
+        <h1>Personal Info</h1>
+        <input type="text" name="FirstName" placeholder="First Name"><br>
+        <input type="text" name="LastName" placeholder="Last Name"><br>
+        <input type="text" name="Email" placeholder="Email"><br>
+        <input type="text" name="PhoneNumber" placeholder="Phone Number"><br>
+
+    </div>
+    <div id="address">
+        <h1>Address Info</h1>
+        <input type="text" name="Street" placeholder="Street"><br>
+        <input type="text" name="HouseNumber" placeholder="HouseNumber"><br>
+        <input type="text" name="City" placeholder="City"><br>
+        <input type="text" name="ZipCode" placeholder="ZipCode"><br>
+        <input type="text" name="Country" placeholder="Country"><br>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="Address.css">
+@{
+    if (Session["User_id"] != null)
+    {
+        <input type="checkbox" name="save" value="Save"> <text>Save info for next time</text>
+    }
+}
+
+<br />
+<br />
+<a href="@Url.Action("Payment", "Checkout", new {})">Continue</a>

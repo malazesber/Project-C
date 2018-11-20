@@ -1,0 +1,14 @@
+﻿#wrapper {
+    width: 500px;
+    overflow: hidden;
+}
+
+#personal {
+    float: left;
+    width: 300px;
+}
+
+#address {
+    overflow: hidden;
+    float: right;
+}

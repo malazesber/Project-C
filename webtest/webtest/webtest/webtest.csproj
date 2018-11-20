@@ -161,7 +161,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CheckoutUnregisteredController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -220,6 +220,7 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\Address.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -304,7 +305,11 @@
     <Content Include="Views\Register\ForgotPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Favorites\Index.cshtml" />
-    <Content Include="Views\CheckoutUnregistered\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\Address.cshtml" />
+    <Content Include="Views\Checkout\Payment.cshtml" />
+    <Content Include="Views\Checkout\Review.cshtml" />
+    <Content Include="Views\Checkout\Confirmation.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>

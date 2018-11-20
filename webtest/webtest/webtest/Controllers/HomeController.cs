@@ -29,10 +29,13 @@ namespace webtest.Controllers
             decimal totalPrice = 0;
             string deleteISBN = del.ToString();
             List<Book> bookList = new List<Book>();
+            List<Book> bookReturn = new List<Book>();
+            Dictionary<Book, int> cartQuantity = new Dictionary<Book, int>();
 
             if (Session["User_id"] != null)
             {
                 int User_id = Convert.ToInt32(Session["User_id"]);
+
                 //Verwijder item voor geregistreerde user
                 if (deleteISBN != "" && deleteISBN != null)
                 {
@@ -101,16 +104,21 @@ namespace webtest.Controllers
                 if (Session["shoppingCart"] != null)
                 {
                     List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                    var bookListQ = from x in isbns
+                            group x by x into g
+                            let count = g.Count()
+                            
+                            select new { Value = g.Key, Count = count };
+
                     var total = 0;
 
 
                     //Deletes product from cart
                     if (isbns.Contains(isbn) && delete)
                     {
-                        isbns.Remove(isbn);
+                        isbns.RemoveAll(s => isbn == s);
                         var newcart = String.Join(",", isbns);
                         Session["shoppingCart"] = newcart;
-
                         delete = false;
                     }
 
@@ -134,36 +142,25 @@ namespace webtest.Controllers
 
                     try
                     {
-                        foreach (string x in isbns)
+
+                        foreach(var book in bookListQ)
                         {
-                            double add = Convert.ToDouble(x);
+                            double bookISBN = Convert.ToDouble(book.Value);
+                            int count = Convert.ToInt32(book.Count);
+                            bookList.Add(db.Books.Where(m => m.ISBN == bookISBN).FirstOrDefault());
 
-                            //Voegt de boeken uit de isbn lijst toe aan de lijst voor de view.
-                            bookList.Add(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
+                            total = total + Decimal.ToInt32(db.Books.Where(m => m.ISBN == bookISBN).Sum(m => m.Price));
+                            var bookAmount = count;
+                            ViewData[book.Value] = bookAmount;
 
-                            //Checkt of het boek al getoont wordt.
-                            if (bookList.GroupBy(m => m.ISBN).Any(c => c.Count() > 1))
-                            {
-                                bookList.Remove(db.Books.Where(m => m.ISBN == add).FirstOrDefault());
-                            }
+                            var bookR = db.Books.Where(x => x.ISBN == bookISBN).FirstOrDefault();
+                            totalPrice += bookR.Price * book.Count;
 
-                            // Berekent de totale prijs van alle boeken.
-                            total = total + Decimal.ToInt32(db.Books.Where(m => m.ISBN == add).Sum(m => m.Price));
-
-                            // Berekent het aantal van het gekozen boek.
-                            var bookAmount = 0;
-                            foreach (var y in isbns)
-                            {
-                                if (y == x)
-                                {
-                                    bookAmount = bookAmount + 1;
-                                }
-                            }
-                            ViewData[x] = bookAmount;
-
+                            cartQuantity.Add(bookR, count);
+                            bookReturn.Add(bookR);
                         }
-
-                        ViewBag.totalPrice = total;
+                        
+                        ViewBag.totalPrice = totalPrice;
                     }
                     catch (FormatException)
                     {
@@ -174,8 +171,8 @@ namespace webtest.Controllers
                 }
             }
 
-
-            return View(bookList);
+            Session["cart"] = cartQuantity;
+            return View(bookReturn);
 
         }
 
