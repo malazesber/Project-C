@@ -290,41 +290,45 @@ namespace webtest.Controllers
 
             List<Book> OrderCheck(string GivenOrder, List<Book> results)
             {
-                if (GivenOrder == "Price: Descending")
+                if (orders.Contains(GivenOrder))
                 {
-                    results = results.OrderByDescending(x => x.Price).ToList();
-                    return results;
+                    if (GivenOrder == "Price: Descending")
+                    {
+                        results = results.OrderByDescending(x => x.Price).ToList();
+                        return results;
+                    }
+                    else if (GivenOrder == "Price: Ascending")
+                    {
+                        results = results.OrderBy(x => x.Price).ToList();
+                        return results;
+                    }
+                    else if (GivenOrder == "Title: A - Z")
+                    {
+                        results = results.OrderBy(x => x.Name).ToList();
+                        return results;
+                    }
+                    else if (GivenOrder == "Title: Z - A")
+                    {
+                        results = results.OrderByDescending(x => x.Name).ToList();
+                        return results;
+                    }
+                    else if (GivenOrder == "Author: A - Z")
+                    {
+                        results = results.OrderBy(x => x.Author).ToList();
+                        return results;
+                    }
+                    else if (GivenOrder == "Author: Z - A")
+                    {
+                        results = results.OrderByDescending(x => x.Author).ToList();
+                        return results;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Could not find the OrderBy value");
+                        return results;
+                    }
                 }
-                else if (GivenOrder == "Price: Ascending")
-                {
-                    results = results.OrderBy(x => x.Price).ToList();
-                    return results;
-                }
-                else if (GivenOrder == "Title: A - Z")
-                {
-                    results = results.OrderBy(x => x.Name).ToList();
-                    return results;
-                }
-                else if (GivenOrder == "Title: Z - A")
-                {
-                    results = results.OrderByDescending(x => x.Name).ToList();
-                    return results;
-                }
-                else if (GivenOrder == "Author: A - Z")
-                {
-                    results = results.OrderBy(x => x.Author).ToList();
-                    return results;
-                }
-                else if (GivenOrder == "Author: Z - A")
-                {
-                    results = results.OrderByDescending(x => x.Author).ToList();
-                    return results;
-                }
-                else
-                {
-                    Console.WriteLine("Could not find the OrderBy value");
-                    return results;
-                }
+                else return results;
             }
 
 
@@ -368,10 +372,7 @@ namespace webtest.Controllers
                                     var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     var select2 = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                     var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -381,10 +382,7 @@ namespace webtest.Controllers
                                     var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
                                     var select3 = select2.Where(m => m.Price >= MinPriceD == true).ToList();
                                     var results = select3.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -408,10 +406,7 @@ namespace webtest.Controllers
                                 var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 var select2 = select.Where(m => m.Price >= MinPriceD == true).ToList();
                                 var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                             }
@@ -437,10 +432,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -449,10 +441,7 @@ namespace webtest.Controllers
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -474,10 +463,7 @@ namespace webtest.Controllers
                                 decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
                                 var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
@@ -513,10 +499,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -525,10 +508,7 @@ namespace webtest.Controllers
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -549,10 +529,7 @@ namespace webtest.Controllers
                                 int rating = Convert.ToInt32(Rating);
                                 var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                 var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
@@ -575,10 +552,7 @@ namespace webtest.Controllers
                                 if (search == "" || search == null)
                                 {
                                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -586,10 +560,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -608,10 +579,7 @@ namespace webtest.Controllers
                             {
                                 decimal MinPriceD = Convert.ToDecimal(MinPrice);
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
@@ -653,10 +621,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -675,10 +640,7 @@ namespace webtest.Controllers
                             {
                                 decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
@@ -703,10 +665,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -715,10 +674,7 @@ namespace webtest.Controllers
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
                                     var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
 
                                 }
@@ -737,10 +693,7 @@ namespace webtest.Controllers
                             int rating = Convert.ToInt32(Rating);
                             var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                             var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
-                            if (orders.Contains(Order))
-                            {
-                                results = OrderCheck(Order, results);
-                            }
+                            results = OrderCheck(Order, results);
                             return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                         }
                         catch (FormatException)
@@ -765,10 +718,7 @@ namespace webtest.Controllers
                                 if (search == "" || search == null)
                                 {
                                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
                                 //ALS SEARCH ACTIEF IS
@@ -776,10 +726,7 @@ namespace webtest.Controllers
                                 {
                                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
+                                    results = OrderCheck(Order, results);
                                     return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                                 }
 
@@ -797,10 +744,7 @@ namespace webtest.Controllers
                                 // RATING
                                 int rating = Convert.ToInt32(Rating);
                                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                if (orders.Contains(Order))
-                                {
-                                    results = OrderCheck(Order, results);
-                                }
+                                results = OrderCheck(Order, results);
                                 return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
                             }
                             catch (FormatException)
@@ -825,10 +769,7 @@ namespace webtest.Controllers
                 if (search == "" || search == null)
                 {
                     var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                    if (orders.Contains(Order))
-                    {
-                        results = OrderCheck(Order, results);
-                    }
+                    results = OrderCheck(Order, results);
                     return View(results.ToPagedList(page ?? 1, Pagination));
                 }
                 //ALS SEARCH ACTIEF IS
@@ -836,10 +777,7 @@ namespace webtest.Controllers
                 {
                     var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
                     var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                    if (orders.Contains(Order))
-                    {
-                        results = OrderCheck(Order, results);
-                    }
+                    results = OrderCheck(Order, results);
                     return View(results.ToPagedList(page ?? 1, Pagination));
                 }
 
@@ -847,10 +785,7 @@ namespace webtest.Controllers
             else
             {
                 var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                if (orders.Contains(Order))
-                {
-                    results = OrderCheck(Order, results);
-                }
+                results = OrderCheck(Order, results);
                 return View(results.ToPagedList(page ?? 1, Pagination));
             }
 

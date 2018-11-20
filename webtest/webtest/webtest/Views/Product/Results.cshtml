@@ -208,8 +208,8 @@
 
             <label>Price</label><br />
             <div id="priceFilter">
-                <input id="minPrice" type="number" name="MinPrice" placeholder="Min Price" , value="@Request.QueryString["MinPrice"]">
-                <input id="maxPrice" type="number" name="MaxPrice" placeholder="Max Price" , value="@Request.QueryString["MaxPrice"]">
+                <input id="minPrice" type="number" name="MinPrice" min="0" placeholder="Min Price" , value="@Request.QueryString["MinPrice"]">
+                <input id="maxPrice" type="number" name="MaxPrice" min="0" placeholder="Max Price" , value="@Request.QueryString["MaxPrice"]">
             </div>
 
             <label>Category</label>
@@ -253,15 +253,13 @@
             </select>
 
             <label>Items per page</label>
-            <div id="PaginationFilter">
-                <br />
-                <input id="Pagination" type="number" name="Pagination" , value="@Request.QueryString["Pagination"]">
-            </div>
+            <br />
+            <input id="Pagination" type="number" name="Pagination" min="1" max="50" placeholder="Items per page" , value="@Request.QueryString["Pagination"]">
+            
 
             <input id="orderInput" type="text" name="Order" , style="display:none">
             <input id="categoryInput" type="text" name="Category" , style="display:none">
             <input id="ratingInput" type="text" name="Rating" , style="display:none">
-            <input id="PaginationInput" type="number" name="Pagination" , style="display:none">
 
             <button id="btnSaveFilters" , onclick="setRating()">Apply Filters</button>
             @Html.Raw(TempData["favo"])
@@ -280,15 +278,26 @@
                 var order = document.getElementById("orderFilter");
                 document.getElementById("orderInput").value = order.options[order.selectedIndex].value;
 
-                var Pagination = document.getElementById("PaginationFilter");
-                document.getElementById("PaginationInput").value = Pagination.options[Pagination.selectedIndex].value;
-
             }
             function setRatingTop() {
                 var rating = document.getElementById("filterTopSelect");
                 document.getElementById("ratingInputTop").value = rating.options[rating.selectedIndex].value;
             }
 
+        </script>
+        <script>
+            function PageCheck() {
+                var page = document.getElementById("Pagination").value;
+                if (page > 50) {
+                    page = 50;
+                    Console.WriteLine("Pagination was too high");
+                    return page;
+                }
+                else {
+                    Console.WriteLine("Check, check, double check");
+                }
+
+            }
         </script>
 
     </div>
