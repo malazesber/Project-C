@@ -84,8 +84,18 @@
     <div id="checkout">
         <label id="payment">Payment</label>
         <div id="priceBox">
-            <label id="deliveryPrice">€0</label>
-            <label id="totalPrice">€@ViewBag.totalPrice</label>
+            <label id="deliveryPrice">€0</label></br>
+            @{
+                if (ViewBag.totalPrice == null)
+                {
+                    <label id="totalPrice">€0</label>
+                }
+                else
+                {
+                    <label id="totalPrice">€@ViewBag.totalPrice</label>
+                }
+            }
+
         </div>
         <div id="totalBox">
             <label id="delivery">Delivery</label>
