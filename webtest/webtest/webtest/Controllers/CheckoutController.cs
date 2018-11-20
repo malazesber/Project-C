@@ -1,12 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
 using webtest.Models;
 
 namespace webtest.Controllers
 {
-    public class CheckoutUnregisteredController : Controller
+    public class CheckoutController : Controller
     {
         // GET: Login
         public ActionResult Index()
@@ -14,6 +17,7 @@ namespace webtest.Controllers
             return View();
         }
 
+        //LOGIN
         [HttpPost]
         public ActionResult Authorize(User userModel)
         {
@@ -42,6 +46,31 @@ namespace webtest.Controllers
                 }
             }
         }
+
+        //CHECKOUT AS GUEST
+        public ActionResult Address()
+        {
+            return View();
+        }
+
+        public ActionResult Payment()
+        {
+            return View();
+        }
+
+        public ActionResult Review()
+        {
+            return View();
+        }
+
+        public ActionResult Confirmation()
+        {
+            return View();
+        }
+
+
+
+
         [NonAction]
         public void SendVerificationLinkEmail(string email, string activationCode, string emailFor = "VerifyAccount")
         {
@@ -88,20 +117,6 @@ namespace webtest.Controllers
                 smtp.Send(message);
         }
 
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        public ActionResult LogOut()
-        {
-            Session.Abandon();
-            return RedirectToAction("Index", "Home");
-        }
+    
     }
 }
