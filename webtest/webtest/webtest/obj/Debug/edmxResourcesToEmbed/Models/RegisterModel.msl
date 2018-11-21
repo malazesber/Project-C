@@ -29,17 +29,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Addresses">
-      <EntityTypeMapping TypeName="DatabaseModel.Address">
-        <MappingFragment StoreEntitySet="Address">
-          <ScalarProperty Name="Postcode" ColumnName="Postcode" />
-          <ScalarProperty Name="House_number" ColumnName="House_number" />
-          <ScalarProperty Name="Street_name" ColumnName="Street_name" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Address_id" ColumnName="Address_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Creditcard_details">
       <EntityTypeMapping TypeName="DatabaseModel.Creditcard_details">
         <MappingFragment StoreEntitySet="Creditcard_details">
@@ -94,6 +83,19 @@
           <ScalarProperty Name="Summary" ColumnName="Summary" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="DatabaseModel.Address">
+        <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Zip_code" ColumnName="Zip_code" />
+          <ScalarProperty Name="House_number" ColumnName="House_number" />
+          <ScalarProperty Name="Street_name" ColumnName="Street_name" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address_id" ColumnName="Address_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

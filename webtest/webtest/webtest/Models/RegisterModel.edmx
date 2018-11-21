@@ -13,7 +13,9 @@
           <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Street_name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="House_number" Type="int" Nullable="false" />
-          <Property Name="Postcode" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Zip_code" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
@@ -26,7 +28,7 @@
           <Property Name="Author" Type="varchar" MaxLength="50" />
           <Property Name="Image_src" Type="varchar(max)" Nullable="false" />
           <Property Name="ISBN" Type="float" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Rating" Type="int" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
         </EntityType>
@@ -141,6 +143,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Address">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_cart">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
@@ -178,6 +192,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="Favorites" EntitySet="Favorites" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Address" Association="Self.FK_User_Address">
+            <End Role="User" EntitySet="User" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_cart" Association="Self.FK_User_cart">
             <End Role="User" EntitySet="User" />
             <End Role="Cart" EntitySet="Cart" />
@@ -203,19 +221,15 @@
           <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Address_id" Type="Int32" />
           <Property Name="Cart_id" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Creditcard_details" Relationship="DatabaseModel.FK_CREDITCARD_USER" FromRole="User" ToRole="Creditcard_details" />
           <NavigationProperty Name="Favorites" Relationship="DatabaseModel.FK_User" FromRole="User" ToRole="Favorite" />
           <NavigationProperty Name="Carts" Relationship="DatabaseModel.FK_User_cart" FromRole="User" ToRole="Cart" />
+          <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Addresses" Relationship="DatabaseModel.FK_User_Address" FromRole="User" ToRole="Address" />
         </EntityType>
         <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Payments" EntityType="DatabaseModel.Payment" />
-          <EntitySet Name="Addresses" EntityType="DatabaseModel.Address" />
-          <AssociationSet Name="FK_Address_id" Association="DatabaseModel.FK_Address_id">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           <EntitySet Name="Creditcard_details" EntityType="DatabaseModel.Creditcard_details" />
           <AssociationSet Name="FK_CREDITCARD_USER" Association="DatabaseModel.FK_CREDITCARD_USER">
             <End Role="User" EntitySet="Users" />
@@ -237,6 +251,15 @@
             <End Role="Cart" EntitySet="Carts" />
           </AssociationSet>
           <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
+          <EntitySet Name="Addresses" EntityType="DatabaseModel.Address" />
+          <AssociationSet Name="FK_Address_id" Association="DatabaseModel.FK_Address_id">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Address" Association="DatabaseModel.FK_User_Address">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Payment">
           <Key>
@@ -248,29 +271,6 @@
           <Property Name="Order_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Payment" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="Address_id" />
-          </Key>
-          <Property Name="Address_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Street_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="House_number" Type="Int32" Nullable="false" />
-          <Property Name="Postcode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Address_id" FromRole="Address" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Address_id">
-          <End Type="DatabaseModel.Address" Role="Address" Multiplicity="0..1" />
-          <End Type="DatabaseModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="Address_id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="Address_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Creditcard_details">
           <Key>
             <PropertyRef Name="CC_number" />
@@ -371,10 +371,48 @@
           <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ISBN" Type="Double" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Address_id" />
+          </Key>
+          <Property Name="Address_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Street_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="House_number" Type="Int32" Nullable="false" />
+          <Property Name="Zip_code" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Address_id" FromRole="Address" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK_User_Address" FromRole="Address" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Address_id">
+          <End Type="DatabaseModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Address_id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Address">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -406,17 +444,6 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Payment_date" ColumnName="Payment_date" />
                 <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="DatabaseModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
-                <ScalarProperty Name="House_number" ColumnName="House_number" />
-                <ScalarProperty Name="Street_name" ColumnName="Street_name" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address_id" ColumnName="Address_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -474,6 +501,19 @@
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="DatabaseModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Zip_code" ColumnName="Zip_code" />
+                <ScalarProperty Name="House_number" ColumnName="House_number" />
+                <ScalarProperty Name="Street_name" ColumnName="Street_name" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address_id" ColumnName="Address_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

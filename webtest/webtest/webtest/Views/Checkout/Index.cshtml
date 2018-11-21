@@ -11,7 +11,7 @@
 <div class="login-card">
     <div class="continue-form">
         <h1>Login</h1>
-        @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
+        @using (Html.BeginForm("Authorize", "Checkout", FormMethod.Post))
         {
             <div class="form-group">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control, email", placeholder = "Email" } })
@@ -29,7 +29,7 @@
             </div>
 
             <div class="login-join">
-                <p>New to Books'R'US? <a href="@Url.Action("Registration", "Register")">Create an account</a></p>
+                <p>New to Books'R'US? <a href="@Url.Action("Registration", "Register", new { checkout = true })">Create an account</a></p>
             </div>
         }
     </div>

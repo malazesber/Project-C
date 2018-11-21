@@ -8,7 +8,9 @@
     <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Street_name" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="House_number" Type="int" Nullable="false" />
-    <Property Name="Postcode" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Zip_code" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Book">
     <Key>
@@ -21,7 +23,7 @@
     <Property Name="Author" Type="varchar" MaxLength="50" />
     <Property Name="Image_src" Type="varchar(max)" Nullable="false" />
     <Property Name="ISBN" Type="float" Nullable="false" />
-    <Property Name="Price" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Rating" Type="int" Nullable="false" />
     <Property Name="Stock" Type="int" Nullable="false" />
   </EntityType>
@@ -136,6 +138,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User_Address">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_cart">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
@@ -172,6 +186,10 @@
     <AssociationSet Name="FK_User" Association="Self.FK_User">
       <End Role="User" EntitySet="User" />
       <End Role="Favorites" EntitySet="Favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Address" Association="Self.FK_User_Address">
+      <End Role="User" EntitySet="User" />
+      <End Role="Address" EntitySet="Address" />
     </AssociationSet>
     <AssociationSet Name="FK_User_cart" Association="Self.FK_User_cart">
       <End Role="User" EntitySet="User" />

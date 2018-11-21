@@ -20,6 +20,7 @@ namespace webtest.Models
             this.Creditcard_details = new HashSet<Creditcard_details>();
             this.Favorites = new HashSet<Favorite>();
             this.Carts = new HashSet<Cart>();
+            this.Addresses = new HashSet<Address>();
         }
     
         public int User_id { get; set; }
@@ -35,12 +36,14 @@ namespace webtest.Models
         public Nullable<int> Address_id { get; set; }
         public Nullable<int> Cart_id { get; set; }
     
-        public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Creditcard_details> Creditcard_details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Favorite> Favorites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual Address Address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

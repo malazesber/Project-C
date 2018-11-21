@@ -24,9 +24,12 @@ namespace webtest.Models
         public string City { get; set; }
         public string Street_name { get; set; }
         public int House_number { get; set; }
-        public string Postcode { get; set; }
+        public string Zip_code { get; set; }
+        public string Country { get; set; }
+        public int User_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

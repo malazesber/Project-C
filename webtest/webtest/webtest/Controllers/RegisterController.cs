@@ -14,8 +14,17 @@ namespace webtest.Controllers
     {
         //Registration Action
         [HttpGet]
-        public ActionResult Registration()
+        public ActionResult Registration(bool? checkout)
         {
+            var checkoutB = Convert.ToBoolean(checkout);
+            if (checkoutB)
+            {
+                Session["checkoutRegister"] = checkout;
+            }
+            else
+            {
+                Session["checkoutRegister"] = false;
+            }
             return View();
         }
         //Registration Post Action
@@ -54,6 +63,20 @@ namespace webtest.Controllers
                     message = "Registration successfully done. An activation link " +
                         " has been sent to your email:" + user.Email;
                     status = true;
+
+                    // Add current shopping cart to the database of the newly created account.
+                    Dictionary<Book, int> cart = (Dictionary<Book, int>)Session["Cart"];
+                    if(cart.Count != 0)
+                    {
+                        foreach (KeyValuePair<Book, int> kv in cart)
+                        {
+                            var cartObj = new Cart() { User_id = user.User_id, ISBN = kv.Key.ISBN, Quantity = kv.Value };
+                            dc.Carts.Add(cartObj);
+                            dc.SaveChanges();
+                        }
+                    }
+                   
+                    
                 }
 
             }

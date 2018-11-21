@@ -101,7 +101,22 @@
             <label id="delivery">Delivery</label>
             <label id="total">Total Price</label>
             </br>
-            <a href="@Url.Action("Index", "Checkout", new {})" >CHECKOUT</a>
+            @{
+                if (Session["User_id"] != null)
+                {
+                    <a href="@Url.Action("Address", "Checkout", new {})">CHECKOUT</a>
+                }
+                else
+                {
+                    var cart = (Dictionary<Book, int>)Session["Cart"];
+                    if (cart.Count != 0)
+                    {
+                        <a href="@Url.Action("Index", "Checkout", new {})">CHECKOUT</a>
+                    }
+                }
+
+            }
+
         </div>
     </div>
 </div>

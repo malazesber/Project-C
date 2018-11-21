@@ -17,6 +17,11 @@
         <div class="alert alert-danger">
             <strong>Success!</strong>@ViewBag.Message
         </div>
+        <br />
+        if ((bool)Session["checkoutRegister"])
+        {
+            <a href="@Url.Action("Index", "Checkout")"> Click here to continue to checkout</a>
+        }
 
     }
     else
@@ -29,8 +34,8 @@
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name"  } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })     
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Surname" } })
@@ -89,11 +94,16 @@
         }
     }
 
-
-    <div class="register-login">
-        <p>Already have an account? <a href="@Url.Action("Index", "Login")">Login</a></p>
+    @{ 
+        if (!(bool)Session["checkoutRegister"])
+        {
+                <div class="register-login">
+                    <p>Already have an account? <a href="@Url.Action("Index", "Login")">Login</a></p>
+                </div>
+       } 
+        }
+        
     </div>
-</div>
 
 @*@section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

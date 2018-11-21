@@ -40,9 +40,22 @@ namespace webtest.Controllers
                 }
                 else
                 {
+                    //SUCCESFULLY LOGIN
                     Session["User_id"] = userData.User_id;
                     Session["Name"] = userData.Name;
-                    return RedirectToAction("Index", "Home");
+
+                    var cart = (Dictionary<Book, int>)Session["Cart"];
+
+                    db.Carts.RemoveRange(db.Carts.Where(x => x.User_id == userData.User_id));
+                    db.SaveChanges();
+                    foreach (KeyValuePair<Book, int> kv in cart)
+                    {
+                        var cartObj = new Cart() { User_id = userData.User_id, ISBN = kv.Key.ISBN, Quantity = kv.Value };
+                        db.Carts.Add(cartObj);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Address", "Checkout");
+
                 }
             }
         }
@@ -50,7 +63,8 @@ namespace webtest.Controllers
         //CHECKOUT AS GUEST
         public ActionResult Address()
         {
-            return View();
+            var tuple = new Tuple<User, Address>(new User(), new Address());
+            return View(tuple);
         }
 
         public ActionResult Payment()
