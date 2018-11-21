@@ -13,11 +13,11 @@
         <AssociationConnector Association="DatabaseModel.FK_CREDITCARD_USER" />
         <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="6.125" PointY="3" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
-        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="8.125" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.Favorite" Width="1.5" PointX="3" PointY="11.875" />
         <AssociationConnector Association="DatabaseModel.FK_User" />
         <EntityTypeShape EntityType="DatabaseModel.Cart" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="DatabaseModel.FK_User_cart" />
+        <EntityTypeShape EntityType="DatabaseModel.Book" Width="1.5" PointX="8.75" PointY="0.625" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

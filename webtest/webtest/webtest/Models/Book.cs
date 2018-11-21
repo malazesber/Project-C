@@ -23,5 +23,6 @@ namespace webtest.Models
         public double ISBN { get; set; }
         public decimal Price { get; set; }
         public int Rating { get; set; }
+        public int Stock { get; set; }
     }
 }
