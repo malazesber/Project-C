@@ -14,21 +14,14 @@ namespace webtest.Models
     
     public partial class Order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
-        {
-            this.OrderDetails = new HashSet<OrderDetail>();
-        }
-    
         public int Order_id { get; set; }
-        public int OrderDetails_id { get; set; }
+        public Nullable<int> OrderDetails_id { get; set; }
         public string Order_status { get; set; }
-        public int Payment_id { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public int User_id { get; set; }
+        public Nullable<int> Payment_id { get; set; }
+        public System.DateTime OrderDate { get; set; }
+        public Nullable<int> User_id { get; set; }
+        public int Order_Number { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual User User { get; set; }
     }

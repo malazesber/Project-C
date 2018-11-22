@@ -91,9 +91,8 @@
     <EntitySetMapping Name="OrderDetails">
       <EntityTypeMapping TypeName="DatabaseModel.OrderDetail">
         <MappingFragment StoreEntitySet="OrderDetails">
-          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="Products" ColumnName="Products" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
           <ScalarProperty Name="OrderDetails_Id" ColumnName="OrderDetails_Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -101,6 +100,7 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="DatabaseModel.Order">
         <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
           <ScalarProperty Name="User_id" ColumnName="User_id" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
           <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />

@@ -17,10 +17,8 @@
         <EntityTypeShape EntityType="DatabaseModel.Address" Width="1.5" PointX="3" PointY="14.5" />
         <AssociationConnector Association="DatabaseModel.FK_Address_id" />
         <AssociationConnector Association="DatabaseModel.FK_User_Address" />
-        <EntityTypeShape EntityType="DatabaseModel.OrderDetail" Width="1.5" PointX="11" PointY="2.25" />
-        <AssociationConnector Association="DatabaseModel.FK_OrderDetails_Books" />
+        <EntityTypeShape EntityType="DatabaseModel.OrderDetail" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="5.5" PointY="2" />
-        <AssociationConnector Association="DatabaseModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_UserID" />
         </Diagram>

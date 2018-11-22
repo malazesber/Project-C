@@ -70,4 +70,4 @@
     }, '#paypal-button-container');
 </script>
 
-<a href="@Url.Action("Review", "Checkout", new {})">Continue</a>
+<a href="@Url.Action("Payment", "Checkout", new {payment = true})">Pay</a>

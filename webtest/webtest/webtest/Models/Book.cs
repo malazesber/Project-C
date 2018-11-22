@@ -14,12 +14,6 @@ namespace webtest.Models
     
     public partial class Book
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Book()
-        {
-            this.OrderDetails = new HashSet<OrderDetail>();
-        }
-    
         public string Category { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
@@ -30,8 +24,5 @@ namespace webtest.Models
         public decimal Price { get; set; }
         public int Rating { get; set; }
         public int Stock { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

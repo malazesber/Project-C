@@ -15,11 +15,7 @@ namespace webtest.Models
     public partial class OrderDetail
     {
         public int OrderDetails_Id { get; set; }
-        public int Order_id { get; set; }
         public System.DateTime OrderDate { get; set; }
-        public double ISBN { get; set; }
-    
-        public virtual Book Book { get; set; }
-        public virtual Order Order { get; set; }
+        public string Products { get; set; }
     }
 }

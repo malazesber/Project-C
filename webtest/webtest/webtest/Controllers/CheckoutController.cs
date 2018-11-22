@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using webtest.Models;
 
+
 namespace webtest.Controllers
 {
     public class CheckoutController : Controller
@@ -61,28 +62,167 @@ namespace webtest.Controllers
         }
 
         //CHECKOUT AS GUEST
-        public ActionResult Address()
+
+        public ActionResult Address(string Name, string LastName, string Email, string PhoneNumber, string Street,
+            int? HouseNumber, string City, string ZipCode, string Country, string Save)
         {
-            var tuple = new Tuple<User, Address>(new User(), new Address());
-            return View(tuple);
+            Dictionary<User, Address> userInfo = new Dictionary<User, Address>();
+
+
+            if (Name == "" || LastName == "" || Email == "" || PhoneNumber == "" || Street == "" ||
+                HouseNumber == null || City == "" || ZipCode == "" || Country == "")
+            {
+                ViewBag.Message = "Please fill in all info";
+                return View();
+            }
+            else
+            {
+                if (Session["User_id"] != null)
+                {
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                       new Address
+                       {
+                           Street_name = Street,
+                           House_number = Convert.ToInt32(HouseNumber),
+                           Zip_code = ZipCode,
+                           Country = Country,
+                           User_id = User_id
+                       });
+
+                    Session["UserInfo"] = userInfo;
+
+                    if (Save == "Save")
+                    {
+
+                        using (var db = new DatabaseEntities1())
+                        {
+                            var has = db.Addresses.Where(x => x.User_id == User_id).SingleOrDefault();
+                            if (has != null)
+                            {
+                                db.Addresses.Remove(db.Addresses.Where(x => x.User_id == User_id).SingleOrDefault());
+                            }
+
+
+                            db.Addresses.Add(new Address
+                            {
+                                Street_name = Street,
+                                City = City,
+                                House_number = Convert.ToInt32(HouseNumber),
+                                Zip_code = ZipCode,
+                                Country = Country,
+                                User_id = User_id
+                            });
+                            db.SaveChanges();
+
+
+                        }
+                    }
+
+                    return RedirectToAction("Review");
+                }
+                else
+                {
+                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                       new Address
+                       {
+                           Street_name = Street,
+                           House_number = Convert.ToInt32(HouseNumber),
+                           Zip_code = ZipCode,
+                           Country = Country
+                       });
+
+                    Session["UserInfo"] = userInfo;
+
+                    return RedirectToAction("Review");
+                }
+                   
+            }
+
+
         }
 
-        public ActionResult Payment()
+
+        public ActionResult Payment(bool? payment)
         {
+            if(payment != null)
+            {
+                if ((bool)payment)
+                {
+
+                    
+                    string products = "";
+
+                    if (Session["User_id"] != null)
+                    {
+
+                    }
+                    else
+                    {
+                        Dictionary<Book, int> cartQuantity = (Dictionary<Book, int>)Session["Cart"];
+                        foreach (KeyValuePair<Book, int> kv in cartQuantity)
+                            {
+                                products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
+                            }
+                    }
+                    
+
+
+                    int Ordernumber = new Random().Next(1000000, int.MaxValue);
+
+
+                    using (var db = new DatabaseEntities1())
+                    {
+                        while (db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault() != null)
+                        {
+                            Ordernumber = new Random().Next(1000000, int.MaxValue);
+                        }
+                        var has = db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+                        if (has == null)
+                        {
+                            if (Session["User_id"] != null)
+                            {
+                                Order OrderObj = new Order()
+                                {
+                                    Order_status = "Pending",
+                                    OrderDate = DateTime.Now,
+                                    User_id = Convert.ToInt32(Session["User_id"]),
+                                    Order_Number = Ordernumber
+                                };
+
+                            }
+                            else
+                            {
+                                Order OrderObj = new Order()
+                                {
+                                    Order_status = "Pending",
+                                    OrderDate = DateTime.Now,
+                                    Order_Number = Ordernumber
+                                };
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+            
             return View();
         }
 
         public ActionResult Review()
         {
-            return View();
+            Dictionary<User, Address> userInfo = (Dictionary < User, Address > )Session["UserInfo"];
+            return View(userInfo);
         }
 
         public ActionResult Confirmation()
         {
             return View();
         }
-
-
 
 
         [NonAction]
