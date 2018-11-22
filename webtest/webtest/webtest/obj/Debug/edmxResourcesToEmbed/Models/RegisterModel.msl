@@ -40,17 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="DatabaseModel.Order">
-        <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
-          <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
-          <ScalarProperty Name="Order_status" ColumnName="Order_status" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Favorites">
       <EntityTypeMapping TypeName="DatabaseModel.Favorite">
         <MappingFragment StoreEntitySet="Favorites">
@@ -96,6 +85,28 @@
           <ScalarProperty Name="Street_name" ColumnName="Street_name" />
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Address_id" ColumnName="Address_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="DatabaseModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetails">
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+          <ScalarProperty Name="OrderDetails_Id" ColumnName="OrderDetails_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="DatabaseModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
+          <ScalarProperty Name="Order_status" ColumnName="Order_status" />
+          <ScalarProperty Name="OrderDetails_id" ColumnName="OrderDetails_id" />
+          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

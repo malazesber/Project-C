@@ -166,6 +166,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Crypto.cs" />
@@ -189,6 +190,9 @@
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Payment.cs">
@@ -312,6 +316,7 @@
     <Content Include="Views\Checkout\Confirmation.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\OrderHistory\OrderHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\UserEntities\" />

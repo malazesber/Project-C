@@ -59,15 +59,25 @@
           <Property Name="User_id" Type="int" Nullable="false" />
           <Property Name="ISBN" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetails_Id" />
+          </Key>
+          <Property Name="OrderDetails_Id" Type="int" Nullable="false" />
+          <Property Name="Order_id" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="ISBN" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="Order_id" />
           </Key>
           <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OrderDetails_id" Type="int" Nullable="false" />
           <Property Name="Order_status" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Cart_id" Type="int" Nullable="false" />
           <Property Name="Payment_id" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="User_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -119,6 +129,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetails_Books">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ISBN" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ISBN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Order_id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ORDERS_PAYMENT">
           <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -128,6 +162,18 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="Payment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERS_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -173,6 +219,7 @@
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -184,8 +231,20 @@
             <End Role="User" EntitySet="User" />
             <End Role="Creditcard_details" EntitySet="Creditcard_details" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Books" Association="Self.FK_OrderDetails_Books">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_ORDERS_PAYMENT" Association="Self.FK_ORDERS_PAYMENT">
             <End Role="Payment" EntitySet="Payment" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERS_UserID" Association="Self.FK_ORDERS_UserID">
+            <End Role="User" EntitySet="User" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_User" Association="Self.FK_User">
@@ -226,6 +285,7 @@
           <NavigationProperty Name="Carts" Relationship="DatabaseModel.FK_User_cart" FromRole="User" ToRole="Cart" />
           <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Addresses" Relationship="DatabaseModel.FK_User_Address" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_UserID" FromRole="User" ToRole="Order" />
         </EntityType>
         <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -234,11 +294,6 @@
           <AssociationSet Name="FK_CREDITCARD_USER" Association="DatabaseModel.FK_CREDITCARD_USER">
             <End Role="User" EntitySet="Users" />
             <End Role="Creditcard_details" EntitySet="Creditcard_details" />
-          </AssociationSet>
-          <EntitySet Name="Orders" EntityType="DatabaseModel.Order" />
-          <AssociationSet Name="FK_ORDERS_PAYMENT" Association="DatabaseModel.FK_ORDERS_PAYMENT">
-            <End Role="Payment" EntitySet="Payments" />
-            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="Favorites" EntityType="DatabaseModel.Favorite" />
           <AssociationSet Name="FK_User" Association="DatabaseModel.FK_User">
@@ -259,6 +314,24 @@
           <AssociationSet Name="FK_User_Address" Association="DatabaseModel.FK_User_Address">
             <End Role="User" EntitySet="Users" />
             <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="DatabaseModel.OrderDetail" />
+          <AssociationSet Name="FK_OrderDetails_Books" Association="DatabaseModel.FK_OrderDetails_Books">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="DatabaseModel.Order" />
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="DatabaseModel.FK_OrderDetails_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERS_PAYMENT" Association="DatabaseModel.FK_ORDERS_PAYMENT">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERS_UserID" Association="DatabaseModel.FK_ORDERS_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Payment">
@@ -291,29 +364,6 @@
             </Principal>
             <Dependent Role="Creditcard_details">
               <PropertyRef Name="User_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Order_id" />
-          </Key>
-          <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Order_status" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Cart_id" Type="Int32" Nullable="false" />
-          <Property Name="Payment_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Payment" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Order" ToRole="Payment" />
-        </EntityType>
-        <Association Name="FK_ORDERS_PAYMENT">
-          <End Type="DatabaseModel.Payment" Role="Payment" Multiplicity="1" />
-          <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Payment">
-              <PropertyRef Name="Payment_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="Payment_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -374,6 +424,7 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="DatabaseModel.FK_OrderDetails_Books" FromRole="Book" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="Address">
           <Key>
@@ -409,6 +460,79 @@
               <PropertyRef Name="User_id" />
             </Principal>
             <Dependent Role="Address">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetails_Id" />
+          </Key>
+          <Property Name="OrderDetails_Id" Type="Int32" Nullable="false" />
+          <Property Name="Order_id" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ISBN" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="DatabaseModel.FK_OrderDetails_Books" FromRole="OrderDetail" ToRole="Book" />
+          <NavigationProperty Name="Order" Relationship="DatabaseModel.FK_OrderDetails_Orders" FromRole="OrderDetail" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Books">
+          <End Type="DatabaseModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="DatabaseModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ISBN" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ISBN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_id" />
+          </Key>
+          <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDetails_id" Type="Int32" Nullable="false" />
+          <Property Name="Order_status" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_id" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="DatabaseModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="Payment" Relationship="DatabaseModel.FK_ORDERS_PAYMENT" FromRole="Order" ToRole="Payment" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK_ORDERS_UserID" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="DatabaseModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="DatabaseModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Order_id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERS_PAYMENT">
+          <End Type="DatabaseModel.Payment" Role="Payment" Multiplicity="1" />
+          <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Payment_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Payment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERS_UserID">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Order">
               <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -458,17 +582,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="DatabaseModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
-                <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
-                <ScalarProperty Name="Order_status" ColumnName="Order_status" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Favorites">
             <EntityTypeMapping TypeName="DatabaseModel.Favorite">
               <MappingFragment StoreEntitySet="Favorites">
@@ -514,6 +627,28 @@
                 <ScalarProperty Name="Street_name" ColumnName="Street_name" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Address_id" ColumnName="Address_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="DatabaseModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+                <ScalarProperty Name="OrderDetails_Id" ColumnName="OrderDetails_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DatabaseModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
+                <ScalarProperty Name="Order_status" ColumnName="Order_status" />
+                <ScalarProperty Name="OrderDetails_id" ColumnName="OrderDetails_id" />
+                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

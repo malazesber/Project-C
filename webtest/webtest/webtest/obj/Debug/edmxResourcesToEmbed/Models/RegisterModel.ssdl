@@ -54,15 +54,25 @@
     <Property Name="User_id" Type="int" Nullable="false" />
     <Property Name="ISBN" Type="float" Nullable="false" />
   </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="OrderDetails_Id" />
+    </Key>
+    <Property Name="OrderDetails_Id" Type="int" Nullable="false" />
+    <Property Name="Order_id" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="ISBN" Type="float" Nullable="false" />
+  </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="Order_id" />
     </Key>
     <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="OrderDetails_id" Type="int" Nullable="false" />
     <Property Name="Order_status" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="Cart_id" Type="int" Nullable="false" />
     <Property Name="Payment_id" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="User_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Payment">
     <Key>
@@ -114,6 +124,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OrderDetails_Books">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Order_id" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="Order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ORDERS_PAYMENT">
     <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -123,6 +157,18 @@
       </Principal>
       <Dependent Role="Orders">
         <PropertyRef Name="Payment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERS_UserID">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="User_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -168,6 +214,7 @@
     <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Creditcard_details" EntityType="Self.Creditcard_details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -179,8 +226,20 @@
       <End Role="User" EntitySet="User" />
       <End Role="Creditcard_details" EntitySet="Creditcard_details" />
     </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Books" Association="Self.FK_OrderDetails_Books">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_ORDERS_PAYMENT" Association="Self.FK_ORDERS_PAYMENT">
       <End Role="Payment" EntitySet="Payment" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERS_UserID" Association="Self.FK_ORDERS_UserID">
+      <End Role="User" EntitySet="User" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_User" Association="Self.FK_User">

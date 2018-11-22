@@ -28,10 +28,11 @@ namespace webtest.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Creditcard_details> Creditcard_details { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

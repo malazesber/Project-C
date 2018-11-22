@@ -21,6 +21,7 @@ namespace webtest.Models
             this.Favorites = new HashSet<Favorite>();
             this.Carts = new HashSet<Cart>();
             this.Addresses = new HashSet<Address>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int User_id { get; set; }
@@ -45,5 +46,7 @@ namespace webtest.Models
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
