@@ -6,6 +6,9 @@
 @{
     ViewBag.Title = "OrderHistory";
     Layout = "~/Views/Shared/_customLayout.cshtml";
+    <head>
+        <link href="~/Content/OrderHistory.css" rel="stylesheet" />
+    </head>
 }
 
 <h2>OrderHistory</h2>
@@ -22,14 +25,20 @@
             <text> You haven't done any orders yet</text>
         }
         <table>
+            <tr>
+                <th>Order Id</th>
+                <th>Order status</th>
+                <th>Order Date</th>
+            </tr>
             @foreach (var m in Model)
             {
                 <tr>
-                    <td>m.Order_id</td>
-                    <td>m.Order_status</td>
-                    <td>OrderDate</td>
+                    <td>@m.Order_id</td>
+                    <td>@m.Order_status</td>
+                    <td>@m.OrderDate</td>
                 </tr>
-            }</table>
-</div>
+            }
+        </table>
     </div>
+</div>
 

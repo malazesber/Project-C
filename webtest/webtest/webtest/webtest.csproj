@@ -242,6 +242,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\Order.css" />
+    <Content Include="Content\OrderHistory.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\ProductPage.css" />
     <Content Include="Content\Registration.css" />
