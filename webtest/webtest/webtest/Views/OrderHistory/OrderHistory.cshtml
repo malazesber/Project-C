@@ -36,6 +36,7 @@
                     <td>@m.Order_id</td>
                     <td>@m.Order_status</td>
                     <td>@m.OrderDate</td>
+                    <td>@Html.ActionLink("Order details","OrderDetails",null, new { id = m.Order_id, style = "color:Blue"})</td>
                 </tr>
             }
         </table>
