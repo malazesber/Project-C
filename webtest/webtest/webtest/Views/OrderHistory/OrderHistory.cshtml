@@ -29,6 +29,7 @@
                 <th>Order Id</th>
                 <th>Order status</th>
                 <th>Order Date</th>
+                <th>Order Details</th>
             </tr>
             @foreach (var m in Model)
             {
@@ -36,6 +37,7 @@
                     <td>@m.Order_id</td>
                     <td>@m.Order_status</td>
                     <td>@m.OrderDate</td>
+                    <td>@Html.ActionLink("Order details","OrderDetails","OrderDetails",null, new { id = m.Order_id, style = "color: Blue"})</td>
                 </tr>
             }
         </table>
