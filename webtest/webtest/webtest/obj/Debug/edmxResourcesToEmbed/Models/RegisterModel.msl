@@ -19,16 +19,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Payments">
-      <EntityTypeMapping TypeName="DatabaseModel.Payment">
-        <MappingFragment StoreEntitySet="Payment">
-          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="Payment_date" ColumnName="Payment_date" />
-          <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Creditcard_details">
       <EntityTypeMapping TypeName="DatabaseModel.Creditcard_details">
         <MappingFragment StoreEntitySet="Creditcard_details">
@@ -91,6 +81,15 @@
     <EntitySetMapping Name="OrderDetails">
       <EntityTypeMapping TypeName="DatabaseModel.OrderDetail">
         <MappingFragment StoreEntitySet="OrderDetails">
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Zip_code" ColumnName="Zip_code" />
+          <ScalarProperty Name="House_number" ColumnName="House_number" />
+          <ScalarProperty Name="Street_Name" ColumnName="Street_Name" />
+          <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Products" ColumnName="Products" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
           <ScalarProperty Name="OrderDetails_Id" ColumnName="OrderDetails_Id" />
@@ -107,6 +106,16 @@
           <ScalarProperty Name="Order_status" ColumnName="Order_status" />
           <ScalarProperty Name="OrderDetails_id" ColumnName="OrderDetails_id" />
           <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="DatabaseModel.Payment">
+        <MappingFragment StoreEntitySet="Payment">
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Payment_date" ColumnName="Payment_date" />
+          <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

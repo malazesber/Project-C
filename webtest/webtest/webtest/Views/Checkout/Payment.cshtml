@@ -64,7 +64,7 @@
         onAuthorize: function (data, actions) {
             return actions.payment.execute()
                 .then(function () {
-                    location.href= 'Confirmation'
+                    location.href = 'Confirmation'
                 });
         }
     }, '#paypal-button-container');

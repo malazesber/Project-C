@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="68a9945e6e0c41b1a6f10e855914594e" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="3.25" PointY="4.125" />
         <EntityTypeShape EntityType="DatabaseModel.Creditcard_details" Width="1.5" PointX="3" PointY="8.625" />
         <AssociationConnector Association="DatabaseModel.FK_CREDITCARD_USER" />
         <EntityTypeShape EntityType="DatabaseModel.Favorite" Width="1.5" PointX="3" PointY="11.875" />
@@ -17,10 +16,11 @@
         <EntityTypeShape EntityType="DatabaseModel.Address" Width="1.5" PointX="3" PointY="14.5" />
         <AssociationConnector Association="DatabaseModel.FK_Address_id" />
         <AssociationConnector Association="DatabaseModel.FK_User_Address" />
-        <EntityTypeShape EntityType="DatabaseModel.OrderDetail" Width="1.5" PointX="5.375" PointY="5.75" />
-        <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="5.5" PointY="2" />
-        <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
+        <EntityTypeShape EntityType="DatabaseModel.OrderDetail" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Order" Width="1.5" PointX="7.625" PointY="4.625" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_UserID" />
+        <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="5.375" PointY="5" />
+        <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

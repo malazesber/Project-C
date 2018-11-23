@@ -58,13 +58,23 @@
     <Key>
       <PropertyRef Name="OrderDetails_Id" />
     </Key>
-    <Property Name="OrderDetails_Id" Type="int" Nullable="false" />
+    <Property Name="OrderDetails_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrderDate" Type="datetime" Nullable="false" />
     <Property Name="Products" Type="varchar(max)" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Phone_Number" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Street_Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="House_number" Type="int" Nullable="false" />
+    <Property Name="Zip_code" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Order_Number" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="Order_id" />
+      <PropertyRef Name="Order_Number" />
     </Key>
     <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrderDetails_id" Type="int" />
@@ -80,8 +90,8 @@
     </Key>
     <Property Name="Payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Payment_date" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="Order_id" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Order_Number" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>

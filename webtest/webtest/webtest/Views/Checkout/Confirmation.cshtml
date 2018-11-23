@@ -1,8 +1,30 @@
-﻿
+﻿@using webtest.Models
+@model Tuple<Order, OrderDetail, Payment>
 @{
     ViewBag.Title = "Confirmation";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-<h2>SUCCESFULLY CHECKOUT</h2>
+<h1>
+    YOU HAVE SUCCESSFULLY SUBMITTED YOUR ORDER
+</h1>
+<h2>
+    A EMAIL HAS BEEN SEND TO YOU WITH THE FOLLOWING INFO
+</h2>
+<h3>Order Number: @Model.Item1.Order_Number</h3>
 
+@{
+    Dictionary<Book, int> bookQuantity = (Dictionary<Book, int>)Session["Checkout"];
+    decimal sum = 0;
+    <p>Quantity------------------------Title------------------------------------------------Unit Price------------------------Total</p>
+    foreach (var book in bookQuantity)
+    {
+
+        decimal total = book.Key.Price * Convert.ToDecimal(book.Value);
+        sum += total;
+        <p>@book.Value------------------------ @book.Key.Name ------------------------------------------------@book.Key.Price------------------------@total</p>
+    }
+    <p>                                                                     Sub Total: @sum</p>
+    <p>USER INFO:  @Model.Item2.Name - @Model.Item2.Surname - @Model.Item2.Email</p>
+    <p>ADDRES: @Model.Item2.Street_Name @Model.Item2.House_number - @Model.Item2.Zip_code - @Model.Item2.Country</p>
+}

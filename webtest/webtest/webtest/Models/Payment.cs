@@ -22,8 +22,8 @@ namespace webtest.Models
     
         public int Payment_id { get; set; }
         public System.DateTime Payment_date { get; set; }
-        public string Amount { get; set; }
-        public int Order_id { get; set; }
+        public int Amount { get; set; }
+        public int Order_Number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }

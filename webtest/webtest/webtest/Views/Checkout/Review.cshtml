@@ -95,8 +95,8 @@
                 <br />
 
             }
-             ViewBag.totalPrice = totalPrice;
-
+            ViewBag.totalPrice = totalPrice;
+            Session["TotalPrice"] = totalPrice;
         }
         else
         {
@@ -154,6 +154,7 @@
 
             }
             ViewBag.totalPrice = totalPrice;
+            Session["TotalPrice"] = totalPrice;
 
         }
 

@@ -10,80 +10,80 @@
     <div id="personal">
         <h1>Personal Info</h1>
         @{
-            using (Html.BeginForm("Address", "Checkout", FormMethod.Get))
-            {
-                if (Session["User_id"] != null)
-                {
-                    int User_id = Convert.ToInt32(Session["User_id"]);
-                    using (var db = new DatabaseEntities1())
-                    {
-                        var user = db.Users.Where(x => x.User_id == User_id).SingleOrDefault();
+        using (Html.BeginForm("Address", "Checkout", FormMethod.Get))
+        {
+        if (Session["User_id"] != null)
+        {
+        int User_id = Convert.ToInt32(Session["User_id"]);
+        using (var db = new DatabaseEntities1())
+        {
+        var user = db.Users.Where(x => x.User_id == User_id).SingleOrDefault();
 
-                        <div id="personal">
-                            <input type="text" name="Name" placeholder="First Name" , value="@user.Name"><br>
-                            <input type="text" name="LastName" placeholder="Last Name" , value="@user.Surname"><br>
-                            <input type="email" name="Email" placeholder="Email" , value="@user.Email"><br>
-                            <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@user.Phone_number"><br>
-                        </div>
+        <div id="personal">
+            <input type="text" name="Name" placeholder="First Name" , value="@user.Name"><br>
+            <input type="text" name="LastName" placeholder="Last Name" , value="@user.Surname"><br>
+            <input type="email" name="Email" placeholder="Email" , value="@user.Email"><br>
+            <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@user.Phone_number"><br>
+        </div>
 
-                        var address = db.Addresses.Where(x => x.User_id == User_id).FirstOrDefault();
-                        if (address != null)
-                        {
-                            <div id="address">
-                                <h1>Address Info</h1>
-                                <input type="text" name="Street" placeholder="Street" , value="@address.Street_name"><br>
-                                <input type="number" name="HouseNumber" placeholder="HouseNumber" , value="@address.House_number"><br>
-                                <input type="text" name="City" placeholder="City" , value="@address.City"><br>
-                                <input type="text" name="ZipCode" placeholder="ZipCode" , value="@address.Zip_code"><br>
-                                <input type="text" name="Country" placeholder="Country" , value="@address.Country"><br>
-                            </div>
-                        }
-                        else
-                        {
-                            <div id="address">
-                                <h1>Address Info</h1>
-                                <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString["Street"]"><br>
-                                <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString["HouseNumber"]"><br>
-                                <input type="text" name="City" placeholder="City" , value="@Request.QueryString["City"]"><br>
-                                <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString["ZipCode"]"><br>
-                                <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString["Country"]"><br>
-                            </div>
-                        }
-                        <br />
-                        <input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
+        var address = db.Addresses.Where(x => x.User_id == User_id).FirstOrDefault();
+        if (address != null)
+        {
+        <div id="address">
+            <h1>Address Info</h1>
+            <input type="text" name="Street" placeholder="Street" , value="@address.Street_name"><br>
+            <input type="number" name="HouseNumber" placeholder="HouseNumber" , value="@address.House_number"><br>
+            <input type="text" name="City" placeholder="City" , value="@address.City"><br>
+            <input type="text" name="ZipCode" placeholder="ZipCode" , value="@address.Zip_code"><br>
+            <input type="text" name="Country" placeholder="Country" , value="@address.Country"><br>
+        </div>
+        }
+        else
+        {
+        <div id="address">
+            <h1>Address Info</h1>
+            <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString[" Street"]"><br>
+            <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString[" HouseNumber"]"><br>
+            <input type="text" name="City" placeholder="City" , value="@Request.QueryString[" City"]"><br>
+            <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString[" ZipCode"]"><br>
+            <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
+        </div>
+        }
+        <br />
+        <input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
 
-                        <br />
-                        @ViewBag.Message
-                        <br />
-                        <button id="btnCart">Continue</button>
+        <br />
+        @ViewBag.Message
+        <br />
+        <button id="btnCart">Continue</button>
 
-                    }
-                }
-                else
-                {
-                    <div id="personal">
-                        <input type="text" name="Name" placeholder="First Name" , value="@Request.QueryString["Name"]"><br>
-                        <input type="text" name="LastName" placeholder="Last Name" , value="@Request.QueryString["LastName"]"><br>
-                        <input type="email" name="Email" placeholder="Email" , value="@Request.QueryString["Email"]"><br>
-                        <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@Request.QueryString["PhoneNumber"]"><br>
-                    </div>
-                    <div id="address">
-                        <h1>Address Info</h1>
-                        <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString["Street"]"><br>
-                        <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString["HouseNumber"]"><br>
-                        <input type="text" name="City" placeholder="City" , value="@Request.QueryString["City"]"><br>
-                        <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString["ZipCode"]"><br>
-                        <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString["Country"]"><br>
-                    </div>
+        }
+        }
+        else
+        {
+        <div id="personal">
+            <input type="text" name="Name" placeholder="First Name" , value="@Request.QueryString[" Name"]"><br>
+            <input type="text" name="LastName" placeholder="Last Name" , value="@Request.QueryString[" LastName"]"><br>
+            <input type="email" name="Email" placeholder="Email" , value="@Request.QueryString[" Email"]"><br>
+            <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@Request.QueryString[" PhoneNumber"]"><br>
+        </div>
+        <div id="address">
+            <h1>Address Info</h1>
+            <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString[" Street"]"><br>
+            <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString[" HouseNumber"]"><br>
+            <input type="text" name="City" placeholder="City" , value="@Request.QueryString[" City"]"><br>
+            <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString[" ZipCode"]"><br>
+            <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
+        </div>
 
-                    <br />
-                    @ViewBag.Message
-                    <br />
-                    <button id="btnCart">Continue</button>
-                }
+        <br />
+        @ViewBag.Message
+        <br />
+        <button id="btnCart">Continue</button>
+        }
 
 
-            }
+        }
         }
     </div>
 </div>

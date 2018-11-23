@@ -22,7 +22,7 @@ namespace webtest.Models
         public Nullable<int> User_id { get; set; }
         public int Order_Number { get; set; }
     
-        public virtual Payment Payment { get; set; }
         public virtual User User { get; set; }
+        public virtual Payment Payment { get; set; }
     }
 }
