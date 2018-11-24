@@ -2040,7 +2040,6 @@ C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webt
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\bin\Microsoft.AI.Web.xml
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csproj.CoreCompileInputs.cache
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csproj.CopyComplete
 C:\Users\malaz\OneDrive\المستندات\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.dll

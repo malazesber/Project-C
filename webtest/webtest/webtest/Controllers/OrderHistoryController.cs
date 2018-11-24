@@ -33,6 +33,15 @@ namespace webtest.Controllers
 
             return View(result);
         }
+        public ActionResult OrderDetails(OrderDetail orederdetail)
+        {
+            var result = (from orderdetails in db.OrderDetails
+                          from order in db.Orders
+                          where order.OrderDetails_id == orderdetails.OrderDetails_Id
+                          select orderdetails).ToList();
+
+            return View(result);
+        }
 
     }
 }

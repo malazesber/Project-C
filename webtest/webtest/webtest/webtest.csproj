@@ -166,7 +166,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-    <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -319,7 +318,7 @@
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderHistory\OrderHistory.cshtml" />
-    <Content Include="Views\OrderDetails\OrderDetails.cshtml" />
+    <Content Include="Views\OrderHistory\OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\UserEntities\" />
