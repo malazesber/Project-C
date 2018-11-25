@@ -1,14 +1,33 @@
-﻿#wrapper {
-    width: 500px;
+﻿.address-card {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+h2 {
+text-align: center;
+}
+
+#wrapper {
+    width: 600px;
     overflow: hidden;
 }
 
+    #wrapper input {
+        display: inline-block;
+        padding: 0 16px;
+        margin-bottom: 10px;
+        width: auto;
+        height: 25px;
+    }
+
 #personal {
     float: left;
-    width: 300px;
+    width: 50%;
 }
 
 #address {
     overflow: hidden;
     float: right;
 }
+
