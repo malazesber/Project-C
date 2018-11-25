@@ -55,12 +55,12 @@
                                 </div>
                             }
                             <br />
-                            <input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
+                            <!--<input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
 
                             <br />
                             <b>@ViewBag.Message</b>
                             <br />
-                            <button id="btnCart">Continue</button>
+                            <button id="btnCart">Continue</button>-->
 
                         }
                     }
@@ -88,11 +88,34 @@
 
 
                 }
+
+                if (Session["User_id"] == null)
+                {
+                    <b>@ViewBag.Message</b>
+                    <br>
+                    <button id="btnCart">Continue</button>}
+                else
+                {
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+                    using (var db = new DatabaseEntities1())
+                    {
+                        var user = db.Users.Where(x => x.User_id == User_id).SingleOrDefault();
+                        var address = db.Addresses.Where(x => x.User_id == User_id).FirstOrDefault();
+                        if (Session["User_id"] != null && address == null)
+                        {
+                            <input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
+
+                            <br />
+                            <b>@ViewBag.Message</b>
+                            <br />
+                            <button id="btnCart">Continue</button>
+                        }
+
+                    }
+                }
             }
         </div>
     </div>
-    <b>@ViewBag.Message</b>
-    <br>
-    <button id="btnCart">Continue</button>
+
 </div>
 
