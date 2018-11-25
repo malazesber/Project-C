@@ -1,8 +1,5 @@
-﻿
-@using PagedList;
-@using PagedList.Mvc;
-@model List<webtest.Models.OrderDetail>
-@using webtest.Models;
+﻿@using webtest.Models
+@model Tuple<Order, OrderDetail, Payment>
 @{
     ViewBag.Title = "OrderDetails";
     Layout = "~/Views/Shared/_customLayout.cshtml";
@@ -11,36 +8,56 @@
     </head>
 }
 
-<h2>OrderDetails</h2>
 
-<div id="container">
-    <div id="results">
 
-        <img id="stripe" src="~/Content/Images/stripe.png" />
+<h3>Order Number: @Model.Item1.Order_Number</h3>
 
-        <!-- SHOW ORDERS-->
-        <!-- Check of er ORDERS zijn gevonden-->
-        @if (Model.Count == 0)
+<h1>Personal Info</h1>
+<p>@Model.Item2.Name</p>
+<p>@Model.Item2.Surname</p>
+<p>@Model.Item2.Email</p>
+
+<h1>Address Info</h1>
+<p>@Model.Item2.Street_Name</p>
+<p>@Model.Item2.House_number</p>
+<p>@Model.Item2.Zip_code</p>
+<p> @Model.Item2.Country</p>
+
+
+
+<table>
+    <tr>
+        <th>Quantity</th>
+        <th>Title</th>
+        <th>Book Price</th>
+        <th>Total</th>
+
+    </tr>
+
+    @{
+        Dictionary<Book, int> bookQuantity = (Dictionary<Book, int>)Session["Checkout"];
+        decimal sum = 0;
+
+        foreach (var book in bookQuantity)
         {
-            <text> You haven't done any orders yet</text>
-        }
-        <table>
+
+            decimal total = book.Key.Price * Convert.ToDecimal(book.Value);
+            sum += total;
             <tr>
-                <th>Order Id</th>
-                <th>Order status</th>
-                <th>Order Date</th>
-                <th>Order Details</th>
+                <td>@book.Value</td>
+                <td>@book.Key.Name</td>
+                <td>@book.Key.Price</td>
+                <td>@total</td>
+
             </tr>
-            @foreach (var m in Model)
-            {
-                <tr>
-                    <td>@m.Name</td>
-                    <td>@m.Products</td>
-                    <td>@m.OrderDate</td>
-                    <td>@Html.ActionLink("Order details", "OrderDetails", null, new { id = m.OrderDetails_Id, style = "color:Blue" })</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
+
+
+        }
+
+    }
+</table>
+<p>                                                                     Sub Total: @sum</p>
+
+
+
 

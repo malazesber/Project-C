@@ -33,14 +33,38 @@ namespace webtest.Controllers
 
             return View(result);
         }
-        public ActionResult OrderDetails(OrderDetail orederdetail)
+        public ActionResult OrderDetails (int id)
         {
-            var result = (from orderdetails in db.OrderDetails
-                          from order in db.Orders
-                          where order.OrderDetails_id == orderdetails.OrderDetails_Id
-                          select orderdetails).ToList();
 
-            return View(result);
+            Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
+            Tuple<Order, OrderDetail, Payment> info;
+            using (var db = new DatabaseEntities1())
+            {
+                Order orderObj = db.Orders.Where(x => x.Order_Number == id).FirstOrDefault();
+                OrderDetail orderDetailObj = db.OrderDetails.Where(x => x.Order_Number == id).FirstOrDefault();
+                Payment paymentObj = db.Payments.Where(x => x.Order_Number == id).FirstOrDefault();
+
+
+
+                // GET PRODUCTS
+                string[] products = orderDetailObj.Products.Split('|');
+
+                foreach (var item in products)
+                {
+                    string[] books = item.Split('-');
+                    double isbn = Convert.ToDouble(books[0]);
+                    Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
+                    int quantity = Convert.ToInt32(books[1]);
+                    BookQuantity.Add(book, quantity);
+
+
+                }
+
+                info = new Tuple<Order, OrderDetail, Payment>(orderObj, orderDetailObj, paymentObj);
+
+                Session["Checkout"] = BookQuantity;
+            }
+            return View(info);
         }
 
     }

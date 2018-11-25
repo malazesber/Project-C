@@ -24,23 +24,25 @@
         {
             <text> You haven't done any orders yet</text>
         }
-        <table>
-            <tr>
-                <th>Order Id</th>
-                <th>Order status</th>
-                <th>Order Date</th>
-                <th>Order Details</th>
-            </tr>
-            @foreach (var m in Model)
-            {
+        <body style="text-align:center;">
+            <table align="center">
                 <tr>
-                    <td>@m.Order_id</td>
-                    <td>@m.Order_status</td>
-                    <td>@m.OrderDate</td>
-                    <td>@Html.ActionLink("Order details","OrderDetails",null, new { id = m.OrderDetails_id, style = "color:Blue"})</td>
+                    <th>Order Id</th>
+                    <th>Order status</th>
+                    <th>Order Date</th>
+                    <th>Order Details</th>
                 </tr>
-            }
-        </table>
-    </div>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.Order_id</td>
+                        <td>@m.Order_status</td>
+                        <td>@m.OrderDate</td>
+                        <td>@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number, style = "color:Blue" }, null)</td>
+                    </tr>
+                }
+            </table>
+            </body>
 </div>
+    </div>
 
