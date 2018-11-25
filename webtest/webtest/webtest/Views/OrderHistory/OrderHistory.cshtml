@@ -34,12 +34,19 @@
                 </tr>
                 @foreach (var m in Model)
                 {
-                    <tr>
-                        <td>@m.Order_id</td>
-                        <td>@m.Order_status</td>
-                        <td>@m.OrderDate</td>
-                        <td>@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number, style = "color:Blue" }, null)</td>
-                    </tr>
+                    string Orderstatus = "";
+                    DateTime Orderdate = m.OrderDate;
+                    DateTime Today = DateTime.Today;
+                    if (Orderdate.AddDays(1) > Today) { Orderstatus = "Pending"; }
+                    else if (Orderdate.AddDays(2) > Today && Orderdate.AddDays(1) < Today) { Orderstatus = "Item received by courier"; }
+                    else if (Orderdate.AddDays(3) > Today && Orderdate.AddDays(2) < Today) { Orderstatus = "Delviered"; }
+
+                <tr>
+                    <td>@m.Order_id</td>
+                    <td>@Orderstatus</td>
+                    <td>@m.OrderDate</td>
+                    <td>@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number, style = "color:Blue" }, null)</td>
+                </tr>
                 }
             </table>
             </body>
