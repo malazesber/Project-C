@@ -161,6 +161,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -315,6 +316,7 @@
     <Content Include="Views\Checkout\Payment.cshtml" />
     <Content Include="Views\Checkout\Review.cshtml" />
     <Content Include="Views\Checkout\Confirmation.cshtml" />
+    <Content Include="Views\Admin\Product.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderHistory\OrderHistory.cshtml" />

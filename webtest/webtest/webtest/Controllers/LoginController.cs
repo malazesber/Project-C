@@ -24,14 +24,18 @@ namespace webtest.Controllers
             {
                 var userPassword = Crypto.Hash(userModel.Password);
                 var userData = db.Users.Where(x => x.Email == userModel.Email
+                 && x.Password == userPassword && x.Type == false).FirstOrDefault();
+                var adminData = db.Users.Where(x => x.Email == userModel.Email
+                 && x.Password == userPassword && x.Type == true).FirstOrDefault();
+                var Data = db.Users.Where(x => x.Email == userModel.Email
                  && x.Password == userPassword).FirstOrDefault();
-                if (userData == null)
-                {
 
+                if (userData == null && adminData == null)
+                {
                     userModel.LoginErrorMessage = "Wrong Email or Password";
                     return View("Index", userModel);
                 }
-                else if (userData.IsEmailVerified == false)
+                else if (Data.IsEmailVerified == false)
                 {
                     userModel.LoginErrorMessage = "your email must be verified first before you can log in a new verification link has been sent tot your email ";
                     SendVerificationLinkEmail(userData.Email, userData.ActivationCode.ToString());
@@ -39,8 +43,16 @@ namespace webtest.Controllers
                 }
                 else
                 {
-                    Session["User_id"] = userData.User_id;
-                    Session["Name"] = userData.Name;
+                    if (adminData != null)
+                    {
+                        Session["Admin"] = adminData.User_id;
+                        Session["Name"] = adminData.Name;
+                    }
+                    else
+                    {
+                        Session["User_id"] = userData.User_id;
+                        Session["Name"] = userData.Name;
+                    }
                     return RedirectToAction("Index", "Home");
                 }
             }

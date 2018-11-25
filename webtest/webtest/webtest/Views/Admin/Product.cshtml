@@ -1,0 +1,83 @@
+﻿@using webtest.Models;
+@model webtest.Models.Book
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_customLayout.cshtml";
+}
+<head>
+    @*css*@
+</head>
+
+<h2>Product</h2>
+@{
+    using (Html.BeginForm("Product", "Admin", FormMethod.Get))
+    {
+        <div id="personal">
+            <input type="text" name="ISBN" placeholder="ISBN" , value="@Request.QueryString["ISBN"]">
+        </div>
+    }
+}
+
+@if (Session["Admin_Book"] != null)
+{
+    <div>
+        <p>@Model.Name</p>
+        <p>@Model.ISBN</p>
+        <p>@Model.Author</p>
+        <p>@Model.Category</p>
+        <p>@Model.Date</p>
+        <p>@Model.Stock</p>
+        <p>@Model.Rating</p>
+
+        @Html.ActionLink("Admin", "Product", new { ISBN = Model.ISBN, delete = true }, new { onclick = "return confirm('Are you sure you want to delete this product?');" })
+        <a href="@Url.Action("Product", "Admin", new {ISBN = Model.ISBN, edit = true})" id="">Edit</a>
+    </div>
+}
+
+@if (Session["Edit_Book"] != null)
+{
+    <h2>Edit product information</h2>
+    using (Html.BeginForm("Product", "Admin", FormMethod.Get))
+    {
+        <div id="edit">
+            <input type="text" name="Category" placeholder="Category" , value="@Request.QueryString["Category"]"><br />
+            <input type="text" name="Name" placeholder="Name" , value="@Request.QueryString["Name"]"><br />
+            <input type="text" name="Summary" placeholder="Summary" , value="@Request.QueryString["Summary"]"><br />
+            <input type="text" name="Date" placeholder="Date" , value="@Request.QueryString["Date"]"><br />
+            <input type="text" name="Author" placeholder="Author" , value="@Request.QueryString["Author"]"><br />
+            <input type="text" name="Image_src" placeholder="Image_src" , value="@Request.QueryString["Image_src"]"><br />
+            <input type="text" name="Price" placeholder="Price" , value="@Request.QueryString["Price"]"><br />
+            <input type="text" name="Rating" placeholder="Rating" , value="@Request.QueryString["Rating"]"><br />
+            <input type="text" name="Stock" placeholder="Stock" , value="@Request.QueryString["Stock"]"><br />
+            <input type="hidden" name="change" value="true" />
+            <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.ISBN"><br />
+
+            <input type="submit" name="edit" />
+
+        </div>
+    }
+}
+
+<h2>Add new product</h2>
+@{
+    using (Html.BeginForm("Product", "Admin", FormMethod.Get))
+    {
+        <div id="add">
+            <input type="text" name="ISBN" placeholder="ISBN" , value="@Request.QueryString["ISBN"]"><br />
+            <input type="text" name="Category" placeholder="Category" , value="@Request.QueryString["Category"]"><br />
+            <input type="text" name="Name" placeholder="Name" , value="@Request.QueryString["Name"]"><br />
+            <input type="text" name="Summary" placeholder="Summary" , value="@Request.QueryString["Summary"]"><br />
+            <input type="text" name="Date" placeholder="Date" , value="@Request.QueryString["Date"]"><br />
+            <input type="text" name="Author" placeholder="Author" , value="@Request.QueryString["Author"]"><br />
+            <input type="text" name="Image_src" placeholder="Image_src" , value="@Request.QueryString["Image_src"]"><br />
+            <input type="text" name="Price" placeholder="Price" , value="@Request.QueryString["Price"]"><br />
+            <input type="text" name="Rating" placeholder="Rating" , value="@Request.QueryString["Rating"]"><br />
+            <input type="text" name="Stock" placeholder="Stock" , value="@Request.QueryString["Stock"]"><br />
+            <input type="hidden" name="add" value="true" />
+
+            <input type="submit" name="add" />
+
+        </div>
+    }
+}
