@@ -54,10 +54,11 @@
                                     <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
                                 </div>
                             }
+                            
                             <br />
-                            <input type="checkbox" name="Save" value="Save"> <text> Save address to address book</text><br>
+                            <lable  id="checkbox"><input type="checkbox" name="Save" value="Save">Save address to address book</lable>
 
-                            <br />
+
                             <b>@ViewBag.Message</b>
                             <br />
                             <button id="btnCart">Continue</button>
@@ -83,6 +84,10 @@
                         </div>
 
                         <br />
+                        <br />
+                        <b>@ViewBag.Message</b>
+                        <br>
+                        <button id="btnCart">Continue</button>
 
                     }
 
@@ -91,8 +96,6 @@
             }
         </div>
     </div>
-    <b>@ViewBag.Message</b>
-    <br>
-    <button id="btnCart">Continue</button>
+    
 </div>
 
