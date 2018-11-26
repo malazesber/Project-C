@@ -11,7 +11,7 @@ namespace webtest.Controllers
     {
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Admin
-        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool change = false, bool edit = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
+        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
         {
             if (ISBN != "")
             {
@@ -94,6 +94,13 @@ namespace webtest.Controllers
                     if (edit == true)
                     {
                         Session["Edit_Book"] = true;
+                        edit = false;
+                    }
+
+                    else if (cancel == true)
+                    {
+                        Session["Edit_Book"] = null;
+                        cancel = false;
                     }
 
                     Session["Admin_Book"] = db.Books.Where(m => m.ISBN == isbn).FirstOrDefault();
