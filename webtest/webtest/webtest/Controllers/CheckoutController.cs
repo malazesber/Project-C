@@ -367,13 +367,23 @@ namespace webtest.Controllers
                     Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
                     int quantity = Convert.ToInt32(books[1]);
                     BookQuantity.Add(book, quantity);
-
-
                 }
 
                 info = new Tuple<Order, OrderDetail, Payment>(orderObj, orderDetailObj, paymentObj);
 
                 Session["Checkout"] = BookQuantity;
+
+                // CLEAR CARTS
+                if(Session["User_id"] != null)
+                {
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+                    db.Carts.RemoveRange(db.Carts.Where(x => x.User_id == User_id));
+                    db.SaveChanges();
+                }
+                else
+                {
+                    Session["ShoppingCart"] = null;
+                }
             }
             return View(info);
         }
