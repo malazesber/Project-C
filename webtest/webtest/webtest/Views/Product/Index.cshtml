@@ -20,7 +20,7 @@
             <label id="title">@Model.Name</label>
             <label id="author">By @Model.Author</label>
             <label id="summary">@ViewBag.summary</label>
-            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
+            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
         </div>
     </div>
 

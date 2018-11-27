@@ -66,12 +66,12 @@
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
             <div id="product">
 
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary})">
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name})">
                     <img id="productImg" src="@m.Image_src" />
                 </a>
 
                 <label id="price">€@m.Price</label>
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary}) " id="title">@m.Name</a>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name}) " id="title">@m.Name</a>
                 <!-- Change to author-->
                 <label id="author">@m.Author</label>
                 @switch (m.Rating)
@@ -112,7 +112,7 @@
                     @mktText
                 </label>
                 <label id="priceSmall">@m.Price</label>
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary}) " id="moreInfo">More info</a>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name}) " id="moreInfo">More info</a>
 
                 @*LOAD FAVORITE BUTTONS*@
                 @{
@@ -185,7 +185,7 @@
 
                 }
 
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, summary = m.Summary})" id="moreInfoSmall">More info</a>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name})" id="moreInfoSmall">More info</a>
                 <img id="stripe" src="~/Content/Images/stripe.png" />
 
             </div>

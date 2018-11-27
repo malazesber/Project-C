@@ -15,7 +15,7 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         List<string> cart = new List<string>();
         // GET: Product
-        public ActionResult Index(string Title, string summary, double? favo, double? cart, double isbn = 0, int readMore = 0)
+        public ActionResult Index(string Title, double? favo, double? cart, double isbn = 0, int readMore = 0)
         {
             string favoISBN = favo.ToString();
             string cartISBN = cart.ToString();
@@ -139,31 +139,43 @@ namespace webtest.Controllers
             }
 
             // Read more button
-            if (readMore == 0)
+            using (DatabaseEntities1 db = new DatabaseEntities1())
             {
+                var _summary = (from book in db.Books
+                                where book.Name == Title
+                                select book.Summary).FirstOrDefault();
 
-                if (summary.Length > 625)
+                var summaryLength = _summary.Count();
+
+                if (_summary != null)
                 {
-                    int pos = summary.LastIndexOf(" ", 625);
+                    if (readMore == 0)
+                    {
+                        if (summaryLength > 625)
+                        {
+                            int pos = _summary.LastIndexOf(" ", 625);
 
-                    summary = summary.Substring(0, pos) + "...";
+                            _summary = _summary.Substring(0, pos) + "...";
 
-                    ViewBag.summary = summary;
-                    ViewBag.Text = "Read more";
-                    ViewBag.Code = 1;
+                            ViewBag.summary = _summary;
+                            ViewBag.Text = "Read more";
+                            ViewBag.Code = 1;
+                        }
+                        else
+                        {
+                            ViewBag.summary = _summary;
+                            //ViewBag.Text = "Read more";
+                            ViewBag.Code = 1;
+                        }
+                    }
+
+                    else
+                    {
+                        ViewBag.summary = _summary;
+                        ViewBag.Text = "Read less";
+                        ViewBag.Code = 0;
+                    }
                 }
-                else
-                {
-                    ViewBag.summary = summary;
-                    ViewBag.Text = "Read more";
-                    ViewBag.Code = 1;
-                }
-            }
-            else
-            {
-                ViewBag.summary = summary;
-                ViewBag.Text = "Read less";
-                ViewBag.Code = 0;
             }
 
             //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 
