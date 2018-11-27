@@ -17,21 +17,26 @@ namespace webtest.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
+            
+            else
 
-            int User_id = Convert.ToInt32(Session["User_id"]);
-            var list = db.Orders.Select(s => s);
-           
+            {
+
+                int User_id = Convert.ToInt32(Session["User_id"]);
+                
 
 
 
 
-            // laad orders
-            var result = (from order in db.Orders
-                          from user in db.Users
-                          where user.User_id == User_id
-                          select order).ToList();
 
-            return View(result);
+                // laad orders
+                var result = (from order in db.Orders
+                              where order.User_id == User_id
+                              select order).ToList();
+
+
+                return View(result);
+            }
         }
         public ActionResult OrderDetails (int id)
         {
