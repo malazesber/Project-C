@@ -15,44 +15,13 @@
 
 #checkout {
     background: white;
-    min-height: 100px;
     height: auto;
+    min-height: 150px;
     width: 100%;
     margin-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
-
-/*#txtSearchTitle {
-    font-weight: 700;
-    color: #8a3366;
-    font-size: 20px;
-    margin-top: 10px;
-    display: block;
-}
-
-#txtResultsTitle {
-    font-weight: 700;
-    color: #8a3366;
-    font-size: 20px;
-    margin-top: 10px;
-    display: inline-block;
-    margin-left: 25px;
-}
-
-#txtTC {
-    color: black;
-    font-size: 16px;
-    margin-top: 10px;
-    display: block;
-    margin-top: 15px;
-    text-decoration: none;
-}
-
-    #txtTC:hover {
-        color: #8a3366;
-        cursor: pointer;
-    }*/
 
 #product {
     margin: 15px;
@@ -81,30 +50,6 @@
     width: 113px;
     height: 173px;
 }
-
-/*#btnCart {
-    float: right;
-    margin-top: 10px;
-    display: inline-block;
-    margin-right: 15px;
-    background-color: #bf9000;
-    border: none;
-    color: white;
-    padding: 10px 30px;
-    border-radius: 6px;
-}
-
-#btnWishList {
-    float: right;
-    margin-top: 10px;
-    display: inline-block;
-    margin-right: 15px;
-    background-color: #bf9000;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-}*/
 
 #price {
     font-size: 17px;
@@ -152,22 +97,16 @@
 
 #totalBox {
     display: inline-block;
-    /*border: 1px red solid;*/
     width: 120px;
-    height: 100px;
-    float: right;
-    margin-right:13%;
-    margin-top: 25px;
+    height: 75px;
 }
 
 #priceBox {
     display: inline-block;
-    /*border: 1px red solid;*/
     width: 50px;
-    height: 100px;
+    height: 75px;
+    margin-left: 5%;
     float: right;
-    margin-right: 7%;
-    margin-top: 25px;
 }
 
 #delivery {
@@ -253,3 +192,29 @@
     padding-right: 9px;
     text-decoration: none;
 }
+
+#checkOutBox {
+    float: right;
+    display: inline-block;
+    width: 190px;
+    height: auto;
+    margin-top: 15px;
+    margin-right: 7%;
+}
+
+#btnCheckOut {
+    display: inline-block;
+    text-align: center;
+    background-color: #8a3366;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    width: 155px;
+}
+
+    #btnCheckOut:hover {
+        background-color: #65254A;
+        color: white;
+        cursor: pointer;
+    }

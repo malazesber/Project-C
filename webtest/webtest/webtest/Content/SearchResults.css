@@ -3,16 +3,6 @@
     height: 100%;
 }
 
-#topCategories {
-    background: white;
-    float: left;
-    height: 190px;
-    width: 16%;
-    margin-left: 15px;
-    margin-top: 15px;
-    text-align: center;
-}
-
 #results {
     background: white;
     float: right;
@@ -52,26 +42,6 @@
     margin-left: 25px;
 }
 
-/*#btnOrderBy {
-    float: right;
-    margin-top: 10px;
-    margin-right: 25px
-}*/
-
-/*#txtTC {
-    color: black;
-    font-size: 16px;
-    margin-top: 10px;
-    display: block;
-    margin-top: 15px;
-    text-decoration: none;
-}
-
-    #txtTC:hover {
-        color: #8a3366;
-        cursor: pointer;
-    }*/
-
 #filters label {
     float: left;
     margin-left: 10px;
@@ -83,11 +53,6 @@
     color: black;
 }
 
-/*#ratingFilter {
-    margin-top: 3px;
-    width: 90%;
-    color: black;
-}*/
 .dropdownFilters {
     width: 90%;
     color: black;

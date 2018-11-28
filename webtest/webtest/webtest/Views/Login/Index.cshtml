@@ -23,7 +23,9 @@
         </div>
 
         <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
-        <input type="submit" name="name" class="login login-submit" value="login" />
+
+        <input type="submit" name="name" class="btnLogin" value="Login" />
+
         <div class="login-help">
             <a href="@Url.Action("ForgotPassword", "Register")"> Forgot Password?</a>
         </div>
