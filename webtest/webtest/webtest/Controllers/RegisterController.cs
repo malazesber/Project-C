@@ -122,7 +122,7 @@ namespace webtest.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Invaild Requist";
+                    ViewBag.Message = "Invaild Request";
                 }
             }
             ViewBag.Status = status;
@@ -272,7 +272,7 @@ namespace webtest.Controllers
                         user.ResetPasswordCode = "";
                         dc.Configuration.ValidateOnSaveEnabled = false;
                         dc.SaveChanges();
-                        message = "Your Password has been successfully updated";
+                        message = "Your password has been successfully updated";
                     }
                 }
             }

@@ -37,7 +37,7 @@ namespace webtest.Controllers
                 }
                 else if (Data.IsEmailVerified == false)
                 {
-                    userModel.LoginErrorMessage = "your email must be verified first before you can log in a new verification link has been sent tot your email ";
+                    userModel.LoginErrorMessage = "Your email must be verified before you can log in. A new verification link has been sent to your email ";
                     SendVerificationLinkEmail(userData.Email, userData.ActivationCode.ToString());
                     return View("Index", userModel);
                 }
@@ -73,7 +73,7 @@ namespace webtest.Controllers
             {
                 subject = "Your account is successfully created";
 
-                body = "<br/><br/> Welcome by bookstore your account has been" +
+                body = "<br/><br/> Welcome by BooksR'us your account has been" +
                    " successfuly created. Please click on the link below to verify your account" +
                    " <br/><br/><a herf='" + link + "'>" + link + "</a> ";
             }
@@ -81,7 +81,7 @@ namespace webtest.Controllers
             else if (emailFor == "ResetPassword")
             {
                 subject = "Reset Password";
-                body = "Hallo,<br/><br/>Dear User of BookRus we just have got a request to reset your password. If you want realy to reset your password, you can click on the link below" +
+                body = "Hallo,<br/><br/>Dear User of BooksR'us, we have received a request to reset your password. If you really want to reset your password, you can click on the link below" +
                        "<br/><br/><a herf='" + link + "'>" + link + "</a>";
             }
             var smtp = new SmtpClient

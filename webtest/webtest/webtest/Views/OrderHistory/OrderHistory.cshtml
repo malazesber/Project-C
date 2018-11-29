@@ -39,7 +39,7 @@
                     DateTime Today = DateTime.Today;
                     if (Orderdate.AddDays(1) > Today) { Orderstatus = "Pending"; }
                     else if (Orderdate.AddDays(2) > Today && Orderdate.AddDays(1) < Today) { Orderstatus = "Item received by courier"; }
-                    else if (Orderdate.AddDays(3)< Today) { Orderstatus = "Delviered"; }
+                    else if (Orderdate.AddDays(3)< Today) { Orderstatus = "Delivered"; }
 
                 <tr>
                     <td>@m.Order_Number</td>
