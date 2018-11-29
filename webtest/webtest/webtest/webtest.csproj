@@ -233,6 +233,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\FavoritePage.css" />
     <Content Include="Content\ForgotPassword.css" />
+    <Content Include="Content\Images\go_back.png" />
     <Content Include="Content\Images\house.PNG" />
     <Content Include="Content\Images\Rating1Star.png" />
     <Content Include="Content\Images\Rating2Star.png" />
