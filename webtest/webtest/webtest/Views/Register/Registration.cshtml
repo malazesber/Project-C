@@ -15,7 +15,7 @@
     @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
     {
         <div class="alert alert-danger">
-            <strong>Success!</strong>@ViewBag.Message
+            <strong>Success! </strong>@ViewBag.Message
         </div>
         <br />
         if ((bool)Session["checkoutRegister"])
@@ -61,15 +61,15 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn" />
+                        <input type="submit" value="Create account" class="btn" />
                     </div>
                 </div>
             </div>
             if (ViewBag.Message != null)
             {
-                <div class="alert alert-danger">
-                    <strong>Error!</strong>@ViewBag.Message
-                </div>
+            <div class="alert alert-danger">
+                <strong>Something went wrong. </strong>@ViewBag.Message
+            </div>
             }
         }
     }

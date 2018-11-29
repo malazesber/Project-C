@@ -1,22 +1,27 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "VerifyAccount";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-<h2>VerifyAccount</h2>
+<head>
+    <link href="~/Content/ResetPassword.css" rel="stylesheet" />
+</head>
 
-@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
-{
-    <div class="alert alert-success">
-        <strong>Scuccess</strong>Your account has been successfully created. Click here to @Html.ActionLink("Login", "Index", "Login")
+<div class="ResetPassword-card">
+    <h2>Verify account</h2>
 
-    </div>
+    @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+    {
+        <div class="alert alert-success">
+            Your account has been successfully created. Click here to @Html.ActionLink("Login", "Index", "Login")
 
-}
-else
-{
-    <div class="alert alert-danger">
-        <strong>Error!</strong>@ViewBag.Message
-    </div>
-}
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>Something went wrong. </strong>@ViewBag.Message
+        </div>
+    }
+</div>

@@ -24,13 +24,40 @@
             <label id="title">@Model.Name</label>
             <label id="author">By @Model.Author</label>
             <label id="summary">@ViewBag.summary</label>
-            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
+            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
         </div>
     </div>
 
     @*Box waar de prijs en knoppen staan*@
     <div id="orderBox">
         <label id="price">€@Model.Price</label>
+        <div id="amountBox">
+            <a href="@Url.Action("Index", "Product", new {isbn = Model.ISBN, min = true, Title = Model.Name})" id="minButton">-</a>
+            @{
+                if (Session["User_id"] != null)
+                {
+                    var _db = new DatabaseEntities1();
+                    var item = _db.Carts.Where(x => x.ISBN == Model.ISBN).FirstOrDefault();
+
+                    try
+                    {
+                        <a id="amount">@item.Quantity</a>
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                else
+                {
+                    <a id="amount">@ViewData[Model.ISBN.ToString()]</a>
+                }
+            }
+
+            <a href="@Url.Action("Index", "Product", new {isbn = Model.ISBN, plus = true, Title = Model.Name, cart = Model.ISBN})" id="plusButton">+</a>
+        </div>
+
+
 
         @{
             if (Session["User_id"] != null)
@@ -43,11 +70,11 @@
 
                 if (hasCart)
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, cart = Model.ISBN})" id="btnCart">Remove From Cart</a>
+                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Remove from cart</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, cart = Model.ISBN})" id="btnCart">Add to Cart</a>
+                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
                 }
 
             }
@@ -55,7 +82,7 @@
             {
                 if (Session["shoppingCart"] == null)
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, cart = Model.ISBN})" id="btnCart">Add to Cart</a>
+                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
                 }
                 else
                 {
@@ -63,21 +90,16 @@
 
                     if (isbns.Contains(Model.ISBN.ToString()))
                     {
-                        <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, cart = Model.ISBN})" id="btnCart">Remove From Cart</a>
+                        <a href="@Url.Action("Index", "Product", new { isbn = Model.ISBN, delete = true, Title = Model.Name})" id="btnCart">Remove from cart</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("Index", "Product", new {Title = Model.Name, summary = Model.Summary, cart = Model.ISBN})" id="btnCart">Add to Cart</a>
+                        <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
                     }
                 }
             }
 
         }
-
-
-
-
-
 
         @*FAVORIETEN*@
         @{
@@ -90,11 +112,11 @@
             //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
             if (has)
             {
-                <a href="@Url.Action("Index", new { Title = Model.Name, summary = Model.Summary, favo = Model.ISBN}) " id="btnWishList">Remove Favo</a>
+                <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Remove from favorites list</a>
             }
             else
             {
-                <a href="@Url.Action("Index", new { Title = Model.Name, summary = Model.Summary, favo = Model.ISBN}) " id="btnWishList">Add Favo</a>
+                <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Add to favorites list</a>
             }
         }
     </div>

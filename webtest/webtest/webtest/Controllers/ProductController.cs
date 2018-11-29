@@ -15,26 +15,20 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         List<string> cart = new List<string>();
         // GET: Product
-        public ActionResult Index(string Title, double? favo, double? cart, double isbn = 0, int readMore = 0)
+        public ActionResult Index(string Title, double? isbn, double? favo, double? cart, double? del, int readMore = 0, bool delete = false, bool plus = false, bool min = false)
         {
             string favoISBN = favo.ToString();
             string cartISBN = cart.ToString();
+            Dictionary<Book, int> cartQuantity = new Dictionary<Book, int>();
 
             if (favoISBN != "" && favoISBN != null)
             {
                 if (Session["User_id"] == null)
                 {
                     TempData["favo"] = "<script>alert('You need to login first.');</script>";
-
-
-                    //Voor de shopping cart session voor de ongeregistreerde grbuiker
-                    //Let op voor zowel de knop favo als cart wordt isbn gebruikt, miss nog een extra variabele meegeven?
-
                 }
                 else
                 {
-
-
                     var list = db.Favorites.Select(s => s);
                     int User_id = Convert.ToInt32(Session["User_id"]);
 
@@ -74,7 +68,7 @@ namespace webtest.Controllers
 
                     bool has = list.Any(cus => cus.ISBN == cart && cus.User_id == User_id);
 
-                    if (has)
+                    if (has && plus != true)
                     {
                         using (DatabaseEntities1 db = new DatabaseEntities1())
                         {
@@ -83,20 +77,15 @@ namespace webtest.Controllers
                         }
 
                     }
-                    else
+                    else if (plus != true)
                     {
-                        // ISBN TOEVOEGEN AAN FAVORIETEN
-
                         using (DatabaseEntities1 db = new DatabaseEntities1())
                         {
-                            var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart) , Quantity = 1};
+                            var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart), Quantity = 1 };
                             db.Carts.Add(cartObj);
                             db.SaveChanges();
                         }
                     }
-
-
-
                 }
                 else
                 {
@@ -104,8 +93,9 @@ namespace webtest.Controllers
                     if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
                     {
                         Session["shoppingCart"] = cartISBN;
+                        plus = false;
                     }
-                    else
+                    else if (plus != true)
                     {
                         List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
                         //Check of die al in je cart zit.
@@ -138,14 +128,134 @@ namespace webtest.Controllers
                 }
             }
 
-            // Read more button
+            decimal totalPrice = 0;
+            string deleteISBN = del.ToString();
+
+            List<Book> bookList = new List<Book>();
+            List<Book> bookReturn = new List<Book>();
+
+            if (Session["User_id"] != null)
+            {
+                int User_id = Convert.ToInt32(Session["User_id"]);
+
+                //Verwijder item voor geregistreerde user
+                if (deleteISBN != "" && deleteISBN != null)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Carts.Remove(db.Carts.Single(x => x.ISBN == del));
+                        db.SaveChanges();
+                    }
+                }
+
+                if (plus)
+                {
+                    double isbnD = Convert.ToDouble(isbn);
+                    var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
+                    if (book == null)
+                    {
+                        var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart), Quantity = 1 };
+                        db.Carts.Add(cartObj);
+                    }
+                    else
+                    {
+                        book.Quantity += 1;
+                    }
+                    db.SaveChanges();
+                }
+
+                if (min)
+                {
+                    double isbnD = Convert.ToDouble(isbn);
+                    var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
+                    if (book.Quantity == 1)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Carts.Remove(db.Carts.Single(x => x.ISBN == isbnD));
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        book.Quantity -= 1;
+                    }
+
+                    db.SaveChanges();
+                }
+
+            }
+
+            else
+            {
+
+                if (Session["shoppingCart"] != null)
+                {
+                    List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                    var bookListQ = from x in isbns
+                                    group x by x into g
+                                    let count = g.Count()
+
+                                    select new { Value = g.Key, Count = count };
+
+                    var _isbn = isbn.ToString();
+
+
+                    //Deletes product from cart
+                    if (isbns.Contains(_isbn) && delete)
+                    {
+                        isbns.RemoveAll(s => _isbn == s);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+                        delete = false;
+                    }
+
+                    if (plus)
+                    {
+                        isbns.Add(_isbn);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+
+                        plus = false;
+                    }
+
+                    if (min)
+                    {
+                        isbns.Remove(_isbn);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+
+                        min = false;
+                    }
+                    try
+                    {
+
+                        foreach (var book in bookListQ)
+                        {
+                            int count = Convert.ToInt32(book.Count);
+
+                            var bookAmount = count;
+                            ViewData[book.Value] = bookAmount;
+                        }
+
+                        ViewBag.totalPrice = totalPrice;
+                    }
+                    catch (FormatException)
+                    {
+
+                    }
+                }
+            }
+
+            //Read more button
             using (DatabaseEntities1 db = new DatabaseEntities1())
             {
                 var _summary = (from book in db.Books
-                                where book.Name == Title
+                                where book.ISBN == isbn
                                 select book.Summary).FirstOrDefault();
 
                 var summaryLength = _summary.Count();
+
 
                 if (_summary != null)
                 {
@@ -168,7 +278,6 @@ namespace webtest.Controllers
                             ViewBag.Code = 1;
                         }
                     }
-
                     else
                     {
                         ViewBag.summary = _summary;

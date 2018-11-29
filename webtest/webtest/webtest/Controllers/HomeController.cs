@@ -46,15 +46,12 @@ namespace webtest.Controllers
                     }
                 }
 
-               
-
                 if (plus)
                 {
                     double isbnD = Convert.ToDouble(isbn);
                     var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
                     book.Quantity += 1;
-                    db.SaveChanges();
-                    
+                    db.SaveChanges(); 
                 }
 
                 if (min)
@@ -83,15 +80,13 @@ namespace webtest.Controllers
                               cart.User_id == User_id
                               select book).ToList();
 
-
                 foreach (var i in result)
                 {
                     var item = db.Carts.Where(x => x.ISBN == i.ISBN).FirstOrDefault();
                     for(int j = 0; j < item.Quantity; j++)
                     {
                         totalPrice += i.Price;
-                    }
-                    
+                    } 
                 }
 
                 ViewBag.totalPrice = totalPrice;
@@ -110,7 +105,6 @@ namespace webtest.Controllers
                             select new { Value = g.Key, Count = count };
 
                     var total = 0;
-
 
                     //Deletes product from cart
                     if (isbns.Contains(isbn) && delete)
@@ -136,12 +130,11 @@ namespace webtest.Controllers
                         var newcart = String.Join(",", isbns);
                         Session["shoppingCart"] = newcart;
 
-                        plus = false;
+                        min = false;
                     }
 
                     try
                     {
-
                         foreach(var book in bookListQ)
                         {
                             double bookISBN = Convert.ToDouble(book.Value);
@@ -165,8 +158,6 @@ namespace webtest.Controllers
                     {
 
                     }
-
-
                 }
             }
 
@@ -185,7 +176,6 @@ namespace webtest.Controllers
             }
             else
             {
-
                 return View();
             }
         }

@@ -64,9 +64,13 @@
     font-size: 15px;
     font-weight: bold;
     color: #8a3366;
-    margin-right: 100px;
+    margin-right: 15%;
     margin-bottom: 15px;
 }
+    #readMore:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 
 #productImg {
     float: left;
@@ -81,6 +85,7 @@
 /*Onderdelen orderBox*/
 #btnCart {
     display: inline-block;
+    float: right;
     margin: auto;
     background-color: #bf9000;
     border: none;
@@ -89,9 +94,10 @@
     border-radius: 6px;
     margin-bottom: 10px;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 18px;
+    margin-top: 70px;
     text-decoration: none;
-    width: 80%;
+    width: 40%;
     cursor: pointer;
 }
     #btnCart:hover {
@@ -128,6 +134,42 @@
     margin-top: 20px;
     font-size: 25px;
     margin-bottom: 25px;
+}
+
+#minButton {
+    text-align: center;
+    color: #bf9000;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px 10px;
+}
+
+#plusButton {
+    text-align: center;
+    color: #bf9000;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 10px;
+}
+
+
+#amount {
+    background: #fff;
+    text-align: center;
+    color: #bf9000;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px 10px;
+}
+
+#amountBox {
+    float: left;
+    margin-top: 75px;
+    margin-left: -20px;
 }
 
 /*Onderdelen input moreInfo box*/
