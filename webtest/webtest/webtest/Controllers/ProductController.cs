@@ -313,8 +313,6 @@ namespace webtest.Controllers
                         }
                         else
                         {
-                            // ISBN TOEVOEGEN AAN FAVORIETEN
-
                             using (DatabaseEntities1 db = new DatabaseEntities1())
                             {
                                 var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn), Quantity = 1 };
@@ -328,6 +326,8 @@ namespace webtest.Controllers
                     }
                     else
                     {
+                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+
                         // UNREGISTERED USER
                         if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
                         {
@@ -335,14 +335,13 @@ namespace webtest.Controllers
                         }
                         else
                         {
-                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
                             //Check of die al in je cart zit.
+                            //Deletes product from cart
                             if (isbns.Contains(isbn))
                             {
-                                isbns.Remove(isbn);
+                                isbns.RemoveAll(s => isbn == s);
                                 var newcart = String.Join(",", isbns);
                                 Session["shoppingCart"] = newcart;
-
                             }
                             else
                             {
@@ -350,6 +349,8 @@ namespace webtest.Controllers
                             }
 
                         }
+
+                        
                     }
 
 
