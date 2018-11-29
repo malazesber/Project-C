@@ -65,18 +65,26 @@ namespace webtest.Controllers
                     status = true;
 
                     // Add current shopping cart to the database of the newly created account.
-                    Dictionary<Book, int> cart = (Dictionary<Book, int>)Session["Cart"];
-                    if(cart.Count != 0)
+                    try
                     {
-                        foreach (KeyValuePair<Book, int> kv in cart)
+                        Dictionary<Book, int> cart = (Dictionary<Book, int>)Session["Cart"];
+                        if (cart.Count != 0)
                         {
-                            var cartObj = new Cart() { User_id = user.User_id, ISBN = kv.Key.ISBN, Quantity = kv.Value };
-                            dc.Carts.Add(cartObj);
-                            dc.SaveChanges();
+                            foreach (KeyValuePair<Book, int> kv in cart)
+                            {
+                                var cartObj = new Cart() { User_id = user.User_id, ISBN = kv.Key.ISBN, Quantity = kv.Value };
+                                dc.Carts.Add(cartObj);
+                                dc.SaveChanges();
+                            }
                         }
                     }
-                   
-                    
+                    catch
+                    {
+
+                    }
+
+
+
                 }
 
             }

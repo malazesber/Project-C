@@ -68,9 +68,8 @@ namespace webtest.Controllers
             // laad favorieten
             var result = (from favo in db.Favorites
                           from book in db.Books
-                          from user in db.Users
                           where favo.ISBN == book.ISBN &&
-                          user.User_id == User_id
+                          favo.User_id == User_id
                           select book).ToList();
 
             return View(result);

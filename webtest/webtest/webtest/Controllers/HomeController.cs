@@ -79,9 +79,8 @@ namespace webtest.Controllers
 
                 var result = (from cart in db.Carts
                               from book in db.Books
-                              from user in db.Users
                               where cart.ISBN == book.ISBN &&
-                              user.User_id == User_id
+                              cart.User_id == User_id
                               select book).ToList();
 
 
