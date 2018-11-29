@@ -126,12 +126,12 @@
                     if (has)
                     {
                         <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList">Remove Favo</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList" class="fa fa-star"/>
                     }
                     else
                     {
                         <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList">Add Favo</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"}) " id="btnWishList" class="fa fa-star-o"/>
                     }
                 }
 
