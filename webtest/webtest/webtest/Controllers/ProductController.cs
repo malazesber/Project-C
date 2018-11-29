@@ -95,7 +95,7 @@ namespace webtest.Controllers
                         Session["shoppingCart"] = cartISBN;
                         plus = false;
                     }
-                    else if (plus != true)
+                    else if (plus == false)
                     {
                         List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
                         //Check of die al in je cart zit.
@@ -110,21 +110,7 @@ namespace webtest.Controllers
                         {
                             Session["shoppingCart"] = Session["shoppingCart"] + "," + cartISBN;
                         }
-
                     }
-                }
-            }
-            //Als er op de knop gedrukt wordt wordt er een isbn meegegeven die dan in een string opgeslagen wordt.
-            if (isbn != 0)
-            {
-                if (Session["shoppingCart"] == null)
-                {
-                    Session["shoppingCart"] = isbn.ToString();
-                }
-                else
-                {
-
-                    Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
                 }
             }
 
