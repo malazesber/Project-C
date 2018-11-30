@@ -22,7 +22,7 @@
         <!-- Check of er producten zijn gevonden-->
         @if (Model.Count == 0)
         {
-            <text> No products in the shopping cart yet.</text>
+            <a href="@Url.Action("Index", "Home")" id="txtEmpty">Click here to start shopping</a>
         }
         <!-- ForEachLoop door alle producten die zijn opgehaald uit de database.-->
         <!-- Elke product krijgt dezelfde opmaak in <div id="procuct"> ..... </div> -->
@@ -31,7 +31,7 @@
         {
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
             <div id="product">
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN})">
+                <a href="@Url.Action("Index", "Product", new { Title = m.Name, isbn = m.ISBN })">
                     <img id="productImg" src="@m.Image_src" />
                 </a>
 
@@ -48,22 +48,13 @@
                     }
                 }
 
-                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="title">@m.Name</a>
+                <a href="@Url.Action("Index", "Product", new { Title = m.Name, isbn = m.ISBN }) " id="title">@m.Name</a>
                 <label id="author">@m.Author</label> <br />
                 <label id="price">€@m.Price</label>
             </div>
-            if (Session["User_id"] != null)
-            {
-                <a href="@Url.Action("ShoppingCart", "Home", new {del = m.ISBN, Title = m.Name, isbn = m.ISBN})" id="deleteButton">Delete product</a>
-            }
-            else
-            {
-                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, delete = true, Title = m.Name})" id="deleteButton">Delete product</a>
-            }
-
 
             <div id="amountBox">
-                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, min = true})" id="minButton">-</a>
+                <a href="@Url.Action("ShoppingCart", "Home", new { isbn = m.ISBN, min = true })" id="minButton">-</a>
                 @{
                     if (Session["User_id"] != null)
                     {
@@ -76,11 +67,45 @@
                         <a id="amount">@ViewData[m.ISBN.ToString()]</a>
                     }
                 }
-                <a href="@Url.Action("ShoppingCart", "Home", new {isbn = m.ISBN, plus = true})" id="plusButton">+</a>
+
+                <a href="@Url.Action("ShoppingCart", "Home", new { isbn = m.ISBN, plus = true })" id="plusButton">+</a>
             </div>
+
+            <div>
+                @{ if (Session["User_id"] != null)
+                    {
+                        @*FAVORIETEN*@
+
+                        var db = new DatabaseEntities1();
+                        var list = db.Favorites.Select(s => s);
+                        double isbnD = Convert.ToDouble(m.ISBN);
+                        int User_id = Convert.ToInt32(Session["User_id"]);
+
+                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                        //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                        if (has)
+                        {
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " id="FavoButton" class="fa fa-star"> Remove from favorites list</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " id="FavoButton" class="fa fa-star-o"> Add to favorites list</a>
+                        }
+
+                        <a href="@Url.Action("ShoppingCart", "Home", new { del = m.ISBN, Title = m.Name, isbn = m.ISBN })" id="deleteButton" class="fa fa-trash-o">Delete product</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ShoppingCart", "Home", new { isbn = m.ISBN, delete = true, Title = m.Name })" id="deleteButton" class="fa fa-trash-o"> Delete product</a>
+                    }
+
+                }
+            </div>
+
 
             <img id="stripe" src="~/Content/Images/stripe.png" />
         }
+
     </div>
 
     <div id="checkout">
@@ -92,7 +117,7 @@
                 <label id="total">Total Price</label>
             </div>
             <div id="priceBox">
-                <label id="deliveryPrice">€0</label></br>
+                <label id="deliveryPrice">€0</label><br />
                 @{
                     if (ViewBag.totalPrice == null)
                     {
@@ -117,7 +142,7 @@
                     var cart = (Dictionary<Book, int>)Session["Cart"];
                     if (cart.Count != 0)
                     {
-                    <a href="@Url.Action("Index", "Checkout", new {})" id="btnCheckOut">Checkout</a>
+                        <a href="@Url.Action("Index", "Checkout", new {})" id="btnCheckOut">Checkout</a>
                     }
                 }
 

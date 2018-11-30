@@ -7,7 +7,7 @@
     background: white;
     min-height: 200px;
     height: auto;
-    width: 100%;
+    margin-left: 15px;
     margin-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -17,7 +17,7 @@
     background: white;
     height: auto;
     min-height: 150px;
-    width: 100%;
+    margin-left: 15px;
     margin-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -79,13 +79,25 @@
     color: #bf9000;
     text-decoration: none;
     font-size: 15px;
-    float: right;
-    margin-right: 25%;
-    margin-top: 50px;
+    margin-left: 630px;
+    margin-top: 10px;
     font-weight: bold;
 }
 
     #deleteButton:hover {
+        text-decoration: underline;
+    }
+
+#FavoButton {
+    color: #8a3366;
+    text-decoration: none;
+    font-size: 15px;
+    margin-left: 630px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+    #FavoButton:hover {
         text-decoration: underline;
     }
 
@@ -138,9 +150,8 @@
 }
 
 #amountBox {
-    float: right;
-    margin-right: -8%;
-    margin-top: -15px;
+    margin-left: 785px;
+    margin-top: -30px;
 }
 
 #minButton {
@@ -232,3 +243,17 @@
     display: inline-block;
     margin-left: 25px;
 }
+
+#txtEmpty {
+    color: #8a3366;
+    font-size: 20px;
+    margin-top: 40px;
+    margin-left: 43%;
+    display: inline-block;
+    text-decoration: none;
+}
+
+    #txtEmpty:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }

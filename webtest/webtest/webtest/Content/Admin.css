@@ -165,15 +165,13 @@
     height: 30px;
     margin-left: 15px;
     margin-top: 5px;
-    /*border: 1px #8a3366 solid;*/
 }
 
 .inputFieldSummary {
-    height: 100px;
+    min-height: 30px;
     width: 80%;
     margin-left: 15px;
     margin-top: 5px;
-    /*border: 1px #8a3366 solid;*/
 }
 
 .btn {

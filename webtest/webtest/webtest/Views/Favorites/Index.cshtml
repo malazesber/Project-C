@@ -14,6 +14,13 @@
         <div id="txtTitle">Favorites List</div>
         <img id="stripe" src="~/Content/Images/stripe.png" />
 
+        @{var count = Model.Count();}
+
+        @if (count == 0)
+        {
+            <a href="@Url.Action("Index", "Home")" id="txtEmpty">Click here to start shopping</a>
+        }
+
         @foreach (var m in Model)
         {
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->

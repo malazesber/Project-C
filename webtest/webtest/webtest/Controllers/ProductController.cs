@@ -101,6 +101,7 @@ namespace webtest.Controllers
                         //Check of die al in je cart zit.
                         if (isbns.Contains(cartISBN))
                         {
+
                             isbns.Remove(cartISBN);
                             var newcart = String.Join(",", isbns);
                             Session["shoppingCart"] = newcart;
@@ -320,14 +321,9 @@ namespace webtest.Controllers
                                 db.SaveChanges();
                             }
                         }
-
-
-
                     }
                     else
                     {
-                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
-
                         // UNREGISTERED USER
                         if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
                         {
@@ -335,6 +331,7 @@ namespace webtest.Controllers
                         }
                         else
                         {
+                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
                             //Check of die al in je cart zit.
                             //Deletes product from cart
                             if (isbns.Contains(isbn))

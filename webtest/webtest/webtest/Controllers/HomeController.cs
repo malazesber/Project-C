@@ -24,13 +24,46 @@ namespace webtest.Controllers
 
         }
 
-        public ActionResult ShoppingCart(string isbn, double? del, bool delete = false, bool plus = false, bool min = false)
+        public ActionResult ShoppingCart(string isbn, double? del, double? favo, bool delete = false, bool plus = false, bool min = false)
         {
             decimal totalPrice = 0;
             string deleteISBN = del.ToString();
             List<Book> bookList = new List<Book>();
             List<Book> bookReturn = new List<Book>();
             Dictionary<Book, int> cartQuantity = new Dictionary<Book, int>();
+
+            string favoISBN = favo.ToString();
+
+            if (favoISBN != "" && favoISBN != null)
+            {
+
+                var list = db.Favorites.Select(s => s);
+                int User_id = Convert.ToInt32(Session["User_id"]);
+
+                bool has = list.Any(cus => cus.ISBN == favo && cus.User_id == User_id);
+                //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                if (has)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == favo && cus.User_id == User_id));
+                        db.SaveChanges();
+                    }
+
+                }
+                else
+                {
+                    // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        var favoObj = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(favo) };
+                        db.Favorites.Add(favoObj);
+                        db.SaveChanges();
+                    }
+                }
+
+            }
 
             if (Session["User_id"] != null)
             {
@@ -160,10 +193,8 @@ namespace webtest.Controllers
                     }
                 }
             }
-
             Session["Cart"] = cartQuantity;
             return View(bookReturn);
-
         }
 
         public ActionResult OrderStatus()

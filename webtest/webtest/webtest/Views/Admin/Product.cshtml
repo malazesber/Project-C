@@ -68,7 +68,7 @@
 
                 <input id="categoryInput" type="text" name="Category" , style="display:none">
                 <input type="text" name="Name" placeholder="Name" , value="@Model.Name" class="inputField"><br />
-                <input type="text" name="Summary" placeholder="Summary" , value="@Model.Summary" class="inputFieldSummary"><br />
+                <textarea type="text" name="Summary" placeholder="Summary" class="inputFieldSummary" rows="4">@Model.Summary</textarea><br />
                 <input type="text" name="Date" placeholder="Date" , value="@Model.Date" class="inputField"><br />
                 <input type="text" name="Author" placeholder="Author" , value="@Model.Author" class="inputField"><br />
                 <input type="text" name="Image_src" placeholder="Image_src" , value="@Model.Image_src" class="inputField"><br />
@@ -79,7 +79,7 @@
                 <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.ISBN"><br />
 
                 <button class="btn" , onclick="setCategory()">Apply changes</button>
-                @Html.ActionLink("Cancel","Product", "Admin", new { cancel = true, ISBN = Model.ISBN }, new {id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
+                @Html.ActionLink("Cancel", "Product", "Admin", new { cancel = true, ISBN = Model.ISBN }, new { id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
             </div>
             }
         }
@@ -90,41 +90,41 @@
         @{
             using (Html.BeginForm("Product", "Admin", FormMethod.Get))
             {
-                <div id="add">
-                    <input type="text" name="ISBN" placeholder="ISBN" value="@Request.QueryString["ISBN"]" class="inputField" /><br />
+        <div id="add">
+            <input type="text" name="ISBN" placeholder="ISBN" value="@Request.QueryString["ISBN"]" class="inputField" /><br />
 
-                    <select id="categoryFilter" , class="dropdownFilters inputField">
-                        <option>Select Category</option>
-                        <option value="Art & Photography" @if (@Request.QueryString["Category"] == "Art & Photography") { <text> selected="selected" </text> }> Art & Photography</option>
-                        <option value="Biography" @if (@Request.QueryString["Category"] == "Biography") { <text> selected="selected" </text> }> Biography</option>
-                        <option value="Business" @if (@Request.QueryString["Category"] == "Business") { <text> selected="selected" </text> }> Business</option>
-                        <option value="Diet & Fitness" @if (@Request.QueryString["Category"] == "Diet & Fitness") { <text> selected="selected" </text> }> Diet & Fitness</option>
-                        <option value="Education" @if (@Request.QueryString["Category"] == "Education") { <text> selected="selected" </text> }> Education</option>
-                        <option value="Fiction" @if (@Request.QueryString["Category"] == "Fiction") { <text> selected="selected" </text> }> Fiction</option>
-                        <option value="Food & Drink" @if (@Request.QueryString["Category"] == "Food & Drink") { <text> selected="selected" </text> }> Food & Drink</option>
-                        <option value="History & Politics" @if (@Request.QueryString["Category"] == "History & Politics") { <text> selected="selected" </text> }> History & Politics</option>
-                        <option value="Home & Garden" @if (@Request.QueryString["Category"] == "Home & Garden") { <text> selected="selected" </text> }> Home & Garden</option>
-                        <option value="Mind Body Spirit" @if (@Request.QueryString["Category"] == "Mind Body Spirit") { <text> selected="selected" </text> }> Mind Body Spirit</option>
-                        <option value="Parenting" @if (@Request.QueryString["Category"] == "Parenting") { <text> selected="selected" </text> }> Parenting</option>
-                        <option value="Science & Nature" @if (@Request.QueryString["Category"] == "Science & Nature") { <text> selected="selected" </text> }> Science & Nature</option>
-                        <option value="Sports" @if (@Request.QueryString["Category"] == "Sports") { <text> selected="selected" </text> }> Sports</option>
-                        <option value="Style & Beauty" @if (@Request.QueryString["Category"] == "Style & Beauty") { <text> selected="selected" </text> }> Style & Beauty</option>
-                    </select><br />
+            <select id="categoryFilter" , class="dropdownFilters inputField">
+                <option>Select Category</option>
+                <option value="Art & Photography" @if (@Request.QueryString["Category"] == "Art & Photography") { <text> selected="selected" </text> }> Art & Photography</option>
+                <option value="Biography" @if (@Request.QueryString["Category"] == "Biography") { <text> selected="selected" </text> }> Biography</option>
+                <option value="Business" @if (@Request.QueryString["Category"] == "Business") { <text> selected="selected" </text> }> Business</option>
+                <option value="Diet & Fitness" @if (@Request.QueryString["Category"] == "Diet & Fitness") { <text> selected="selected" </text> }> Diet & Fitness</option>
+                <option value="Education" @if (@Request.QueryString["Category"] == "Education") { <text> selected="selected" </text> }> Education</option>
+                <option value="Fiction" @if (@Request.QueryString["Category"] == "Fiction") { <text> selected="selected" </text> }> Fiction</option>
+                <option value="Food & Drink" @if (@Request.QueryString["Category"] == "Food & Drink") { <text> selected="selected" </text> }> Food & Drink</option>
+                <option value="History & Politics" @if (@Request.QueryString["Category"] == "History & Politics") { <text> selected="selected" </text> }> History & Politics</option>
+                <option value="Home & Garden" @if (@Request.QueryString["Category"] == "Home & Garden") { <text> selected="selected" </text> }> Home & Garden</option>
+                <option value="Mind Body Spirit" @if (@Request.QueryString["Category"] == "Mind Body Spirit") { <text> selected="selected" </text> }> Mind Body Spirit</option>
+                <option value="Parenting" @if (@Request.QueryString["Category"] == "Parenting") { <text> selected="selected" </text> }> Parenting</option>
+                <option value="Science & Nature" @if (@Request.QueryString["Category"] == "Science & Nature") { <text> selected="selected" </text> }> Science & Nature</option>
+                <option value="Sports" @if (@Request.QueryString["Category"] == "Sports") { <text> selected="selected" </text> }> Sports</option>
+                <option value="Style & Beauty" @if (@Request.QueryString["Category"] == "Style & Beauty") { <text> selected="selected" </text> }> Style & Beauty</option>
+            </select><br />
 
-                    <input id="categoryInput" type="text" name="Category" , style="display:none">
-                    <input type="text" name="Name" placeholder="Name" class="inputField" /><br />
-                    <input type="text" name="Author" placeholder="Author" class="inputField" /><br />
-                    <input type="text" name="Date" placeholder="Date" class="inputField" /><br />
-                    <input type="text" name="Summary" placeholder="Summary" class="inputFieldSummary" /><br />
-                    <input type="text" name="Image_src" placeholder="Image_src" class="inputField" /><br />
-                    <input type="text" name="Price" placeholder="Price" class="inputField" /><br />
-                    <input type="text" name="Rating" placeholder="Rating" class="inputField" /><br />
-                    <input type="text" name="Stock" placeholder="Stock" class="inputField" /><br />
-                    <input type="hidden" name="add" value="true" />
+            <input id="categoryInput" type="text" name="Category" , style="display:none">
+            <input type="text" name="Name" placeholder="Name" class="inputField" /><br />
+            <input type="text" name="Author" placeholder="Author" class="inputField" /><br />
+            <input type="text" name="Date" placeholder="Date" class="inputField" /><br />
+            <textarea type="text" name="Summary" rows="4" placeholder="Summary" class="inputFieldSummary"></textarea><br />
+            <input type="text" name="Image_src" placeholder="Image_src" class="inputField" /><br />
+            <input type="text" name="Price" placeholder="Price" class="inputField" /><br />
+            <input type="text" name="Rating" placeholder="Rating" class="inputField" /><br />
+            <input type="text" name="Stock" placeholder="Stock" class="inputField" /><br />
+            <input type="hidden" name="add" value="true" />
 
-                    <button class="btn" , onclick="setCategory()">Save new product</button>
+            <button class="btn" , onclick="setCategory()">Save new product</button>
 
-                </div>
+        </div>
             }
         }
     </div>

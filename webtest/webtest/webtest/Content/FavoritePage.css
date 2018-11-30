@@ -7,7 +7,7 @@
     background: white;
     min-height: 200px;
     height: auto;
-    width: 100%;
+    margin-left: 15px;
     margin-right: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -104,3 +104,17 @@
     height: 2px;
     margin-bottom: 5px;
 }
+
+#txtEmpty {
+    color: #8a3366;
+    font-size: 20px;
+    margin-top: 40px;
+    margin-left: 43%;
+    display: inline-block;
+    text-decoration: none;
+}
+
+    #txtEmpty:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
