@@ -34,27 +34,33 @@
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
+                    <label for="name"> <b>Name</b> </label>
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label for="surname"> <b>Surname</b> </label>
                     @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Surname" } })
                     @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label for="email"> <b>Email</b> </label>
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control, email", placeholder = "Email" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label for="phoneNumber"> <b>Phone number</b> </label>
                     @Html.EditorFor(model => model.Phone_number, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number" } })
                     @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label for="password"> <b>Password</b> </label>
                     @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label for="confirmPassword"> <b>Confirm password</b> </label>
                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirm password" } })
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>

@@ -13,14 +13,16 @@
         <h1>Login</h1>
         @using (Html.BeginForm("Authorize", "Checkout", FormMethod.Post))
         {
-            <div class="form-group">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control, email", placeholder = "Email" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-group">
+            <label for="email"> <b>Email</b> </label>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control, email", placeholder = "Email" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
 
-            <div class="form-group">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
-            </div>
+        <div class="form-group">
+            <label for="password"> <b>Password</b> </label>
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+        </div>
 
             <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
             <input type="submit" name="name" class="login login-submit" value="Login" />
