@@ -135,7 +135,22 @@
             @{
                 if (Session["User_id"] != null)
                 {
-                    <a href="@Url.Action("Address", "Checkout", new {})" id="btnCheckOut">Checkout</a>
+                    using (var db = new DatabaseEntities1())
+                    {
+                        int User_id = Convert.ToInt32(Session["User_id"]);
+                        var result = (from cart in db.Carts
+                                      from book in db.Books
+                                      where cart.ISBN == book.ISBN &&
+                                      cart.User_id == User_id
+                                      select book).ToList();
+                        if (result.Count != 0)
+                        {
+                            <a href="@Url.Action("Address", "Checkout", new {})" id="btnCheckOut">Checkout</a>
+                        }
+                    }
+
+
+
                 }
                 else
                 {

@@ -103,21 +103,25 @@
 
         @*FAVORIETEN*@
         @{
-            var db = new DatabaseEntities1();
-            var list = db.Favorites.Select(s => s);
-            double isbnD = Convert.ToDouble(Model.ISBN);
-            int User_id = Convert.ToInt32(Session["User_id"]);
+            if (Session["User_id"] != null)
+            {
+                var db = new DatabaseEntities1();
+                var list = db.Favorites.Select(s => s);
+                double isbnD = Convert.ToDouble(Model.ISBN);
+                int User_id = Convert.ToInt32(Session["User_id"]);
 
-            bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
-            //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
-            if (has)
-            {
-                <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Remove from favorites list</a>
+                bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                if (has)
+                {
+                    <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Remove from favorites list</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Add to favorites list</a>
+                }
             }
-            else
-            {
-                <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Add to favorites list</a>
-            }
+
         }
     </div>
 
