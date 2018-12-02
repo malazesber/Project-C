@@ -8,6 +8,6 @@
     "\\webtest\\webtest\\webtest\\Controllers",
     "\\webtest\\webtest\\webtest\\Views"
   ],
-  "SelectedNode": "\\webtest\\webtest\\webtest.sln",
+  "SelectedNode": "\\webtest\\webtest\\webtest\\Controllers\\ProductController.cs",
   "PreviewInSolutionExplorer": false
 }
