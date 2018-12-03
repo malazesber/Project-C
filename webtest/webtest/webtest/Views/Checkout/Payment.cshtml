@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
+@{ 
+    decimal totalPrice = Convert.ToDecimal(Session["TotalPrice"]);
+}
 <h2>Payment</h2>
 
 <div id="paypal-button-container"></div>
@@ -52,7 +55,7 @@
                     transactions: [
                         {
                             amount: {
-                                total: '0.01',
+                                total: @totalPrice,
                                 currency: 'USD'
                             }
                         }
@@ -69,5 +72,3 @@
         }
     }, '#paypal-button-container');
 </script>
-
-<a href="@Url.Action("Payment", "Checkout", new {payment = true})">Pay</a>
