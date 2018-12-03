@@ -4,20 +4,20 @@
     ViewBag.Title = "OrderDetails";
     Layout = "~/Views/Shared/_customLayout.cshtml";
     <head>
-        <link href="~/Content/OrderHistory.css" rel="stylesheet" />
+        <link href="~/Content/OrderDetails.css" rel="stylesheet" />
     </head>
 }
 
 
 
-<h3>Order Number: @Model.Item1.Order_Number</h3>
+<h3 id="header">Order Number: @Model.Item1.Order_Number</h3>
 
-<h1>Personal Info</h1>
+<h1 id="personalinfo">Personal Info</h1>
 <p>@Model.Item2.Name</p>
 <p>@Model.Item2.Surname</p>
 <p>@Model.Item2.Email</p>
 
-<h1>Address Info</h1>
+<h1 id="address">Address Info</h1>
 <p>@Model.Item2.Street_Name</p>
 <p>@Model.Item2.House_number</p>
 <p>@Model.Item2.Zip_code</p>

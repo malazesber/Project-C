@@ -18,3 +18,10 @@
     table tr:nth-child(odd) td {
         background-color:#e7edf0;
     }
+a{
+    color: #000000;
+    text-decoration:none;
+}
+a:hover{
+    color:#808080;
+}

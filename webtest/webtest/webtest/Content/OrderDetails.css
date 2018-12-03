@@ -1,0 +1,54 @@
+﻿#header {
+    font-weight: 100;
+    text-align: center;
+    font-size: 2.3em;
+}
+#personalinfo {
+    font-weight: 100;
+    text-align: left;
+    margin-left:10px;
+    font-size: 2.3em;
+}
+#address {
+    font-weight: 100;
+    text-align: left;
+    margin-left:10px;
+    font-size: 2.3em;
+}
+p{
+    font-weight:100;
+    text-align:left;
+    margin-left:20px;
+    font-size:1em;
+}
+
+
+
+
+table {
+    margin-left:10px;
+    border-collapse: collapse;
+}
+
+    table th {
+        text-align: center;
+        background-color: #993366;
+        color: #FFF;
+        padding: 4px 50px 4px 8px;
+    }
+
+    table td {
+        border: 1px solid #e3e3e3;
+        padding: 4px 8px;
+    }
+
+    table tr:nth-child(odd) td {
+        background-color: #e7edf0;
+    }
+btn {
+    background: Black;
+    display: block;
+    width: 150px;
+    height: 150px;
+    text-indent: -9999px;
+}

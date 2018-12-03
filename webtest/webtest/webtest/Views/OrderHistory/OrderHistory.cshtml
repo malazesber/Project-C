@@ -39,13 +39,13 @@
                     DateTime Today = DateTime.Today;
                     if (Orderdate.AddDays(1) > Today) { Orderstatus = "Pending"; }
                     else if (Orderdate.AddDays(2) > Today) { Orderstatus = "Item received by courier"; }
-                    else if (Orderdate.AddDays(3)> Today) { Orderstatus = "Delivered"; }
+                    else if (Orderdate.AddDays(3)< Today) { Orderstatus = "Delivered"; }
 
                 <tr>
                     <td>@m.Order_Number</td>
                     <td>@Orderstatus</td>
                     <td>@m.OrderDate</td>
-                    <td>@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number, style = "color:Blue" }, null)</td>
+                    <td><a id="link ">@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number }, null)</a></td>
                 </tr>
                 }
             </table>
