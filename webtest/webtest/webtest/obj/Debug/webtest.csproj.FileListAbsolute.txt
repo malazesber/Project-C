@@ -2142,7 +2142,6 @@ C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webt
 C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csproj.CopyComplete
 C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.dll
 C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.pdb
-C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csprojAssemblyReference.cache
 C:\Users\charl\Source\Repos\ANL\Project-C\webtest\webtest\webtest\bin\ApplicationInsights.config
 C:\Users\charl\Source\Repos\ANL\Project-C\webtest\webtest\webtest\bin\webtest.dll.config
 C:\Users\charl\Source\Repos\ANL\Project-C\webtest\webtest\webtest\bin\webtest.dll

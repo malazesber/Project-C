@@ -319,6 +319,7 @@
     <Content Include="Views\Checkout\Review.cshtml" />
     <Content Include="Views\Checkout\Confirmation.cshtml" />
     <Content Include="Views\Admin\Product.cshtml" />
+    <Content Include="Views\Checkout\PaymentRegistered.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderHistory\OrderHistory.cshtml" />

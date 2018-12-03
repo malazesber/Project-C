@@ -69,15 +69,18 @@ namespace webtest.Controllers
             Dictionary<User, Address> userInfo = new Dictionary<User, Address>();
 
 
-            if (Name == "" || LastName == "" || Email == "" || PhoneNumber == "" || Street == "" ||
-                HouseNumber == null || City == "" || ZipCode == "" || Country == "")
+            var streetadress = (HouseNumber == null || ZipCode == "");
+            
+            var fullname = (Name == "" || LastName == "");
+            var emptyEmail = (Email == "");
+            var personalInfo = (fullname || emptyEmail);
+            var empty = (streetadress || fullname);
+            if (empty)
             {
-                ViewBag.Message = "Please fill in everything.";
+                ViewBag.Message = "Please fill in your full name, email and your adress.";
                 return View();
             }
-            else
-            {
-                if (Session["User_id"] != null)
+            if (Session["User_id"] != null)
                 {
                     int User_id = Convert.ToInt32(Session["User_id"]);
 
@@ -141,14 +144,13 @@ namespace webtest.Controllers
             }
 
 
-        }
+        
 
 
-        public ActionResult Payment(bool? payment)
+        public ActionResult PaymentRegistered (bool? payment)
         {
-            if (payment != null)
-            {
-                if ((bool)payment)
+            
+                if ((bool)payment || Session["User_id"] != null)
                 {
 
                     string products = "";
@@ -167,176 +169,210 @@ namespace webtest.Controllers
                         // CREATE ORDER IN DATABASE
                         Order orderObj = new Order();
 
-                        if (Session["User_id"] != null)
+                        //if (Session["User_id"] != null)
+                        //{
+                        //CREATER ORDER OBJECT
+                        orderObj = new Order()
                         {
-                            //CREATER ORDER OBJECT
-                            orderObj = new Order()
-                            {
-                                Order_status = "Pending",
-                                OrderDate = DateTime.Now,
-                                User_id = Convert.ToInt32(Session["User_id"]),
-                                Order_Number = Ordernumber
-                            };
-                            //ADD ORDER TO DATABASE
-                            db.Orders.Add(orderObj);
-                            db.SaveChanges();
+                            Order_status = "Pending",
+                            OrderDate = DateTime.Now,
+                            User_id = Convert.ToInt32(Session["User_id"]),
+                            Order_Number = Ordernumber
+                        };
+                        //ADD ORDER TO DATABASE
+                        db.Orders.Add(orderObj);
+                        db.SaveChanges();
 
-                            //READ ALL PRODUCTS AND QUANITIES TO STRING
-                            Dictionary<Book, int> bookDict = new Dictionary<Book, int>();
-                            var User_id = Convert.ToInt32(Session["User_id"]);
+                        //READ ALL PRODUCTS AND QUANITIES TO STRING
+                        Dictionary<Book, int> bookDict = new Dictionary<Book, int>();
+                        var User_id = Convert.ToInt32(Session["User_id"]);
 
 
-                            var a = db.Carts.Where(x => x.User_id == User_id).ToList();
-                            foreach (var item in a)
-                            {
-                                Book bookObj = db.Books.Where(x => x.ISBN == item.ISBN).FirstOrDefault();
-                                bookDict.Add(bookObj, item.Quantity);
-                            }
-
-                            int maxCount = bookDict.Count;
-                            int counter = 0;
-                            foreach (KeyValuePair<Book, int> kv in bookDict)
-                            {
-                                counter += 1;
-                                if (counter == maxCount)
-                                {
-                                    products += kv.Key.ISBN.ToString() + "-" + kv.Value;
-                                }
-                                else
-                                {
-                                    products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
-                                }
-
-                            }
-
-                            //ADD ORDERDETAILS TO DB
-                            foreach (KeyValuePair<User, Address> kv2 in userInfo)
-                            {
-                                OrderDetail orderDetailObj = new OrderDetail()
-                                {
-                                    OrderDate = DateTime.Now,
-                                    Products = products,
-                                    Name = kv2.Key.Name,
-                                    Surname = kv2.Key.Surname,
-                                    Email = kv2.Key.Email,
-                                    Phone_Number = kv2.Key.Phone_number,
-                                    Street_Name = kv2.Value.Street_name,
-                                    House_number = kv2.Value.House_number,
-                                    Zip_code = kv2.Value.Zip_code,
-                                    Country = kv2.Value.Country,
-                                    Order_Number = Ordernumber
-                                };
-                                //CREATE PAYMENT OBJ AND ADD IT TO PAYMENT TABLE
-                                Payment PaymentObj = new Payment
-                                {
-                                    Payment_date = DateTime.Now,
-                                    Amount = Convert.ToInt32(Session["TotalPrice"]),
-                                    Order_Number = Ordernumber
-                                };
-
-                                db.OrderDetails.Add(orderDetailObj);
-                                db.Payments.Add(PaymentObj);
-                                db.SaveChanges();
-                            }
-                            //ADD ORDERDETAIL ID & PAMYENT ID TO ORDER
-                            var orderDetailObj2 = db.OrderDetails.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-                            var paymentObj2 = db.Payments.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-
-                            var orderObj2 = db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-                            orderObj2.OrderDetails_id = orderDetailObj2.OrderDetails_Id;
-                            orderObj2.Payment_id = paymentObj2.Payment_id;
-
-
-
-
-                            db.SaveChanges();
-
-                            return RedirectToAction("Confirmation", new { orderNumber = Ordernumber });
-                        }
-                        else
+                        var a = db.Carts.Where(x => x.User_id == User_id).ToList();
+                        foreach (var item in a)
                         {
-                            // CREATE ORDER OBJECT
-                            orderObj = new Order()
-                            {
-                                Order_status = "Pending",
-                                OrderDate = DateTime.Now,
-                                Order_Number = Ordernumber
-                            };
-                            //ADD ORDER TO DATABASE
-                            db.Orders.Add(orderObj);
-                            db.SaveChanges();
-
-                            //READ ALL PRODUCTS AND QUANITIES TO STRING
-                            Dictionary<Book, int> cartQuantity = (Dictionary<Book, int>)Session["Cart"];
-                            int maxCount = cartQuantity.Count;
-                            int counter = 0;
-                            foreach (KeyValuePair<Book, int> kv in cartQuantity)
-                            {
-                                counter += 1;
-                                if (counter == maxCount)
-                                {
-                                    products += kv.Key.ISBN.ToString() + "-" + kv.Value;
-                                }
-                                else
-                                {
-                                    products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
-                                }
-                            }
-
-                            // ADD ORDERDETAILS TO DB
-                            foreach (KeyValuePair<User, Address> kv2 in userInfo)
-                            {
-                                //CREATE ORDERDETAIL OBJ AND ADD IT TO ORDERDETAIL TABLE
-                                OrderDetail orderDetailObj = new OrderDetail()
-                                {
-                                    OrderDate = DateTime.Now,
-                                    Products = products,
-                                    Name = kv2.Key.Name,
-                                    Surname = kv2.Key.Surname,
-                                    Email = kv2.Key.Email,
-                                    Phone_Number = kv2.Key.Phone_number,
-                                    Street_Name = kv2.Value.Street_name,
-                                    House_number = kv2.Value.House_number,
-                                    Zip_code = kv2.Value.Zip_code,
-                                    Country = kv2.Value.Country,
-                                    Order_Number = Ordernumber
-                                };
-
-                                //CREATE PAYMENT OBJ AND ADD IT TO PAYMENT TABLE
-                                Payment PaymentObj = new Payment
-                                {
-                                    Payment_date = DateTime.Now,
-                                    Amount = Convert.ToInt32(Session["TotalPrice"]),
-                                    Order_Number = Ordernumber
-
-                                };
-
-                                db.OrderDetails.Add(orderDetailObj);
-                                db.Payments.Add(PaymentObj);
-                                db.SaveChanges();
-                            }
-
-                            //ADD ORDERDETAIL ID TO ORDER
-                            var orderDetailObj2 = db.OrderDetails.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-                            var paymentObj2 = db.Payments.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-
-                            var orderObj2 = db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
-                            orderObj2.OrderDetails_id = orderDetailObj2.OrderDetails_Id;
-                            orderObj2.Payment_id = paymentObj2.Payment_id;
-                            db.SaveChanges();
-
-
-                            return RedirectToAction("Confirmation", new { orderNumber = Ordernumber });
+                            Book bookObj = db.Books.Where(x => x.ISBN == item.ISBN).FirstOrDefault();
+                            bookDict.Add(bookObj, item.Quantity);
                         }
 
+                        int maxCount = bookDict.Count;
+                        int counter = 0;
+                        foreach (KeyValuePair<Book, int> kv in bookDict)
+                        {
+                            counter += 1;
+                            if (counter == maxCount)
+                            {
+                                products += kv.Key.ISBN.ToString() + "-" + kv.Value;
+                            }
+                            else
+                            {
+                                products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
+                            }
 
+                        }
+
+                        //ADD ORDERDETAILS TO DB
+                        foreach (KeyValuePair<User, Address> kv2 in userInfo)
+                        {
+                            OrderDetail orderDetailObj = new OrderDetail()
+                            {
+                                OrderDate = DateTime.Now,
+                                Products = products,
+                                Name = kv2.Key.Name,
+                                Surname = kv2.Key.Surname,
+                                Email = kv2.Key.Email,
+                                Phone_Number = kv2.Key.Phone_number,
+                                Street_Name = kv2.Value.Street_name,
+                                House_number = kv2.Value.House_number,
+                                Zip_code = kv2.Value.Zip_code,
+                                Country = kv2.Value.Country,
+                                Order_Number = Ordernumber
+                            };
+                            //CREATE PAYMENT OBJ AND ADD IT TO PAYMENT TABLE
+                            Payment PaymentObj = new Payment
+                            {
+                                Payment_date = DateTime.Now,
+                                Amount = Convert.ToInt32(Session["TotalPrice"]),
+                                Order_Number = Ordernumber
+                            };
+
+                            db.OrderDetails.Add(orderDetailObj);
+                            db.Payments.Add(PaymentObj);
+                            db.SaveChanges();
+                        }
+                        //ADD ORDERDETAIL ID & PAMYENT ID TO ORDER
+                        var orderDetailObj2 = db.OrderDetails.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+                        var paymentObj2 = db.Payments.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+
+                        var orderObj2 = db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+                        orderObj2.OrderDetails_id = orderDetailObj2.OrderDetails_Id;
+                        orderObj2.Payment_id = paymentObj2.Payment_id;
+
+
+
+
+                        db.SaveChanges();
+
+                        return RedirectToAction("Confirmation", new { orderNumber = Ordernumber });
                     }
-
                 }
-            }
-
+                
+            
             return View();
         }
+
+        public ActionResult PaymentUnRegistered(bool? payment)
+        {
+            if (payment != null)
+            {
+                if ((bool)payment || Session["User_id"] == null)
+                {
+
+                    string products = "";
+                    Dictionary<User, Address> userInfo = (Dictionary<User, Address>)Session["UserInfo"];
+
+                    int Ordernumber = new Random().Next(1000000, int.MaxValue);
+
+
+                    using (var db = new DatabaseEntities1())
+                    {
+                        //Check if ordernumber already exists.
+                        while (db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault() != null)
+                        {
+                            Ordernumber = new Random().Next(1000000, int.MaxValue);
+                        }
+                        // CREATE ORDER IN DATABASE
+                        Order orderObj = new Order();
+                        //else
+                        //{
+                        // CREATE ORDER OBJECT
+                        orderObj = new Order()
+                        {
+                            Order_status = "Pending",
+                            OrderDate = DateTime.Now,
+                            Order_Number = Ordernumber
+                        };
+                        //ADD ORDER TO DATABASE
+                        db.Orders.Add(orderObj);
+                        db.SaveChanges();
+
+                        //READ ALL PRODUCTS AND QUANITIES TO STRING
+                        Dictionary<Book, int> cartQuantity = (Dictionary<Book, int>)Session["Cart"];
+                        int maxCount = cartQuantity.Count;
+                        int counter = 0;
+                        foreach (KeyValuePair<Book, int> kv in cartQuantity)
+                        {
+                            counter += 1;
+                            if (counter == maxCount)
+                            {
+                                products += kv.Key.ISBN.ToString() + "-" + kv.Value;
+                            }
+                            else
+                            {
+                                products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
+                            }
+                        }
+
+                        // ADD ORDERDETAILS TO DB
+                        foreach (KeyValuePair<User, Address> kv2 in userInfo)
+                        {
+                            //CREATE ORDERDETAIL OBJ AND ADD IT TO ORDERDETAIL TABLE
+                            OrderDetail orderDetailObj = new OrderDetail()
+                            {
+                                OrderDate = DateTime.Now,
+                                Products = products,
+                                Name = kv2.Key.Name,
+                                Surname = kv2.Key.Surname,
+                                Email = kv2.Key.Email,
+                                Phone_Number = kv2.Key.Phone_number,
+                                Street_Name = kv2.Value.Street_name,
+                                House_number = kv2.Value.House_number,
+                                Zip_code = kv2.Value.Zip_code,
+                                Country = kv2.Value.Country,
+                                Order_Number = Ordernumber
+                            };
+
+                            //CREATE PAYMENT OBJ AND ADD IT TO PAYMENT TABLE
+                            Payment PaymentObj = new Payment
+                            {
+                                Payment_date = DateTime.Now,
+                                Amount = Convert.ToInt32(Session["TotalPrice"]),
+                                Order_Number = Ordernumber
+
+                            };
+
+                            db.OrderDetails.Add(orderDetailObj);
+                            db.Payments.Add(PaymentObj);
+                            db.SaveChanges();
+                        }
+
+                        //ADD ORDERDETAIL ID TO ORDER
+                        var orderDetailObj2 = db.OrderDetails.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+                        var paymentObj2 = db.Payments.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+
+                        var orderObj2 = db.Orders.Where(x => x.Order_Number == Ordernumber).FirstOrDefault();
+                        orderObj2.OrderDetails_id = orderDetailObj2.OrderDetails_Id;
+                        orderObj2.Payment_id = paymentObj2.Payment_id;
+                        db.SaveChanges();
+
+
+                        return RedirectToAction("Confirmation", new { orderNumber = Ordernumber });
+                    }
+
+
+                }
+
+
+
+            }
+        return View();
+    }
+
+
+
+
+
+
 
         public ActionResult Review()
         {

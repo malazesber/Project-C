@@ -7,7 +7,14 @@
 <link href="~/Content/SearchResults.css" rel="stylesheet" />
 <h2>Review</h2>
 <p>Please check if all the information is correct before continuing.</p>
-<a href="@Url.Action("Payment", "Checkout", new { })">Continue</a>
+<a if ( Session["User_id"] != null)
+   {
+        href="@Url.Action("PaymentRegistered", "Checkout", new { })"
+   }
+   else{
+        href="@Url.Action("PaymentUnRegistered", "Checkout", new { })"
+   }
+   >Continue</a>
 
 @{
     var cart = (Dictionary<Book, int>)Session["Cart"];
