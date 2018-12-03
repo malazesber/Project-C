@@ -6,6 +6,10 @@
 
 <h2>Payment</h2>
 
+@{
+    decimal totalPrice = Convert.ToDecimal(Session["TotalPrice"]);
+}
+
 <div id="paypal-button-container"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
@@ -52,7 +56,7 @@
                     transactions: [
                         {
                             amount: {
-                                total: '0.01',
+                                total: @totalPrice,
                                 currency: 'USD'
                             }
                         }
