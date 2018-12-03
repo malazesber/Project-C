@@ -213,8 +213,8 @@
 
             <label>Price</label><br />
             <div id="priceFilter">
-                <input id="minPrice" type="number" name="MinPrice" min="0" placeholder="Min Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MinPrice"]">
-                <input id="maxPrice" type="number" name="MaxPrice" min="0" placeholder="Max Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MaxPrice"]">
+                <input id="minPrice" type="number" name="MinPrice" min="0" onchange="Pricecheck()" placeholder="Min Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MinPrice"]">
+                <input id="maxPrice" type="number" name="MaxPrice" min="0" onchange="Pricecheck()" placeholder="Max Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MaxPrice"]">
             </div>
 
             <label>Category</label>
@@ -289,6 +289,18 @@
                 document.getElementById("ratingInputTop").value = rating.options[rating.selectedIndex].value;
             }
 
+            function Pricecheck() {
+                var minimum = parseInt(document.getElementById("minPrice").value, 10);
+                var maximum = parseInt(document.getElementById("maxPrice").value, 10);
+
+                if (minimum > maximum) {
+                    minimum = maximum - 1;
+                }
+
+                document.getElementById("minPrice").value = minimum;
+                document.getElementById("maxPrice").value = maximum;
+
+            }
         </script>
 
     </div>
