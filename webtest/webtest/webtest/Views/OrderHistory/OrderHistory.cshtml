@@ -11,12 +11,11 @@
     </head>
 }
 
-<h2>OrderHistory</h2>
+
 
 <div id="container">
     <div id="results">
-
-        <img id="stripe" src="~/Content/Images/stripe.png" />
+        <div id="title">Order History</div>
 
         <!-- SHOW ORDERS-->
         <!-- Check of er ORDERS zijn gevonden-->
@@ -39,17 +38,16 @@
                     DateTime Today = DateTime.Today;
                     if (Orderdate.AddDays(1) > Today) { Orderstatus = "Pending"; }
                     else if (Orderdate.AddDays(2) > Today) { Orderstatus = "Item received by courier"; }
-                    else if (Orderdate.AddDays(3)< Today) { Orderstatus = "Delivered"; }
+                    else if (Orderdate.AddDays(3) < Today) { Orderstatus = "Delivered"; }
 
-                <tr>
-                    <td>@m.Order_Number</td>
-                    <td>@Orderstatus</td>
-                    <td>@m.OrderDate</td>
-                    <td><a id="link ">@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number }, null)</a></td>
-                </tr>
+                    <tr>
+                        <td>@m.Order_Number</td>
+                        <td>@Orderstatus</td>
+                        <td>@m.OrderDate</td>
+                        <td><a id="link ">@Html.ActionLink("Order details", "OrderDetails", new { id = m.Order_Number }, null)</a></td>
+                    </tr>
                 }
             </table>
-            </body>
-</div>
+        </body>
     </div>
-
+</div>
