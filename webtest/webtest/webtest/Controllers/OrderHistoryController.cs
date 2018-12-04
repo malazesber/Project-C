@@ -33,6 +33,7 @@ namespace webtest.Controllers
                 // laad orders
                 var result = (from order in db.Orders
                               where order.User_id == User_id
+                              orderby order.OrderDate descending
                               select order).ToList();
 
 
