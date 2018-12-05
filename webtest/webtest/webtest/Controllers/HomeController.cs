@@ -16,14 +16,6 @@ namespace webtest.Controllers
         {
             return View();
         }
-
-        public ActionResult WishList()
-        {
-            ViewBag.Message = "THIS IS THE WISHLIST PAGE";
-            return View();
-
-        }
-
         public ActionResult ShoppingCart(string isbn, double? del, double? favo, bool delete = false, bool plus = false, bool min = false)
         {
             decimal totalPrice = 0;

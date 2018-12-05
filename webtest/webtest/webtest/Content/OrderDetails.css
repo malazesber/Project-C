@@ -3,17 +3,6 @@
     height: 100%;
 }
 
-#results {
-    background: white;
-    width: 65%;
-    margin: auto;
-    min-height: 400px;
-    height: auto;
-    margin-top: 15px;
-    padding-top: 15px;
-    margin-bottom: 15px;
-}
-
 #title {
     font-weight: 100;
     text-align: center;
@@ -51,8 +40,6 @@ table {
     margin-left: 10%;
     margin-top: 15px;
     display: inline-block;
-    
-
 }
 
 .BoxPriceInfo {
@@ -101,7 +88,7 @@ table {
     margin-top: 15px;
 }
 
-.orderInfoTitle{
+.orderInfoTitle {
     float: left;
     width: 30%;
     margin-bottom: 25px;
@@ -111,5 +98,5 @@ table {
     width: 20%;
     float: right;
     margin-right: 45%;
-    margin-bottom:25px;
+    margin-bottom: 25px;
 }

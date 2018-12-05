@@ -19,100 +19,18 @@ namespace webtest.Controllers
         {
             string favoISBN = favo.ToString();
             string cartISBN = cart.ToString();
+            var _isbn = isbn.ToString();
             Dictionary<Book, int> cartQuantity = new Dictionary<Book, int>();
 
             if (favoISBN != "" && favoISBN != null)
             {
-                if (Session["User_id"] == null)
-                {
-                    TempData["favo"] = "<script>alert('You need to login first.');</script>";
-                }
-                else
-                {
-                    var list = db.Favorites.Select(s => s);
-                    int User_id = Convert.ToInt32(Session["User_id"]);
-
-                    bool has = list.Any(cus => cus.ISBN == favo && cus.User_id == User_id);
-                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
-                    if (has)
-                    {
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
-                        {
-                            db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == favo && cus.User_id == User_id));
-                            db.SaveChanges();
-                        }
-
-                    }
-                    else
-                    {
-                        // ISBN TOEVOEGEN AAN FAVORIETEN
-
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
-                        {
-                            var favoObj = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(favo)};
-                            db.Favorites.Add(favoObj);
-                            db.SaveChanges();
-                        }
-                    }
-                }
+                FavoriteList(_isbn);
             }
 
             //Cart button toevoegen
             if (cartISBN != "" && cartISBN != null)
             {
-                if (Session["User_id"] != null)
-                {
-                    var list = db.Carts.Select(s => s);
-
-                    int User_id = Convert.ToInt32(Session["User_id"]);
-
-                    bool has = list.Any(cus => cus.ISBN == cart && cus.User_id == User_id);
-
-                    if (has && plus != true)
-                    {
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
-                        {
-                            db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == cart && cus.User_id == User_id));
-                            db.SaveChanges();
-                        }
-
-                    }
-                    else if (plus != true)
-                    {
-                        using (DatabaseEntities1 db = new DatabaseEntities1())
-                        {
-                            var cartObj = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(cart), Quantity = 1 };
-                            db.Carts.Add(cartObj);
-                            db.SaveChanges();
-                        }
-                    }
-                }
-                else
-                {
-                    // UNREGISTERED USER
-                    if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
-                    {
-                        Session["shoppingCart"] = cartISBN;
-                        plus = false;
-                    }
-                    else if (plus == false)
-                    {
-                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
-                        //Check of die al in je cart zit.
-                        if (isbns.Contains(cartISBN))
-                        {
-
-                            isbns.Remove(cartISBN);
-                            var newcart = String.Join(",", isbns);
-                            Session["shoppingCart"] = newcart;
-
-                        }
-                        else
-                        {
-                            Session["shoppingCart"] = Session["shoppingCart"] + "," + cartISBN;
-                        }
-                    }
-                }
+                ShoppingCart(_isbn);
             }
 
             decimal totalPrice = 0;
@@ -184,9 +102,6 @@ namespace webtest.Controllers
                                     let count = g.Count()
 
                                     select new { Value = g.Key, Count = count };
-
-                    var _isbn = isbn.ToString();
-
 
                     //Deletes product from cart
                     if (isbns.Contains(_isbn) && delete)
@@ -292,610 +207,170 @@ namespace webtest.Controllers
             // CHECK OF ER EEN ISBN IS MEEGEGEVEN
             if (isbn != "" && isbn != null)
             {
-
                 if (type == "cart")
                 {
-                    if (Session["User_id"] != null)
-                    {
-                        var list = db.Carts.Select(s => s);
-                        double isbnD = Convert.ToDouble(isbn);
-                        int User_id = Convert.ToInt32(Session["User_id"]);
-
-                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
-
-                        if (has)
-                        {
-                            using (DatabaseEntities1 db = new DatabaseEntities1())
-                            {
-                                db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
-                                db.SaveChanges();
-                            }
-
-                        }
-                        else
-                        {
-                            using (DatabaseEntities1 db = new DatabaseEntities1())
-                            {
-                                var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn), Quantity = 1 };
-                                db.Carts.Add(cart);
-                                db.SaveChanges();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // UNREGISTERED USER
-                        if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
-                        {
-                            Session["shoppingCart"] = isbn.ToString();
-                        }
-                        else
-                        {
-                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
-                            //Check of die al in je cart zit.
-                            //Deletes product from cart
-                            if (isbns.Contains(isbn))
-                            {
-                                isbns.RemoveAll(s => isbn == s);
-                                var newcart = String.Join(",", isbns);
-                                Session["shoppingCart"] = newcart;
-                            }
-                            else
-                            {
-                                Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
-                            }
-
-                        }
-
-                        
-                    }
-
-
-
+                    ShoppingCart(isbn);
                 }
+
                 else if (type == "favorite")
                 {
-                    if (Session["User_id"] == null)
-                    {
-                        TempData["favo"] = "<script>alert('You need to login first.');</script>";
-
-                    }
-                    else
-                    {
-                        var list = db.Favorites.Select(s => s);
-                        double isbnD = Convert.ToDouble(isbn);
-                        int User_id = Convert.ToInt32(Session["User_id"]);
-
-                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
-                        //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
-                        if (has)
-                        {
-                            using (DatabaseEntities1 db = new DatabaseEntities1())
-                            {
-                                db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
-                                db.SaveChanges();
-                            }
-
-                        }
-                        else
-                        {
-                            // ISBN TOEVOEGEN AAN FAVORIETEN
-
-                            using (DatabaseEntities1 db = new DatabaseEntities1())
-                            {
-                                var favo = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
-                                db.Favorites.Add(favo);
-                                db.SaveChanges();
-                            }
-                        }
-                    }
+                    FavoriteList(isbn);
                 }
-
             }
 
-            List<Book> OrderCheck(string GivenOrder, List<Book> results)
+            // Apply filters
+            var select = db.Books.ToList();
+            if (search != null)
             {
-                if (orders.Contains(GivenOrder))
-                {
-                    if (GivenOrder == "Price: Descending")
-                    {
-                        results = results.OrderByDescending(x => x.Price).ToList();
-                        return results;
-                    }
-                    else if (GivenOrder == "Price: Ascending")
-                    {
-                        results = results.OrderBy(x => x.Price).ToList();
-                        return results;
-                    }
-                    else if (GivenOrder == "Title: A - Z")
-                    {
-                        results = results.OrderBy(x => x.Name).ToList();
-                        return results;
-                    }
-                    else if (GivenOrder == "Title: Z - A")
-                    {
-                        results = results.OrderByDescending(x => x.Name).ToList();
-                        return results;
-                    }
-                    else if (GivenOrder == "Author: A - Z")
-                    {
-                        results = results.OrderBy(x => x.Author).ToList();
-                        return results;
-                    }
-                    else if (GivenOrder == "Author: Z - A")
-                    {
-                        results = results.OrderByDescending(x => x.Author).ToList();
-                        return results;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Could not find the OrderBy value");
-                        return results;
-                    }
-                }
-                else return results;
+                select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
             }
-
-
-            // ALS SEARCH LEEG IS
-            if (search == "" || search == null)
-            {
-                if (categories.Contains(Category))
-                {
-                    if (!((MinPrice != null && MinPrice != "") || (MaxPrice != null && MaxPrice != "") || ratings.Contains(Rating) || orders.Contains(Order)))
-                    {
-
-                        return View(db.Books.Where(m => m.Category.Contains(Category)).ToList().ToPagedList(page ?? 1, Pagination));
-                    }
-
-                }
-                else
-                {
-                    return View(db.Books.Where(m => m.Name.Contains("####@")).ToList().ToPagedList(page ?? 1, Pagination));
-                }
-            }
-
-            //FILTERS
             if (MinPrice != null && MinPrice != "")
             {
-                if (MaxPrice != null && MaxPrice != "")
-                {
-                    if (ratings.Contains(Rating))
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            //MIN PRIJS - MAX PRIJS - RATING - CATEGORY
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                                int rating = Convert.ToInt32(Rating);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    var select2 = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    var select3 = select2.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    var results = select3.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            //MIN PRIJS - MAX PRIJS - RATING
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                                int rating = Convert.ToInt32(Rating);
-
-                                var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                var select2 = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            //MIN PRIJS - MAX PRIJS - CATEGORY
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            //MIN PRIJS - MAX PRIJS
-                            try
-                            {
-
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                                var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-
-                    }
-
-                }
-
-
-
-
-
-
-                else
-                {
-
-                    if (ratings.Contains(Rating))
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            // MIN PRIJS - RATING - CATEGORY
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                int rating = Convert.ToInt32(Rating);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select2.Where(m => m.Price >= MinPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            // MIN PRIJS - RATING
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                int rating = Convert.ToInt32(Rating);
-                                var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                var results = select.Where(m => m.Price >= MinPriceD == true).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            // MIN PRIJS - CATEGORY
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            // MIN PRIJS
-                            try
-                            {
-                                decimal MinPriceD = Convert.ToDecimal(MinPrice);
-                                var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Price >= MinPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                    }
-
-
-                }
+                decimal MinPriceD = Convert.ToDecimal(MinPrice);
+                select = select.Where(m => m.Price >= MinPriceD == true).ToList();
             }
-            else
+            if (MaxPrice != null && MaxPrice != "")
             {
-                if (MaxPrice != null && MaxPrice != "")
-                {
-
-                    if (!ratings.Contains(Rating))
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            // MAX PRIJS - CATEGORY
-                            try
-                            {
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    if (orders.Contains(Order))
-                                    {
-                                        results = OrderCheck(Order, results);
-                                    }
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            // MAX RPIJS
-                            try
-                            {
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                                var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Price <= MaxPriceD == true).ToList().ToPagedList(page ?? 1, Pagination));
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            //  MAX PRIJS - RATING - CATEGORY
-                            try
-                            {
-                                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                                int rating = Convert.ToInt32(Rating);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var select = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var select2 = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    var results = select2.Where(m => m.Price <= MaxPriceD == true).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        // MAX PRIJS - RATING
-                        try
-                        {
-                            decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
-                            int rating = Convert.ToInt32(Rating);
-                            var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                            var results = select.Where(m => m.Price <= MaxPriceD == true).ToList();
-                            results = OrderCheck(Order, results);
-                            return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                        }
-                        catch (FormatException)
-                        {
-
-                        }
-                    }
-
-                }
-                else
-                {
-                    if (ratings.Contains(Rating))
-                    {
-                        if (categories.Contains(Category))
-                        {
-                            //  RATING - CATEGORY
-                            try
-                            {
-                                int rating = Convert.ToInt32(Rating);
-
-                                // ALS SEARCH LEEG IS
-                                if (search == "" || search == null)
-                                {
-                                    var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-                                //ALS SEARCH ACTIEF IS
-                                else
-                                {
-                                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                                    results = OrderCheck(Order, results);
-                                    return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                                }
-
-
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                // RATING
-                                int rating = Convert.ToInt32(Rating);
-                                var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                                results = OrderCheck(Order, results);
-                                return View(results.Where(m => m.Rating == rating).ToList().ToPagedList(page ?? 1, Pagination));
-                            }
-                            catch (FormatException)
-                            {
-
-                            }
-                        }
-
-                    }
-
-                }
+                decimal MaxPriceD = Convert.ToDecimal(MaxPrice);
+                select = select.Where(m => m.Price <= MaxPriceD == true).ToList();
             }
-
-
-
-            // NO FILTERS
             if (categories.Contains(Category))
             {
+                select = select.Where(m => m.Category.Contains(Category)).ToList();
+            }
+            if (ratings.Contains(Rating))
+            {
+                int rating = Convert.ToInt32(Rating);
+                select = select.Where(m => m.Rating == rating).ToList();
+            }
 
-
-                // ALS SEARCH LEEG IS
-                if (search == "" || search == null)
+            // Apply ordering
+            if (orders.Contains(Order))
+            {
+                switch (Order)
                 {
-                    var results = db.Books.Where(m => m.Category.Contains(Category)).ToList();
-                    results = OrderCheck(Order, results);
-                    return View(results.ToPagedList(page ?? 1, Pagination));
+                    case "Price: Descending":
+                        select = select.OrderByDescending(x => x.Price).ToList();
+                        break;
+                    case "Price: Ascending":
+                        select = select.OrderBy(x => x.Price).ToList();
+                        break;
+                    case "Title: A - Z":
+                        select = select.OrderBy(x => x.Name).ToList();
+                        break;
+                    case "Title: Z - A":
+                        select = select.OrderByDescending(x => x.Name).ToList();
+                        break;
+                    case "Author: A - Z":
+                        select = select.OrderBy(x => x.Author).ToList();
+                        break;
+                    case "Author: Z - A":
+                        select = select.OrderByDescending(x => x.Author).ToList();
+                        break;
+                    default:
+                        Console.WriteLine("Could not find the OrderBy value");
+                        break;
                 }
-                //ALS SEARCH ACTIEF IS
+            }
+
+            // Return result
+            return View(select.ToPagedList(page ?? 1, Pagination));
+        }
+
+        public void ShoppingCart(string isbn)
+        {
+            if (Session["User_id"] != null)
+            {
+                var list = db.Carts.Select(s => s);
+                double isbnD = Convert.ToDouble(isbn);
+                int User_id = Convert.ToInt32(Session["User_id"]);
+
+                bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+
+                if (has)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                        db.SaveChanges();
+                    }
+
+                }
                 else
                 {
-                    var select = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                    var results = select.Where(m => m.Category.Contains(Category)).ToList();
-                    results = OrderCheck(Order, results);
-                    return View(results.ToPagedList(page ?? 1, Pagination));
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        var cart = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn), Quantity = 1 };
+                        db.Carts.Add(cart);
+                        db.SaveChanges();
+                    }
                 }
+            }
+            else
+            {
+                // UNREGISTERED USER
+                if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
+                {
+                    Session["shoppingCart"] = isbn.ToString();
+                }
+                else
+                {
+                    List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                    //Check of die al in je cart zit.
+                    //Deletes product from cart
+                    if (isbns.Contains(isbn))
+                    {
+                        isbns.RemoveAll(s => isbn == s);
+                        var newcart = String.Join(",", isbns);
+                        Session["shoppingCart"] = newcart;
+                    }
+                    else
+                    {
+                        Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                    }
+
+                }
+
+            }
+        }
+
+        public void FavoriteList(string isbn)
+        {
+            if (Session["User_id"] == null)
+            {
+                TempData["favo"] = "<script>alert('You need to login first.');</script>";
 
             }
             else
             {
-                var results = db.Books.Where(m => m.Name.Contains(search) || m.Author.Contains(search)).ToList();
-                results = OrderCheck(Order, results);
-                return View(results.ToPagedList(page ?? 1, Pagination));
+                var list = db.Favorites.Select(s => s);
+                double isbnD = Convert.ToDouble(isbn);
+                int User_id = Convert.ToInt32(Session["User_id"]);
+
+                bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                if (has)
+                {
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                        db.SaveChanges();
+                    }
+
+                }
+                else
+                {
+                    // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                    using (DatabaseEntities1 db = new DatabaseEntities1())
+                    {
+                        var favo = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                        db.Favorites.Add(favo);
+                        db.SaveChanges();
+                    }
+                }
             }
-
         }
-
 
     }
 }

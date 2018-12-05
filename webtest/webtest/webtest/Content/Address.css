@@ -1,72 +1,65 @@
-﻿.address-card {
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
+﻿.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    background: white;
+    width: 55%;
+    margin: auto;
+    min-height: 375px;
+    height: auto;
+    margin-top: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+#title {
+    font-weight: 100;
     text-align: center;
+    font-size: 35px;
 }
 
-
-h2 {
-text-align: center;
+.grid-sub-container {
+    display: grid;
+    grid-template-columns: auto auto;
 }
 
-#wrapper {
-    width: 600px;
-    overflow: hidden;
-}
-
-    #wrapper input {
-        display: inline-block;
-        padding: 0 16px;
-        margin-bottom: 10px;
-        width: auto;
-        height: 25px;
-    }
-
-#personal {
+.BoxNameInfo {
+    width: 29%;
     float: left;
-    width: 50%;
+    height: auto;
+    margin-left: 20%;
+    margin-right: 10%;
+    display: inline-block;
 }
 
-#address {
-    overflow: hidden;
+.BoxAdressInfo {
+    width: 30%;
+    float: right;
+    height: auto;
+    display: inline-block;
 }
 
-b {
-    text-align: center;
-    float: left;
-    padding-left: 35px;
-}
-
-i {
-    text-align: center;
-    float: left;
-    padding-left: 35px;
-    padding-top: inherit;
-}
-
-#checkbox{
-    position: absolute;
-    margin-right:35%;
-    margin-top:18%;
-}
-
-
-#btnCart {
-    position: absolute;
-    margin-right:35%;
-    margin-top:22%;
-    width: 15%;
-    height: 30px;
-    border: 1px solid #bf9000;
-    background: #bf9000;
-    text-align: center;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
+.subtitle {
     font-size: 20px;
+    font-weight: bold;
 }
 
-label {
-    display: block;
+#btnContinue {
+    display: inline-block;
+    text-align: center;
+    background-color: #8a3366;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    width: 155px;
+    border-style: none;
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
+
+    #btnContinue:hover {
+        background-color: #65254A;
+        color: white;
+        cursor: pointer;
+    }

@@ -2,17 +2,16 @@
 @model Tuple<Order, OrderDetail, Payment>
 @{
     ViewBag.Title = "OrderDetails";
-    Layout = "~/Views/Shared/_customLayout.cshtml";
-    <head>
-        <link href="~/Content/OrderDetails.css" rel="stylesheet" />
-    </head>
+    Layout = "~/Views/Shared/_customLayout.cshtml";  
 }
 
+<head>
+    <link href="~/Content/OrderDetails.css" rel="stylesheet" />
+</head>
 
 <div id="container">
     <div class="grid-container">
         <div id="title">Order @Model.Item1.Order_Number</div>
-
        
             <table>
                 <tr>
