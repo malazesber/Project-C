@@ -5,26 +5,66 @@
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-<h1>
-    YOU HAVE SUCCESSFULLY SUBMITTED YOUR ORDER
-</h1>
-<h2>
-    A EMAIL HAS BEEN SEND TO YOU WITH THE FOLLOWING INFO
-</h2>
-<h3>Order Number: @Model.Item1.Order_Number</h3>
+<head>
+    <link href="~/Content/Confirmation.css" rel="stylesheet" />
+</head>
 
-@{
-    Dictionary<Book, int> bookQuantity = (Dictionary<Book, int>)Session["Checkout"];
-    decimal sum = 0;
-    <p>Quantity------------------------Title------------------------------------------------Unit Price------------------------Total</p>
-    foreach (var book in bookQuantity)
-    {
+<div id="container">
+    <div class="grid-container">
+        <div id="title">You have successfully submitted your order</div>
+        <div id="subtitle">An email has been send with the following information.</div>
 
-        decimal total = book.Key.Price * Convert.ToDecimal(book.Value);
-        sum += total;
-        <p>@book.Value------------------------ @book.Key.Name ------------------------------------------------@book.Key.Price------------------------@total</p>
-    }
-    <p>                                                                     Sub Total: @sum</p>
-    <p>USER INFO:  @Model.Item2.Name - @Model.Item2.Surname - @Model.Item2.Email</p>
-    <p>ADDRES: @Model.Item2.Street_Name @Model.Item2.House_number - @Model.Item2.Zip_code - @Model.Item2.Country</p>
-}
+        <table>
+            <tr>
+                <th>Quantity</th>
+                <th>Title</th>
+                <th>Book Price</th>
+                <th>Total Price</th>
+            </tr>
+            @{
+                Dictionary<Book, int> bookQuantity = (Dictionary<Book, int>)Session["Checkout"];
+                decimal sum = 0;
+
+                foreach (var book in bookQuantity)
+                {
+
+                    decimal total = book.Key.Price * Convert.ToDecimal(book.Value);
+                    sum += total;
+                    <tr>
+                        <td>@book.Value</td>
+                        <td>@book.Key.Name</td>
+                        <td>€ @book.Key.Price</td>
+                        <td>€ @total</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <div class="grid-sub-container">
+            <div class="personalInfo">
+                <div class="subtitle">Personal information</div>
+                <p>@Model.Item2.Name @Model.Item2.Surname</p>
+                <p>@Model.Item2.Email</p>
+                <p>@Model.Item2.Street_Name @Model.Item2.House_number</p>
+                <p>@Model.Item2.Zip_code</p>
+                <p> @Model.Item2.Country</p>
+            </div>
+
+            <div class="orderInfoGrid">
+                <div class="subtitle">Order information</div>
+                <div class="orderInfoTitle">
+                    <p>Price</p>
+                    <p>Delivery Costs</p>
+                    <p>Total price</p>
+                </div>
+                <div class="orderInfoPrice">
+                    <p>€ @sum</p>
+                    <p>€ 0</p>
+                    <p>€ @sum</p>
+                </div>
+                <p><b>Order date </b>@Model.Item2.OrderDate<br /><br />
+                <b>Order number </b>@Model.Item1.Order_Number</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,16 +1,29 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-<h2>Payment</h2>
+<head>
+    <link href="~/Content/Payment.css" rel="stylesheet" />
+</head>
 
-@{
-    decimal totalPrice = Convert.ToDecimal(Session["TotalPrice"]);
-}
+<div id="container">
+    <div id="result">
+        <div id="title">Payment</div>
 
-<div id="paypal-button-container"></div>
+        @{
+            decimal totalPrice = Convert.ToDecimal(Session["TotalPrice"]);
+        }
+        <div id="Paypalbox">
+            <div id="paypal-button-container"></div>
+        </div>
+
+
+        <a href="@Url.Action("Payment", "Checkout", new {payment = true})">Pay</a>
+    </div>
+</div>
+
+
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
     // Render the PayPal button
@@ -73,5 +86,3 @@
         }
     }, '#paypal-button-container');
 </script>
-
-<a href="@Url.Action("Payment", "Checkout", new {payment = true})">Pay</a>

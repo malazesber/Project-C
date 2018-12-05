@@ -1,0 +1,121 @@
+﻿#container {
+    width: 100%;
+    height: 100%;
+}
+
+#result {
+    background: white;
+    width: 75%;
+    margin: auto;
+    min-height: 200px;
+    height: auto;
+    margin-top: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+#title {
+    font-weight: 100;
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+#subtitle {
+    font-weight: 100;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+}
+
+    table th {
+        text-align: center;
+        background-color: #993366;
+        color: #FFF;
+        padding-top: 7px;
+        padding-bottom: 5px;
+    }
+
+    table td {
+        border: 1px solid #e3e3e3;
+        padding: 4px 8px;
+    }
+
+    table tr:nth-child(odd) td {
+        background-color: #e7edf0;
+    }
+
+.BoxPersonalInfo {
+    width: 39%;
+    float: left;
+    height: auto;
+    margin-left: 10%;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.BoxPriceInfo {
+    width: 39%;
+    float: right;
+    height: auto;
+    margin-right: 10%;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    background: white;
+    width: 65%;
+    margin: auto;
+    min-height: 400px;
+    height: auto;
+    margin-top: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.grid-sub-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 15px;
+}
+
+
+.personalInfo {
+    float: left;
+    height: auto;
+    margin-left: 20%;
+    margin-top: 15px;
+}
+
+.orderInfoGrid {
+    margin-top: 15px;
+}
+
+.orderInfoTitle {
+    float: left;
+    width: 30%;
+    margin-bottom: 25px;
+}
+
+.orderInfoPrice {
+    width: 20%;
+    float: right;
+    margin-right: 45%;
+    margin-bottom: 25px;
+}
