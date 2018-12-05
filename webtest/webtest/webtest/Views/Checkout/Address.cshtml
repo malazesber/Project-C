@@ -9,7 +9,7 @@
     <link href="~/Content/Address.css" rel="stylesheet" type="text/css" />
 </head>
 
-<div class="grid-container">
+<div id="grid-container">
     <div id="title">Personal Information</div>
     <div class="grid-sub-container">
         <div id="info-card">
@@ -66,14 +66,13 @@
                                     <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString[" ZipCode"]"><br>
                                     <label for="country">Country</label><br />
                                     <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
+                                    <lable id="checkbox"><input type="checkbox" name="Save" value="Save">Save address</lable><br />
                                     <button id="btnContinue">Continue</button>
                                 </div>
                             }
 
                             <br />
-                            <lable id="checkbox"><input type="checkbox" name="Save" value="Save">Save address to address book</lable>
-
-                            <i>@ViewBag.Message</i>
+                           
                         }
                     }
                     else

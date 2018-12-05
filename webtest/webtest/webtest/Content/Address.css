@@ -1,4 +1,4 @@
-﻿.grid-container {
+﻿#grid-container {
     display: grid;
     grid-template-columns: auto;
     background: white;
@@ -11,10 +11,16 @@
     margin-bottom: 15px;
 }
 
+#grid-container input{
+    margin-top: 3px;
+    margin-bottom: 9px;
+}
+
 #title {
     font-weight: 100;
     text-align: center;
     font-size: 35px;
+    margin-bottom: 20px;
 }
 
 .grid-sub-container {
@@ -32,9 +38,10 @@
 }
 
 .BoxAdressInfo {
-    width: 30%;
+    width: 34%;
     float: right;
     height: auto;
+    margin-right: -10%;
     display: inline-block;
 }
 

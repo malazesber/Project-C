@@ -85,18 +85,18 @@
                         //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
                         if (has)
                         {
-                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " id="FavoButton" class="fa fa-star"> Remove from favorites list</a>
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-star"> Remove from favorites list</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " id="FavoButton" class="fa fa-star-o"> Add to favorites list</a>
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-star-o"> Add to favorites list</a>
                         }
                 
-                        <a href="@Url.Action("ShoppingCart", "Home", new { del = m.ISBN, Title = m.Name, isbn = m.ISBN })" id="deleteButton" class="fa fa-trash-o">Delete product</a>
+                        <a href="@Url.Action("ShoppingCart", "Home", new { del = m.ISBN, Title = m.Name, isbn = m.ISBN })" class="fa fa-trash-o deleteButton"> Delete product</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("ShoppingCart", "Home", new { isbn = m.ISBN, delete = true, Title = m.Name })" id="deleteButton" class="fa fa-trash-o"> Delete product</a>
+                        <a href="@Url.Action("ShoppingCart", "Home", new { isbn = m.ISBN, delete = true, Title = m.Name })" class="fa fa-trash-o deleteButton"> Delete product</a>
                     }
 
                 }

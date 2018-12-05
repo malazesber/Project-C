@@ -75,7 +75,7 @@
     margin-bottom: 5px;
 }
 
-#deleteButton {
+.deleteButton {
     color: #bf9000;
     text-decoration: none;
     font-size: 15px;
@@ -88,7 +88,7 @@
         text-decoration: underline;
     }
 
-#FavoButton {
+.FavoButton {
     color: #8a3366;
     text-decoration: none;
     font-size: 15px;
