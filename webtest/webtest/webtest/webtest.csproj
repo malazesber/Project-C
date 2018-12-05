@@ -250,6 +250,7 @@
     <Content Include="Content\ProductPage.css" />
     <Content Include="Content\Registration.css" />
     <Content Include="Content\ResetPassword.css" />
+    <Content Include="Content\Review.css" />
     <Content Include="Content\SearchResults.css" />
     <Content Include="Content\ShoppingCart.css" />
     <Content Include="favicon.ico" />

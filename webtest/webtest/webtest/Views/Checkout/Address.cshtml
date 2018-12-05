@@ -38,19 +38,20 @@
                             var address = db.Addresses.Where(x => x.User_id == User_id).FirstOrDefault();
                             if (address != null)
                             {
-                                <div class="BoxAdressInfo">
-                                    <div class="subtitle">Address Info</div>
-                                    <label for="street">Street</label><br />
-                                    <input type="text" name="Street" placeholder="Street" , value="@address.Street_name"><br>
-                                    <label for="houseNumber">House number</label><br />
-                                    <input type="number" name="HouseNumber" placeholder="HouseNumber" , value="@address.House_number"><br>
-                                    <label for="city">City</label><br />
-                                    <input type="text" name="City" placeholder="City" , value="@address.City"><br>
-                                    <label for="zipCode">Zip code</label><br />
-                                    <input type="text" name="ZipCode" placeholder="ZipCode" , value="@address.Zip_code"><br>
-                                    <label for="country">Countr</label><br />
-                                    <input type="text" name="Country" placeholder="Country" , value="@address.Country"><br>
-                                </div>
+                            <div class="BoxAdressInfo">
+                                <div class="subtitle">Address Info</div>
+                                <label for="street">Street</label><br />
+                                <input type="text" name="Street" placeholder="Street" , value="@address.Street_name"><br>
+                                <label for="houseNumber">House number</label><br />
+                                <input type="number" name="HouseNumber" placeholder="HouseNumber" , value="@address.House_number"><br>
+                                <label for="city">City</label><br />
+                                <input type="text" name="City" placeholder="City" , value="@address.City"><br>
+                                <label for="zipCode">Zip code</label><br />
+                                <input type="text" name="ZipCode" placeholder="ZipCode" , value="@address.Zip_code"><br>
+                                <label for="country">Countr</label><br />
+                                <input type="text" name="Country" placeholder="Country" , value="@address.Country"><br>
+                                <button id="btnContinue">Continue</button>
+                            </div>
                             }
                             else
                             {
