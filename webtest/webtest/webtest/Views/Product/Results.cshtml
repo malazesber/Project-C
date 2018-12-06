@@ -20,9 +20,36 @@
 
     <!-- Results: hier worden alle resultaten geladen -->
     <div id="results">
-        <div>
-            <a id="txtResultsTitle">Results</a>
-            @*  <button id="btnOrderBy">Order By</button>*@
+        <div id="topBox">
+            @using (Html.BeginForm("Results", "Product", FormMethod.Get))
+            {
+                <select id="paginationFilter" , onchange="setPaginationOrder()">
+                    <option>Items Per Page</option>
+                    <option value="5" @if (@Request.QueryString["Pagination"] == "5") { <text> selected="selected" </text> }> 5</option>
+                    <option value="10" @if (@Request.QueryString["Pagination"] == "10") { <text> selected="selected" </text> }> 10</option>
+                    <option value="20" @if (@Request.QueryString["Pagination"] == "20") { <text> selected="selected" </text> }> 20</option>
+                    <option value="40" @if (@Request.QueryString["Pagination"] == "40") { <text> selected="selected" </text> }> 40</option>
+                </select>
+                <a id="txtResultsTitle">Results</a>
+                <select id="orderFilter" , onchange="setPaginationOrder()">
+                    <option>Order By</option>
+                    <option value="Price: Ascending" @if (@Request.QueryString["Order"] == "Price: Ascending") { <text> selected="selected" </text> }> Price: Ascending</option>
+                    <option value="Price: Descending" @if (@Request.QueryString["Order"] == "Price: Descending") { <text> selected="selected" </text> }> Price: Descending</option>
+                    <option value="Title: A - Z" @if (@Request.QueryString["Order"] == "Title: A - Z") { <text> selected="selected" </text> }> Title: A - Z</option>
+                    <option value="Title: Z - A" @if (@Request.QueryString["Order"] == "Title: Z - A") { <text> selected="selected" </text> }> Title: Z - A</option>
+                    <option value="Author: A - Z" @if (@Request.QueryString["Order"] == "Author: A - Z") { <text> selected="selected" </text> }> Author: A - Z</option>
+                    <option value="Author: Z - A" @if (@Request.QueryString["Order"] == "Author: Z - A") { <text> selected="selected" </text> }> Author: Z - A</option>
+                </select>
+                <input id="orderInput" type="text" name="Order" , style="display:none">
+                <input id="paginationInput" type="text" name="Pagination" , style="display:none">
+                <input name="minPrice" , value="@Request.QueryString["minPrice"]", style=" display:none">
+                <input name="maxPrice" , value="@Request.QueryString["maxPrice"]", style="display:none">
+                <input name="Category" , value="@Request.QueryString["Category"]", style=" display:none">
+                <input name="Rating" ,value="@Request.QueryString["Rating"]", style="display:none">
+
+                <button id="submitOrderItems" , style="display:none"></button>
+            }
+
 
         </div>
 
@@ -215,8 +242,8 @@
 
             <label>Price</label><br />
             <div id="priceFilter">
-                <input id="minPrice" type="number" name="MinPrice" min="0" onchange="Pricecheck()" placeholder="Min Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MinPrice"]">
-                <input id="maxPrice" type="number" name="MaxPrice" min="0" onchange="Pricecheck()" placeholder="Max Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", value="@Request.QueryString["MaxPrice"]">
+                <input id="minPrice" type="number" name="MinPrice" min="0" onchange="Pricecheck()" placeholder="Min Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" , value="@Request.QueryString["MinPrice"]">
+                <input id="maxPrice" type="number" name="MaxPrice" min="0" onchange="Pricecheck()" placeholder="Max Price" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" , value="@Request.QueryString["MaxPrice"]">
             </div>
 
             <label>Category</label>
@@ -248,23 +275,9 @@
                 <option value="5" @if (@Request.QueryString["Rating"] == "5") { <text> selected="selected" </text> }>5</option>
             </select>
 
-            <label>Order By</label>
-            <select id="orderFilter" , class="dropdownFilters">
-                <option>Order By</option>
-                <option value="Price: Ascending" @if (@Request.QueryString["Order"] == "Price: Ascending") { <text> selected="selected" </text> }> Price: Ascending</option>
-                <option value="Price: Descending" @if (@Request.QueryString["Order"] == "Price: Descending") { <text> selected="selected" </text> }> Price: Descending</option>
-                <option value="Title: A - Z" @if (@Request.QueryString["Order"] == "Title: A - Z") { <text> selected="selected" </text> }> Title: A - Z</option>
-                <option value="Title: Z - A" @if (@Request.QueryString["Order"] == "Title: Z - A") { <text> selected="selected" </text> }> Title: Z - A</option>
-                <option value="Author: A - Z" @if (@Request.QueryString["Order"] == "Author: A - Z") { <text> selected="selected" </text> }> Author: A - Z</option>
-                <option value="Author: Z - A" @if (@Request.QueryString["Order"] == "Author: Z - A") { <text> selected="selected" </text> }> Author: Z - A</option>
-            </select>
 
-            <label>Items per page</label>
-            <br />
-            <input id="Pagination" type="number" name="Pagination" min="1" max="50" placeholder="Items per page" , value="@Request.QueryString["Pagination"]">
-            
-
-            <input id="orderInput" type="text" name="Order" , style="display:none">
+            <input id="orderInput" type="text" name="Order" , value="@Request.QueryString["Order"]" , style="display:none">
+            <input id="paginationInput" type="text" name="Pagination", value="@Request.QueryString["Pagination"]" , style="display:none">
             <input id="categoryInput" type="text" name="Category" , style="display:none">
             <input id="ratingInput" type="text" name="Rating" , style="display:none">
 
@@ -289,6 +302,14 @@
             function setRatingTop() {
                 var rating = document.getElementById("filterTopSelect");
                 document.getElementById("ratingInputTop").value = rating.options[rating.selectedIndex].value;
+            }
+
+            function setPaginationOrder() {
+                var orderby = document.getElementById('orderFilter');
+                document.getElementById('orderInput').value = orderby.options[orderby.selectedIndex].value;
+                var pagination = document.getElementById('paginationFilter');
+                document.getElementById('paginationInput').value = pagination.options[pagination.selectedIndex].value;
+                document.getElementById('submitOrderItems').click();
             }
 
             function Pricecheck() {

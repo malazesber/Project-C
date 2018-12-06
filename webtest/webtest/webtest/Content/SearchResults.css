@@ -2,6 +2,14 @@
     width: 100%;
     height: 100%;
 }
+#paginationFilter{
+    margin: 10px; 10px;
+}
+#orderFilter {
+    float: right;
+    margin: 10px; 10px;
+}
+
 
 #results {
     background: white;
@@ -38,8 +46,9 @@
     color: #8a3366;
     font-size: 20px;
     margin-top: 10px;
-    display: inline-block;
-    margin-left: 25px;
+    text-align: center;
+    margin-left: 35%;
+    margin-top: 10px;
 }
 
 #filters label {
