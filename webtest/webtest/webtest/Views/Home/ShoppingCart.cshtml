@@ -50,7 +50,9 @@
 
                 <a href="@Url.Action("Index", "Product", new { Title = m.Name, isbn = m.ISBN }) " id="title">@m.Name</a>
                 <label id="author">@m.Author</label> <br />
-                <label id="price">€@m.Price</label>
+                <label id="price">€@m.Price</label> <br />
+                <label id="price"><b>Stock: </b> @m.Stock</label>
+
             </div>
 
             <div id="amountBox">

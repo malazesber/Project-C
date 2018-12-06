@@ -129,9 +129,12 @@
     @*More information box*@
     <div id="moreInfo">
         <label id="miTitle">More Information</label>
+        @*Label om de Stock te laten zien. Staat nu dus bij de eigenschappen van het boek.*@
+        <label id="miLabel"><b>Stock: </b> @Model.Stock</label>
         <label id="miLabel"><b>Publish Date:</b> @Model.Date.ToString("dd-MM-yyyy")</label>
         <label id="miLabel"><b>ISBN:</b> @Model.ISBN</label>
         <label id="miLabel"><b>Author:</b> @Model.Author</label>
+        <br />
 
         <label id="miLabel">
             <b>Rating:</b>
