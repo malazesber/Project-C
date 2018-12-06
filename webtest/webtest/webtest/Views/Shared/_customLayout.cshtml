@@ -17,27 +17,32 @@
 
             <nav class="site-nav">
                 <ul>
-                    @if (Session["User_id"] != null)
-                    {
-                        <li><a href="@Url.Action("OrderHistory", "OrderHistory")"><i class="fa fa-eye site-nav--icon"></i>Order History</a></li>
-                        <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-star site-nav--icon"></i>Favorites</a></li>
-                    }
+                    @{
+                        <li><a href="@Url.Action("ShoppingCart", "Home")"><i class="fa fa-shopping-cart site-nav--icon"></i> Cart</a></li>
+                        if (Session["User_id"] != null)
+                        {
+                            <li><a href="@Url.Action("OrderHistory", "OrderHistory")"><i class="fa fa-eye site-nav--icon"></i>Order History</a></li>
+                            <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-star site-nav--icon"></i>Favorites</a></li>
+                            if (Session["Admin"] != null)
+                            {
+                                bool admin = Convert.ToBoolean(Session["Admin"]);
+                                if (admin)
+                                {
+                                    <li><a href="@Url.Action("Product", "Admin")"><i class="fa fa-shield site-nav--icon"></i>Admin</a></li>
+                                }
+                            }
+                            <li><a href="@Url.Action("Logout", "Login")"><i class="fa fa-user site-nav--icon"></i>Logout</a></li>
 
-                    @if (Session["Admin"] != null)
-                    {
-                        <li><a href="@Url.Action("Product", "Admin")"><i class="fa fa-shield site-nav--icon"></i>Admin</a></li>
-                    }
+                        }
 
-                    <li><a href="@Url.Action("ShoppingCart", "Home")"><i class="fa fa-shopping-cart site-nav--icon"></i> Cart</a></li>
+                        else
+                        {
+                            <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
+                        }
 
-                    <!--Check of de user is ingelogd-->
-                    @if (Session["User_id"] == null && Session["Admin"] == null)
-                    {
-                        <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user site-nav--icon"></i>Login</a></li>
-                    }
-                    else if (Session["Admin"] != null || Session["Admin"] == null)
-                    {
-                        <li><a href="@Url.Action("Logout", "Login")"><i class="fa fa-user site-nav--icon"></i>Logout</a></li>
+
+
+
                     }
 
                 </ul>

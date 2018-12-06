@@ -24,13 +24,20 @@ namespace webtest.Controllers
             {
                 var userPassword = Crypto.Hash(userModel.Password);
                 var userData = db.Users.Where(x => x.Email == userModel.Email
-                 && x.Password == userPassword && x.Type == false).FirstOrDefault();
-                var adminData = db.Users.Where(x => x.Email == userModel.Email
-                 && x.Password == userPassword && x.Type == true).FirstOrDefault();
+                 && x.Password == userPassword).FirstOrDefault();
                 var Data = db.Users.Where(x => x.Email == userModel.Email
                  && x.Password == userPassword).FirstOrDefault();
 
-                if (userData == null && adminData == null)
+                if(userData.Type)
+                {
+                    Session["Admin"] = true;
+                }
+                else
+                {
+                    Session["Admin"] = false;
+                }
+
+                if (userData == null)
                 {
                     userModel.LoginErrorMessage = "Wrong Email or Password";
                     return View("Index", userModel);
@@ -43,16 +50,10 @@ namespace webtest.Controllers
                 }
                 else
                 {
-                    if (adminData != null)
-                    {
-                        Session["Admin"] = adminData.User_id;
-                        Session["Name"] = adminData.Name;
-                    }
-                    else
-                    {
-                        Session["User_id"] = userData.User_id;
-                        Session["Name"] = userData.Name;
-                    }
+  
+                    Session["User_id"] = userData.User_id;
+                    Session["Name"] = userData.Name;
+                    
                     return RedirectToAction("Index", "Home");
                 }
             }
