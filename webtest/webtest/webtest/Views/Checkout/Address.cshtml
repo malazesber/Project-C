@@ -26,13 +26,13 @@
                             <div class="BoxNameInfo">
                                 <div class="subtitle">Personal Info</div>
                                 <label for="name">Name</label><br />
-                                <input type="text" name="Name" placeholder="First Name" , value="@user.Name"><br>
+                                <input type="text" name="Name" placeholder="Name" , value="@user.Name"><br>
                                 <label for="surname">Surname</label><br />
-                                <input type="text" name="LastName" placeholder="Last Name" , value="@user.Surname"><br>
+                                <input type="text" name="Surname" placeholder="Surname" , value="@user.Surname"><br>
                                 <label for="email">Email</label><br />
                                 <input type="email" name="Email" placeholder="Email" , value="@user.Email"><br>
                                 <label for="phoneNumber">Phone number</label><br />
-                                <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@user.Phone_number"><br>
+                                <input type="text" name="PhoneNumber" placeholder="Phone number" , value="@user.Phone_number"><br>
                             </div>
 
                             var address = db.Addresses.Where(x => x.User_id == User_id).FirstOrDefault();
@@ -43,12 +43,12 @@
                                 <label for="street">Street</label><br />
                                 <input type="text" name="Street" placeholder="Street" , value="@address.Street_name"><br>
                                 <label for="houseNumber">House number</label><br />
-                                <input type="number" name="HouseNumber" placeholder="HouseNumber" , value="@address.House_number"><br>
+                                <input type="number" name="HouseNumber" placeholder="House number" , value="@address.House_number"><br>
                                 <label for="city">City</label><br />
                                 <input type="text" name="City" placeholder="City" , value="@address.City"><br>
                                 <label for="zipCode">Zip code</label><br />
-                                <input type="text" name="ZipCode" placeholder="ZipCode" , value="@address.Zip_code"><br>
-                                <label for="country">Countr</label><br />
+                                <input type="text" name="ZipCode" placeholder="Zip code" , value="@address.Zip_code"><br>
+                                <label for="country">Country</label><br />
                                 <input type="text" name="Country" placeholder="Country" , value="@address.Country"><br>
                                 <button id="btnContinue">Continue</button>
                             </div>
@@ -60,11 +60,11 @@
                                     <label for="street">Street</label><br />
                                     <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString[" Street"]"><br>
                                     <label for="houseNumber">House number</label><br />
-                                    <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString[" HouseNumber"]"><br>
+                                    <input type="text" name="HouseNumber" placeholder="House number" , value="@Request.QueryString[" HouseNumber"]"><br>
                                     <label for="city">City</label><br />
                                     <input type="text" name="City" placeholder="City" , value="@Request.QueryString[" City"]"><br>
                                     <label for="zipCode">Zip code</label><br />
-                                    <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString[" ZipCode"]"><br>
+                                    <input type="text" name="ZipCode" placeholder="Zip code" , value="@Request.QueryString[" ZipCode"]"><br>
                                     <label for="country">Country</label><br />
                                     <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
                                     <lable id="checkbox"><input type="checkbox" name="Save" value="Save">Save address</lable><br />
@@ -81,24 +81,24 @@
                         <div class="BoxNameInfo">
                             <div class="subtitle">Personal Info</div>
                             <label for="name">Name</label><br />
-                            <input type="text" name="Name" placeholder="First Name" , value="@Request.QueryString[" Name"]"><br>
+                            <input type="text" name="Name" placeholder="Name" , value="@Request.QueryString[" Name"]"><br>
                             <label for="surname">Surname</label><br />
-                            <input type="text" name="LastName" placeholder="Last Name" , value="@Request.QueryString[" LastName"]"><br>
+                            <input type="text" name="Surname" placeholder="Surname" , value="@Request.QueryString[" LastName"]"><br>
                             <label for="email">Email</label><br />
                             <input type="email" name="Email" placeholder="Email" , value="@Request.QueryString[" Email"]"><br>
                             <label for="phoneNumber">Phone number</label><br />
-                            <input type="text" name="PhoneNumber" placeholder="Phone Number" , value="@Request.QueryString[" PhoneNumber"]"><br>
+                            <input type="text" name="PhoneNumber" placeholder="Phone number" , value="@Request.QueryString[" PhoneNumber"]"><br>
                         </div>
                         <div class="BoxAdressInfo">
                             <div class="subtitle">Address Info</div>
                             <label for="street">Street</label><br />
                             <input type="text" name="Street" placeholder="Street" , value="@Request.QueryString[" Street"]"><br>
                             <label for="houseNumber">House number</label><br />
-                            <input type="text" name="HouseNumber" placeholder="House Number" , value="@Request.QueryString[" HouseNumber"]"><br>
+                            <input type="text" name="HouseNumber" placeholder="House number" , value="@Request.QueryString[" HouseNumber"]"><br>
                             <label for="city">City</label><br />
                             <input type="text" name="City" placeholder="City" , value="@Request.QueryString[" City"]"><br>
                             <label for="zipCode">Zip code</label><br />
-                            <input type="text" name="ZipCode" placeholder="ZipCode" , value="@Request.QueryString[" ZipCode"]"><br>
+                            <input type="text" name="ZipCode" placeholder="Zip code" , value="@Request.QueryString[" ZipCode"]"><br>
                             <label for="country">Country</label><br />
                             <input type="text" name="Country" placeholder="Country" , value="@Request.QueryString[" Country"]"><br>
                             <button id="btnContinue">Continue</button>
