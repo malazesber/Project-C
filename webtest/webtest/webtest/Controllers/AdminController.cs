@@ -187,10 +187,10 @@ namespace webtest.Controllers
             }
 
         }
-    }
-    //public ActionResult CatagorieStatistics(string Catagorie)
-    //{
-    //    var db = new DatabaseEntities1();
+    
+    public ActionResult CatagorieStatistics(string Catagorie)
+    {
+        var db = new DatabaseEntities1();
         //var a = db.OrderDetails;
         //foreach (OrderDetail orderDetailObj in a)
         //{
@@ -209,112 +209,111 @@ namespace webtest.Controllers
         //            BookQuantity.Add(book, quantity);
         //        }
 
-        //    }
-    //        int Tottal = 0;
-    //    foreach (Book prod1 in db.Books)
-    //    {
-    //        Tottal = Tottal + prod1.Stock;
-    //    }
+        //}
+        int Tottal = 0;
+        foreach (Book prod1 in db.Books)
+        {
+            Tottal = Tottal + prod1.Stock;
+        }
 
 
-    //    int Fiction = 0;
-    //    int Biography = 0;
-    //    int Sports = 0;
-    //    int Art = 0;
-    //    int Science = 0;
-    //    int Business = 0;
-    //    int Education = 0;
-    //    int Food = 0;
-    //    int Style = 0;
-    //    int Diet = 0;
-    //    int History = 0;
-    //    int Home = 0;
-    //    int Mind = 0;
-    //    int Parenting = 0;
-    //    int[] statistcs = new int [13];
-        
+        int Fiction = 0;
+        int Biography = 0;
+        int Sports = 0;
+        int Art = 0;
+        int Science = 0;
+        int Business = 0;
+        int Education = 0;
+        int Food = 0;
+        int Style = 0;
+        int Diet = 0;
+        int History = 0;
+        int Home = 0;
+        int Mind = 0;
+        int Parenting = 0;
+        int[] statistcs = new int[13];
 
-    //        foreach (Book prod1 in db.Books)
-    //        {
-    //            if (prod1.Category == "Fiction" || Catagorie == "Fiction")
-    //            {
-    //                int Fictionper = 0;
-    //                Fiction = Fiction + prod1.Stock;
-    //                statistcs[0] = Fiction / 100;
-    //                Fictionper = (Fiction * 100) / Tottal;
-                
-    //            }
-            
-    //            if (prod1.Category == "Biography")
-    //            {
-    //                Biography = Biography + prod1.Stock;
-    //                statistcs[1] = Biography / 100;
-    //            }
-    //            if (prod1.Category == "Sports")
-    //            {
-    //                Sports = Sports + prod1.Stock;
-    //                statistcs[2] = Sports / 100;
-    //            }
-    //            if (prod1.Category == "Art & Photography")
-    //            {
-    //                Art = Art + prod1.Stock;
-    //                statistcs[3] = Art / 100;
-    //            }
-    //            if (prod1.Category == "Science & Nature")
-    //            {
-    //                Science = Science + prod1.Stock;
-    //                statistcs[4] = Science / 100;
-    //            }
-    //            if (prod1.Category == "Business")
-    //            {
-    //                Business = Business + prod1.Stock;
-    //                statistcs[5] = Business / 100;
-    //            }
-    //            if (prod1.Category == "Education")
-    //            {
-    //                Education = Education + prod1.Stock;
-    //                statistcs[6] = Education / 100;
-    //            }
-    //            if (prod1.Category == "Food & Drink")
-    //            {
-    //                Food = Food + prod1.Stock;
-    //                statistcs[7] = Food / 100;
-    //            }
-    //            if (prod1.Category == "Style & Beauty")
-    //            {
-    //                Style = Style + prod1.Stock;
-    //                statistcs[8] = Style / 100;
-    //            }
-    //            if (prod1.Category == "Diet & Fitness")
-    //            {
-    //                Diet = Diet + prod1.Stock;
-    //                statistcs[9] = Diet / 100;
-    //            }
-    //            if (prod1.Category == "History & Politics")
-    //            {
-    //                History = History + prod1.Stock;
-    //                statistcs[10] = History / 100;
-    //            }
-    //            if (prod1.Category == "Home & Garden")
-    //            {
-    //                Home = Home + prod1.Stock;
-    //                statistcs[11] = Home / 100;
-    //            }
-    //            if (prod1.Category == "Mind Body Spirit")
-    //            {
-    //                Mind = Mind + prod1.Stock;
-    //                statistcs[12] = Mind / 100;
-    //            }
-    //            if (prod1.Category == "Parenting")
-    //            {
-    //                Parenting = Parenting + prod1.Stock;
-    //                statistcs[13] = Parenting / 100;
-    //            }
 
-    //        }
-            
+        foreach (Book prod1 in db.Books)
+        {
+            if (prod1.Category == "Fiction" || Catagorie == "Fiction")
+            {
+                int Fictionper = 0;
+                Fiction = Fiction + prod1.Stock;
+                statistcs[0] = Fiction / 100;
+                Fictionper = (Fiction * 100) / Tottal;
 
-    //    }
-    //    return View();
-    //}
+            }
+
+            if (prod1.Category == "Biography")
+            {
+                Biography = Biography + prod1.Stock;
+                statistcs[1] = Biography / 100;
+            }
+            if (prod1.Category == "Sports")
+            {
+                Sports = Sports + prod1.Stock;
+                statistcs[2] = Sports / 100;
+            }
+            if (prod1.Category == "Art & Photography")
+            {
+                Art = Art + prod1.Stock;
+                statistcs[3] = Art / 100;
+            }
+            if (prod1.Category == "Science & Nature")
+            {
+                Science = Science + prod1.Stock;
+                statistcs[4] = Science / 100;
+            }
+            if (prod1.Category == "Business")
+            {
+                Business = Business + prod1.Stock;
+                statistcs[5] = Business / 100;
+            }
+            if (prod1.Category == "Education")
+            {
+                Education = Education + prod1.Stock;
+                statistcs[6] = Education / 100;
+            }
+            if (prod1.Category == "Food & Drink")
+            {
+                Food = Food + prod1.Stock;
+                statistcs[7] = Food / 100;
+            }
+            if (prod1.Category == "Style & Beauty")
+            {
+                Style = Style + prod1.Stock;
+                statistcs[8] = Style / 100;
+            }
+            if (prod1.Category == "Diet & Fitness")
+            {
+                Diet = Diet + prod1.Stock;
+                statistcs[9] = Diet / 100;
+            }
+            if (prod1.Category == "History & Politics")
+            {
+                History = History + prod1.Stock;
+                statistcs[10] = History / 100;
+            }
+            if (prod1.Category == "Home & Garden")
+            {
+                Home = Home + prod1.Stock;
+                statistcs[11] = Home / 100;
+            }
+            if (prod1.Category == "Mind Body Spirit")
+            {
+                Mind = Mind + prod1.Stock;
+                statistcs[12] = Mind / 100;
+            }
+            if (prod1.Category == "Parenting")
+            {
+                Parenting = Parenting + prod1.Stock;
+                statistcs[13] = Parenting / 100;
+            }
+
+        }
+
+        return View(statistcs);
+    }
+}    
 }
