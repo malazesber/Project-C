@@ -191,6 +191,9 @@ namespace webtest.Controllers
                             {
                                 Book bookObj = db.Books.Where(x => x.ISBN == item.ISBN).FirstOrDefault();
                                 bookDict.Add(bookObj, item.Quantity);
+                                //Changes the stock of the book in the database.
+                                bookObj.Stock = bookObj.Stock - item.Quantity;
+                                db.SaveChanges();
                             }
 
                             int maxCount = bookDict.Count;
@@ -281,6 +284,15 @@ namespace webtest.Controllers
                                 {
                                     products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
                                 }
+                            }
+
+                            //Change Stock for the Books in the Shopping Cart (Stock = Stock - Quantity that's been ordered)
+                            var cart = (Dictionary<Book, int>)Session["Cart"];
+                            foreach (var item in cart)
+                            {
+                                Book Bookobj = db.Books.Where(x => x.ISBN == item.Key.ISBN).FirstOrDefault();
+                                Bookobj.Stock = Bookobj.Stock - item.Value;
+                                db.SaveChanges();
                             }
 
                             // ADD ORDERDETAILS TO DB
