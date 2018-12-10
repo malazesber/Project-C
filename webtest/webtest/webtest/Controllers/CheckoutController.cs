@@ -63,13 +63,13 @@ namespace webtest.Controllers
 
         //CHECKOUT AS GUEST
 
-        public ActionResult Address(string Name, string LastName, string Email, string PhoneNumber, string Street,
-            int? HouseNumber, string City, string ZipCode, string Country, string Save)
+        public ActionResult Address(string Name, string Surname, string Email, string PhoneNumber, string Street,
+           int? HouseNumber, string City, string ZipCode, string Country, string Save)
         {
             Dictionary<User, Address> userInfo = new Dictionary<User, Address>();
 
 
-            if (Name == "" || LastName == "" || Email == "" || PhoneNumber == "" || Street == "" ||
+            if (Name == "" || Surname == "" || Email == "" || PhoneNumber == "" || Street == "" ||
                 HouseNumber == null || City == "" || ZipCode == "" || Country == "")
             {
                 ViewBag.Message = "Please fill in everything.";
@@ -81,7 +81,7 @@ namespace webtest.Controllers
                 {
                     int User_id = Convert.ToInt32(Session["User_id"]);
 
-                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                    userInfo.Add(new User { Name = Name, Surname = Surname, Email = Email, Phone_number = PhoneNumber },
                        new Address
                        {
                            Street_name = Street,
@@ -124,7 +124,7 @@ namespace webtest.Controllers
                 }
                 else
                 {
-                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                    userInfo.Add(new User { Name = Name, Surname = Surname, Email = Email, Phone_number = PhoneNumber },
                        new Address
                        {
                            Street_name = Street,

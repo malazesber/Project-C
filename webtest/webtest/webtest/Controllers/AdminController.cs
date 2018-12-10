@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -112,6 +113,79 @@ namespace webtest.Controllers
                 Session["Admin_Book"] = null;
                 return View();
             }
+        }
+
+        public ActionResult User(bool? Type, bool? EmailVerified, string User_id = "", string add = "", string Name = "", string Surname = "", string Email = "",
+            string Phone_number = "", string Password = "", string ConfirmPassword = "")
+        {
+            if (User_id != "")
+            {
+
+                using (var db = new DatabaseEntities1())
+                {
+                    int User_id_int = Convert.ToInt32(User_id);
+                    var User = db.Users.Where(x => x.User_id == User_id_int).FirstOrDefault();
+                    Session["Admin_user"] = User;
+                    return View(User);
+                }
+            }
+            else if (add == "true")
+            {
+
+                bool TypeB = Convert.ToBoolean(Type);
+                bool EmailVerifiedB = Convert.ToBoolean(EmailVerified);
+                var passCrypto = Crypto.Hash(Password);
+                var confirmPassCrypto = Crypto.Hash(ConfirmPassword);
+                var ActivationCode = Guid.NewGuid();
+
+                User addUser = new User()
+                {
+                    Name = Name,
+                    Surname = Surname,
+                    Email = Email,
+                    Phone_number = Phone_number,
+                    Password = passCrypto,
+                    ConfirmPassword = confirmPassCrypto,
+                    IsEmailVerified = EmailVerifiedB,
+                    Type = TypeB
+
+
+
+                };
+
+                try
+                {
+                    using (var db = new DatabaseEntities1())
+                    {
+                        db.Users.Add(addUser);
+                        db.SaveChanges();
+                    }
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
+                }
+
+
+
+
+
+                return View();
+
+
+            }
+            else
+            {
+                Session["Admin_User"] = null;
+                return View();
+            }
+
         }
     }
     //public ActionResult BooksStatistics()
