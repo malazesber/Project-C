@@ -63,13 +63,13 @@ namespace webtest.Controllers
 
         //CHECKOUT AS GUEST
 
-        public ActionResult Address(string Name, string LastName, string Email, string PhoneNumber, string Street,
-            int? HouseNumber, string City, string ZipCode, string Country, string Save)
+        public ActionResult Address(string Name, string Surname, string Email, string PhoneNumber, string Street,
+           int? HouseNumber, string City, string ZipCode, string Country, string Save)
         {
             Dictionary<User, Address> userInfo = new Dictionary<User, Address>();
 
 
-            if (Name == "" || LastName == "" || Email == "" || PhoneNumber == "" || Street == "" ||
+            if (Name == "" || Surname == "" || Email == "" || PhoneNumber == "" || Street == "" ||
                 HouseNumber == null || City == "" || ZipCode == "" || Country == "")
             {
                 ViewBag.Message = "Please fill in everything.";
@@ -81,7 +81,7 @@ namespace webtest.Controllers
                 {
                     int User_id = Convert.ToInt32(Session["User_id"]);
 
-                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                    userInfo.Add(new User { Name = Name, Surname = Surname, Email = Email, Phone_number = PhoneNumber },
                        new Address
                        {
                            Street_name = Street,
@@ -124,7 +124,7 @@ namespace webtest.Controllers
                 }
                 else
                 {
-                    userInfo.Add(new User { Name = Name, Surname = LastName, Email = Email, Phone_number = PhoneNumber },
+                    userInfo.Add(new User { Name = Name, Surname = Surname, Email = Email, Phone_number = PhoneNumber },
                        new Address
                        {
                            Street_name = Street,
@@ -191,6 +191,9 @@ namespace webtest.Controllers
                             {
                                 Book bookObj = db.Books.Where(x => x.ISBN == item.ISBN).FirstOrDefault();
                                 bookDict.Add(bookObj, item.Quantity);
+                                //Changes the stock of the book in the database.
+                                bookObj.Stock = bookObj.Stock - item.Quantity;
+                                db.SaveChanges();
                             }
 
                             int maxCount = bookDict.Count;
@@ -281,6 +284,15 @@ namespace webtest.Controllers
                                 {
                                     products += kv.Key.ISBN.ToString() + "-" + kv.Value + "|";
                                 }
+                            }
+
+                            //Change Stock for the Books in the Shopping Cart (Stock = Stock - Quantity that's been ordered)
+                            var cart = (Dictionary<Book, int>)Session["Cart"];
+                            foreach (var item in cart)
+                            {
+                                Book Bookobj = db.Books.Where(x => x.ISBN == item.Key.ISBN).FirstOrDefault();
+                                Bookobj.Stock = Bookobj.Stock - item.Value;
+                                db.SaveChanges();
                             }
 
                             // ADD ORDERDETAILS TO DB
