@@ -16,6 +16,8 @@ namespace webtest.Models
 
     public class UserMetadata
     {
+        public DateTime RegisterDate { get; set; }
+
         [Display(Name = "First Name")]
         [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert your first name")]
         [RegularExpression("[A-Z][a-z]*", ErrorMessage = "Your name cannot contain any numbers or characters. Please start the name with a capital letter.")]

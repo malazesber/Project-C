@@ -22,6 +22,7 @@
     <NavigationProperty Name="Address" Relationship="DatabaseModel.FK_Address_id" FromRole="User" ToRole="Address" />
     <NavigationProperty Name="Addresses" Relationship="DatabaseModel.FK_User_Address" FromRole="User" ToRole="Address" />
     <NavigationProperty Name="Orders" Relationship="DatabaseModel.FK_ORDERS_UserID" FromRole="User" ToRole="Order" />
+    <Property Name="RegisterDate" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="Self.User" />
@@ -135,7 +136,7 @@
     <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ISBN" Type="Double" Nullable="false" />

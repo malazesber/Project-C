@@ -19,7 +19,7 @@
     <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="varchar(max)" Nullable="false" />
     <Property Name="Summary" Type="varchar(max)" />
-    <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
     <Property Name="Author" Type="varchar" MaxLength="50" />
     <Property Name="Image_src" Type="varchar(max)" Nullable="false" />
     <Property Name="ISBN" Type="float" Nullable="false" />
@@ -109,6 +109,7 @@
     <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
     <Property Name="Address_id" Type="int" />
     <Property Name="Cart_id" Type="int" />
+    <Property Name="RegisterDate" Type="date" />
   </EntityType>
   <Association Name="FK_Address_id">
     <End Role="Address" Type="Self.Address" Multiplicity="0..1" />

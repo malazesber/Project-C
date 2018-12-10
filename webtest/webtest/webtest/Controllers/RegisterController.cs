@@ -56,8 +56,10 @@ namespace webtest.Controllers
                 //Save data to Database
                 using (DatabaseEntities1 dc = new DatabaseEntities1())
                 {
+                    user.RegisterDate = DateTime.Now;
                     dc.Users.Add(user);
                     dc.SaveChanges();
+
                     //Send Email to User
                     SendVerificationLinkEmail(user.Email, user.ActivationCode.ToString());
                     message = "Registration successfully done. An activation link " +

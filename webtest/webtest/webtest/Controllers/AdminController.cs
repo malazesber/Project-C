@@ -114,4 +114,116 @@ namespace webtest.Controllers
             }
         }
     }
+    //public ActionResult BooksStatistics()
+    //{
+    //    var db = new DatabaseEntities1();
+    //    var a = db.OrderDetails;
+    //    foreach (OrderDetail orderDetailObj in a)
+    //    {
+    //        Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
+
+    //        {
+    //            // GET PRODUCTS
+    //            string[] products = orderDetailObj.Products.Split('|');
+
+    //            foreach (var item in products)
+    //            {
+    //                string[] books = item.Split('-');
+    //                double isbn = Convert.ToDouble(books[0]);
+    //                Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
+    //                int quantity = Convert.ToInt32(books[1]);
+    //                BookQuantity.Add(book, quantity);
+    //            }
+    //        }
+    //        int Tottal = 0;
+    //    foreach (KeyValuePair<Book, int> prod1 in BookQuantity)
+    //    {
+    //        Tottal = Tottal + prod1.Value;
+    //    }
+
+
+    //    int Fiction = 0;
+    //    int Biography = 0;
+    //    int Sports = 0;
+    //    int Art = 0;
+    //    int Science = 0;
+    //    int Business = 0;
+    //    int Education = 0;
+    //    int Food = 0;
+    //    int Style = 0;
+    //    int Diet = 0;
+    //    int History = 0;
+    //    int Home = 0;
+    //    int Mind = 0;
+    //    int Parenting = 0;
+        
+        
+
+    //        foreach (KeyValuePair<Book, int> prod1 in BookQuantity)
+    //        {
+    //            if (prod1.Key.Category == "Fiction")
+    //            {
+    //                int Fictionper = 0;
+    //                Fiction = Fiction + prod1.Value;
+    //                Fictionper = (Fiction * 100) / Tottal; 
+    //            }
+    //            if (prod1.Key.Category == "Biography")
+    //            {
+    //                Biography = Biography + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Sports")
+    //            {
+    //                Sports = Sports + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Art & Photography")
+    //            {
+    //                Art = Art + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Science & Nature")
+    //            {
+    //                Science = Science + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Business")
+    //            {
+    //                Business = Business + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Education")
+    //            {
+    //                Education = Education + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Food & Drink")
+    //            {
+    //                Food = Food + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Style & Beauty")
+    //            {
+    //                Style = Style + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Diet & Fitness")
+    //            {
+    //                Diet = Diet + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "History & Politics")
+    //            {
+    //                History = History + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Home & Garden")
+    //            {
+    //                Home = Home + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Mind Body Spirit")
+    //            {
+    //                Mind = Mind + prod1.Value;
+    //            }
+    //            if (prod1.Key.Category == "Parenting")
+    //            {
+    //                Parenting = Parenting + prod1.Value;
+    //            }
+
+    //        }
+            
+
+    //    }
+    //    return ViewType(Fiction);
+    //}
 }

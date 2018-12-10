@@ -36,6 +36,7 @@ namespace webtest.Models
         public string ResetPasswordCode { get; set; }
         public Nullable<int> Address_id { get; set; }
         public Nullable<int> Cart_id { get; set; }
+        public Nullable<System.DateTime> RegisterDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Creditcard_details> Creditcard_details { get; set; }
