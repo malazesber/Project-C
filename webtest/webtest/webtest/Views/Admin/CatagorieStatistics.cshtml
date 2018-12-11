@@ -1,0 +1,83 @@
+﻿@using webtest.Models
+
+@{
+    ViewBag.Title = "CatagorieStatistics";
+    Layout = "~/Views/Shared/_customLayout.cshtml";
+}
+@{ 
+    var CataSta = ViewBag.data;
+}
+
+<h2>CatagorieStatistics</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+
+<div class="container">
+    <canvas id="cataChart"></canvas>
+</div>
+<script>
+    let cataChart = document.getElementById('cataChart').getContext('2d');
+
+    //Global Options 
+    Chart.defaults.global.defaultFontFamily = 'lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#777';
+
+    let catagorieChart = new Chart(cataChart, {
+        type: 'pie',
+        data: {
+            labels: ["Fiction", "Biography", "Sports", "Art & Photography", "Science & Nature", "Business", "Education", "Food & Drink", "Style & Beauty", "Diet & Fitness", "History & Politics", "Home & Garden", "Mind Body Spirit", "Parenting"],
+            datasets: [{
+                lable: 'Stock',
+                data: [@CataSta[0], @CataSta[1],@CataSta[2], @CataSta[3], @CataSta[4],@CataSta[5],@CataSta[6],
+                       @CataSta[7],@CataSta[8],@CataSta[9],@CataSta[10],@CataSta[11],@CataSta[12],@CataSta[13]],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(200, 33, 100, 0.6)',
+                    'rgba(80, 155, 135, 0.6)',
+                    'rgba(60, 106, 186, 0.6)',
+                    'rgba(175, 92, 92, 0.6)',
+                    'rgba(53, 202, 155, 0.6)',
+                    'rgba(55, 59, 244, 0.6)',
+                    'rgba(243, 202, 200, 0.6)',
+                    'rgba(100, 249, 64, 0.6)'
+                ],
+                borderColor: '#777',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Stock of each catagory',
+                fontSize: 25
+            },
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: '#000'
+                }
+            
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom:0,
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

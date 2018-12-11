@@ -188,7 +188,7 @@ namespace webtest.Controllers
 
         }
     
-    public ActionResult CatagorieStatistics(string Catagorie)
+    public ActionResult CatagorieStatistics()
     {
         var db = new DatabaseEntities1();
         //var a = db.OrderDetails;
@@ -231,16 +231,16 @@ namespace webtest.Controllers
         int Home = 0;
         int Mind = 0;
         int Parenting = 0;
-        int[] statistcs = new int[13];
+        int[] statistcs = new int[14];
 
 
         foreach (Book prod1 in db.Books)
         {
-            if (prod1.Category == "Fiction" || Catagorie == "Fiction")
+            if (prod1.Category == "Fiction")
             {
                 int Fictionper = 0;
                 Fiction = Fiction + prod1.Stock;
-                statistcs[0] = Fiction / 100;
+                statistcs[0] = Fiction;
                 Fictionper = (Fiction * 100) / Tottal;
 
             }
@@ -248,72 +248,72 @@ namespace webtest.Controllers
             if (prod1.Category == "Biography")
             {
                 Biography = Biography + prod1.Stock;
-                statistcs[1] = Biography / 100;
+                statistcs[1] = Biography;
             }
             if (prod1.Category == "Sports")
             {
                 Sports = Sports + prod1.Stock;
-                statistcs[2] = Sports / 100;
+                statistcs[2] = Sports;
             }
             if (prod1.Category == "Art & Photography")
             {
                 Art = Art + prod1.Stock;
-                statistcs[3] = Art / 100;
+                statistcs[3] = Art;
             }
             if (prod1.Category == "Science & Nature")
             {
                 Science = Science + prod1.Stock;
-                statistcs[4] = Science / 100;
+                statistcs[4] = Science;
             }
             if (prod1.Category == "Business")
             {
                 Business = Business + prod1.Stock;
-                statistcs[5] = Business / 100;
+                statistcs[5] = Business;
             }
             if (prod1.Category == "Education")
             {
                 Education = Education + prod1.Stock;
-                statistcs[6] = Education / 100;
+                statistcs[6] = Education;
             }
             if (prod1.Category == "Food & Drink")
             {
                 Food = Food + prod1.Stock;
-                statistcs[7] = Food / 100;
+                statistcs[7] = Food;
             }
             if (prod1.Category == "Style & Beauty")
             {
                 Style = Style + prod1.Stock;
-                statistcs[8] = Style / 100;
+                statistcs[8] = Style;
             }
             if (prod1.Category == "Diet & Fitness")
             {
                 Diet = Diet + prod1.Stock;
-                statistcs[9] = Diet / 100;
+                statistcs[9] = Diet;
             }
             if (prod1.Category == "History & Politics")
             {
                 History = History + prod1.Stock;
-                statistcs[10] = History / 100;
+                statistcs[10] = History;
             }
             if (prod1.Category == "Home & Garden")
             {
                 Home = Home + prod1.Stock;
-                statistcs[11] = Home / 100;
+                statistcs[11] = Home;
             }
             if (prod1.Category == "Mind Body Spirit")
             {
                 Mind = Mind + prod1.Stock;
-                statistcs[12] = Mind / 100;
+                statistcs[12] = Mind;
             }
             if (prod1.Category == "Parenting")
             {
                 Parenting = Parenting + prod1.Stock;
-                statistcs[13] = Parenting / 100;
+                statistcs[13] = Parenting ;
             }
 
         }
-
-        return View(statistcs);
+            ViewBag.data = statistcs;
+        return View();
     }
 }    
 }
