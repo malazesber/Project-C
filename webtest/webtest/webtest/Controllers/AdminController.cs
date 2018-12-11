@@ -314,6 +314,36 @@ namespace webtest.Controllers
         }
             ViewBag.data = statistcs;
         return View();
-    }
-}    
+        }
+        public ActionResult UserOrderSta()
+        {
+            var db = new DatabaseEntities1();
+            int[] Users = new int[2];
+            int unregisterd = 0;
+            int registerd = 0;
+            foreach(Order order in db.Orders)
+            {
+                if (order.User_id == null)
+                {
+                    unregisterd = unregisterd + order.Payment.Amount;
+                    Users[0] = unregisterd; 
+
+                }
+
+                if (order.User_id != 0 )
+                {
+                    registerd = registerd + order.Payment.Amount;
+                    Users[1] = registerd;
+                }
+
+            }
+            ViewBag.data = Users;
+            return View();
+        }
+        //public ActionResult DailySale(DateTime[] day)
+        //{
+        //    var db = new DatabaseEntities1();
+        //    int Sales = 0;
+        //}
+    }    
 }
