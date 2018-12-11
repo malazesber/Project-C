@@ -73,10 +73,25 @@ namespace webtest.Controllers
 
                 if (plus)
                 {
-                    double isbnD = Convert.ToDouble(isbn);
-                    var book = db.Carts.Where(x => x.ISBN == isbnD).FirstOrDefault();
-                    book.Quantity += 1;
-                    db.SaveChanges(); 
+                    /*  ValidISBN has to be made to succesfully do the Where() part of the query for Book.
+                     *  book fetches the specific item of the shopping cart that has been selected, which holds the data of the book and the quantity in which it is present.
+                     *  BookStock fetches the Stock data from the database Where the isbn is the same as the book that has been selected.
+                     */ 
+                    double ValidISBN = Convert.ToDouble(isbn);
+                    var book = db.Carts.Where(x => x.ISBN == ValidISBN).FirstOrDefault();
+                    int BookStock = db.Books.Where(x => x.ISBN == book.ISBN).FirstOrDefault().Stock;
+                    if (book.Quantity >= BookStock)
+                    {
+                        //Essentially nothing happens, except for resetting the plus value.
+                        plus = false;
+                    }
+                    else
+                    {
+                        //Adds 1 to the Quantity of the selected book in the shopping cart and saves it in the database.
+                        book.Quantity += 1;
+                        db.SaveChanges();
+                        plus = false;
+                    }
                 }
 
                 if (min)
@@ -142,11 +157,31 @@ namespace webtest.Controllers
 
                     if (plus)
                     {
-                        isbns.Add(isbn);
-                        var newcart = String.Join(",", isbns);
-                        Session["shoppingCart"] = newcart;
+                     /* ValidISBN has to be made to succesfully do the Where() part of the query for Book.
+                     *  BookStock fetches the Stock data from the database Where the isbn is the same as the book that has been selected.
+                     *  Quantity fetches the Count() in which the selected book is present in the Shopping Cart. 
+                     *  The items in the shopping cart are presented by their ISBN in isbns. (a List<string>).
+                     */
+                        double ValidISBN = Convert.ToDouble(isbn);
+                        int BookStock = db.Books.Where(x => x.ISBN == ValidISBN).FirstOrDefault().Stock;
+                        int Quantity = isbns.Where(x => x == isbn).Count();
 
-                        plus = false;
+                        if (Quantity < BookStock)
+                        {
+                            //Adds 1 to the Quantity of the selected book in the shopping cart and saves it in the Session["shoppingCart"] and isbns.
+                            isbns.Add(isbn);
+                            var newcart = String.Join(",", isbns);
+                            Session["shoppingCart"] = newcart;
+               
+                            plus = false;
+                        }
+                        else
+                        {
+                            //Essentially nothing happens, except for resetting the plus value.
+                            plus = false;
+
+                            ViewBag.Error = "We only have " + BookStock.ToString() + " copies in stock. You have reached the maximum amount.";
+                        }
                     }
 
                     if (min)
