@@ -15,72 +15,65 @@
         @{
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
-                <input type="text" name="User_id" placeholder="User_id" , value="@Request.QueryString["User_id"]" id="inputfieldisbn"><br />
-                <button id="btnFind">Find product</button>
+                <input type="text" name="Email_search" placeholder="Email" , value="@Request.QueryString["Email_search"]" id="inputfieldisbn"><br />
+                <input name="find" , value="true" , style="display:none" />
+                <button id="btnFind">Find User</button>
             }
         }
 
         @if (Session["Admin_user"] != null)
         {
-            <div id="subtitle">Selected product</div>
 
             <div id="selectedProduct">
-                <label id="titleProduct">@Model.User_id</label>
+                <label id="titleProduct">@Model.Email</label>
                 <label class="extraInfo"><b style="color:#8a3366">Name </b><br />@Model.Name</label>
                 <label class="extraInfo"><b style="color:#8a3366">Surname </b><br />@Model.Surname</label>
                 <label class="extraInfo"><b style="color:#8a3366">Email </b><br />@Model.Email</label>
                 <label class="extraInfo"><b style="color:#8a3366">Email Verified </b><br />@Model.IsEmailVerified</label>
                 <label class="extraInfo"><b style="color:#8a3366">Phone Number </b><br />@Model.Phone_number</label>
-                <label class="extraInfo"><b style="color:#8a3366">isAdmin </b><br />@Model.Type</label>
-
+                <label class="extraInfo"><b style="color:#8a3366">Admin</b><br />@Model.Type</label>
             </div>
 
-            <a href="@Url.Action("User", "Admin", new {User_id = Model.User_id, edit = true})" id="btnEdit">Edit</a>
-            @Html.ActionLink("Delete", "Product", "Admin", new { ISBN = Model.User_id, delete = true }, new { id = "btnDelete", onclick = "return confirm('Are you sure you want to delete this product?');" })
+            <a href="@Url.Action("User", "Admin", new {Email_search = Model.Email, edit = true})" id="btnEdit">Edit</a>
+            <a href="@Url.Action("User", "Admin", new {Email_search = Model.Email, delete = true})" id="btnDelete" , onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+
+
 
         }
 
-        @*@if (Session["Edit_Book"] != null)
+        @if (Session["Edit_User"] != null)
+        {
+            <div class="title">Edit product information</div>
+            using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
-                <div class="title">Edit product information</div>
-                using (Html.BeginForm("Product", "Admin", FormMethod.Get))
-                {
-                    <div id="edit">
-                        <select id="categoryFilter" , class="dropdownFilters inputField">
-                            <option>Select Category</option>
-                            <option value="Art & Photography" @if (@Request.QueryString["Category"] == "Art & Photography") { <text> selected="selected" </text> }> Art & Photography</option>
-                            <option value="Biography" @if (@Request.QueryString["Category"] == "Biography") { <text> selected="selected" </text> }> Biography</option>
-                            <option value="Business" @if (@Request.QueryString["Category"] == "Business") { <text> selected="selected" </text> }> Business</option>
-                            <option value="Diet & Fitness" @if (@Request.QueryString["Category"] == "Diet & Fitness") { <text> selected="selected" </text> }> Diet & Fitness</option>
-                            <option value="Education" @if (@Request.QueryString["Category"] == "Education") { <text> selected="selected" </text> }> Education</option>
-                            <option value="Fiction" @if (@Request.QueryString["Category"] == "Fiction") { <text> selected="selected" </text> }> Fiction</option>
-                            <option value="Food & Drink" @if (@Request.QueryString["Category"] == "Food & Drink") { <text> selected="selected" </text> }> Food & Drink</option>
-                            <option value="History & Politics" @if (@Request.QueryString["Category"] == "History & Politics") { <text> selected="selected" </text> }> History & Politics</option>
-                            <option value="Home & Garden" @if (@Request.QueryString["Category"] == "Home & Garden") { <text> selected="selected" </text> }> Home & Garden</option>
-                            <option value="Mind Body Spirit" @if (@Request.QueryString["Category"] == "Mind Body Spirit") { <text> selected="selected" </text> }> Mind Body Spirit</option>
-                            <option value="Parenting" @if (@Request.QueryString["Category"] == "Parenting") { <text> selected="selected" </text> }> Parenting</option>
-                            <option value="Science & Nature" @if (@Request.QueryString["Category"] == "Science & Nature") { <text> selected="selected" </text> }> Science & Nature</option>
-                            <option value="Sports" @if (@Request.QueryString["Category"] == "Sports") { <text> selected="selected" </text> }> Sports</option>
-                            <option value="Style & Beauty" @if (@Request.QueryString["Category"] == "Style & Beauty") { <text> selected="selected" </text> }> Style & Beauty</option>
-                        </select> <br />
+                <div id="edit">
+                    <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Model.Name" /><br />
+                    <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Model.Surname" /><br />
+                    <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Model.Email" /><br />
+                    <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Model.Phone_number" /><br />
+                    <select id="TypeChange" , class="dropdownFilters inputField">
+                        <option>Select Type</option>
+                        <option value="true" @if (Model.Type == true) { <text> selected="selected" </text> }> true</option>
+                        <option value="false" @if (Model.Type == false) { <text> selected="selected" </text> }> false</option>
+                    </select><br />
+                    <select id="EmailVerifiedChange" , class="dropdownFilters inputField">
+                        <option>Select Email Verified</option>
+                        <option value="true" @if (Model.IsEmailVerified == true) { <text> selected="selected" </text> }> true</option>
+                        <option value="false" @if (Model.IsEmailVerified == false) { <text> selected="selected" </text> }> false</option>
+                    </select><br />
 
-                        <input id="categoryInput" type="text" name="Category" , style="display:none">
-                        <input type="text" name="Name" placeholder="Name" , value="@Model.Name" class="inputField"><br />
-                        <textarea type="text" name="Summary" placeholder="Summary" class="inputFieldSummary" rows="4">@Model.Summary</textarea><br />
-                        <input type="text" name="Date" placeholder="Date" , value="@Model.Date" class="inputField"><br />
-                        <input type="text" name="Author" placeholder="Author" , value="@Model.Author" class="inputField"><br />
-                        <input type="text" name="Image_src" placeholder="Image_src" , value="@Model.Image_src" class="inputField"><br />
-                        <input type="text" name="Price" placeholder="Price" , value="@Model.Price" class="inputField"><br />
-                        <input type="text" name="Rating" placeholder="Rating" , value="@Model.Rating" class="inputField"><br />
-                        <input type="text" name="Stock" placeholder="Stock" , value="@Model.Stock" class="inputField"><br />
-                        <input type="hidden" name="change" value="true" />
-                        <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.ISBN"><br />
+                    <input id="TypeInputChange" type="text" name="Type" , style="display:none">
+                    <input id="EmailVerifiedInputChange" type="text" name="EmailVerified" , style="display:none">>
+                    <input name="Email_search" , value="@Model.Email" , style="display:none" />
 
-                        <button class="btn" , onclick="setCategory()">Apply changes</button>
-                        @Html.ActionLink("Cancel", "Product", "Admin", new { cancel = true, ISBN = Model.ISBN }, new { id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
-                    </div>
-                }
-            }*@
+                    <button class="btn" , onclick="setChange()">Apply changes</button>
+
+                    <input type="hidden" name="change" value="true" />
+
+                    <a href="@Url.Action("User", "Admin", new {Email_search = Model.Email, cancel = true})" id="btnCancel" , onclick="return confirm('Are you sure you want to cancel?');">Cancel</a>
+                </div>
+            }
+        }
     </div>
 
     <div id="addBox">
@@ -88,43 +81,84 @@
         @{
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
+                @Html.AntiForgeryToken()
+
+
                 <div id="add">
-                    <input type="text" name="Name" placeholder="Name" class="inputField" /><br />
-                    <input type="text" name="Surname" placeholder="Surname" class="inputField" /><br />
-                    <input type="text" name="Email" placeholder="Email" class="inputField" /><br />
-                    <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" /><br />
-                    <input type="text" name="Password" placeholder="Password" class="inputField" /><br />
-                    <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" /><br />
-                    <select id="Type" , class="dropdownFilters inputField">
+
+                    <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Request.QueryString["Name"]" /><br />
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })<br />
+                    @*<input type="text" name="Name" placeholder="Name" class="inputField" /><br />*@
+
+                    <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Request.QueryString["Surname"]" /><br />
+                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })<br />
+
+                    <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Request.QueryString["Email"]" /><br />
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })<br />
+
+                    <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" /><br />
+                    @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })<br />
+
+                    <input type="text" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]" /><br />
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })<br />
+
+                    <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" , value="@Request.QueryString["ConfirmPassword"]" /><br />
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })<br />
+                    <input name="Add" , value="true" , style="display:none" />
+                    <select id="TypeAdd" , class="dropdownFilters inputField">
                         <option>Select Type</option>
-                        <option value="true"> true</option>
-                        <option value="false"> false</option>
+                        <option value="true" @if (@Request.QueryString["Type"] == "true") { <text> selected="selected" </text> }>
+                            true
+                        </option>
+                        <option value="false" @if (@Request.QueryString["Type"] == "false") { <text> selected="selected" </text> }>
+                            false
+                        </option>
                     </select><br />
-                    <select id="EmailVerified" , class="dropdownFilters inputField">
+                    <select id="EmailVerifiedAdd" , class="dropdownFilters inputField">
                         <option>Select Email Verified</option>
-                        <option value="true"> true</option>
-                        <option value="false"> false</option>
+                        <option value="true" @if (@Request.QueryString["EmailVerified"] == "true") { <text> selected="selected" </text> }>
+                            true
+                        </option>
+                        <option value="false" @if (@Request.QueryString["EmailVerified"] == "false") { <text> selected="selected" </text> }>
+                            false
+                        </option>
                     </select><br />
 
-                    <input id="TypeInput" type="text" name="Type" , style="display:none">
-                    <input id="EmailVerifiedInput" type="text" name="EmailVerified" , style="display:none">
-                    <input type="hidden" name="add" value="true" />
+                    <input id="TypeInputAdd" type="text" name="Type" , style="display:none">
+                    <input id="EmailVerifiedInputAdd" type="text" name="EmailVerified" , style="display:none">
+                    <input name="add" , value="true" , style="display:none" />
 
-                    <button class="btn" , onclick="setType()">Save new product</button>
+                    <input name="Email_search" , value="@Request.QueryString["Email_search"]" , style="display:none" />
+
+
+
+                    <button class="btn" , onclick="setAdd()">Save new User</button>
+
 
                 </div>
+
             }
         }
     </div>
 </div>
-
+@Html.Raw(TempData["Success"])
+@Html.Raw(TempData["emailError"])
 <script>
-    function setType() {
+    function setAdd() {
         //SET CATEGORIE
-        var Type = document.getElementById("Type");
-        document.getElementById("TypeInput").value = Type.options[Type.selectedIndex].value;
+        var Type = document.getElementById("TypeAdd");
+        document.getElementById("TypeInputAdd").value = Type.options[Type.selectedIndex].value;
 
-        var EmailVerified = document.getElementById("EmailVerified");
-        document.getElementById("EmailVerifiedInput").value = EmailVerified.options[EmailVerified.selectedIndex].value;
+        var EmailVerified = document.getElementById("EmailVerifiedAdd");
+        document.getElementById("EmailVerifiedInputAdd").value = EmailVerified.options[EmailVerified.selectedIndex].value;
     }
+    function setChange() {
+        //SET CATEGORIE
+        var Type = document.getElementById("TypeChange");
+        document.getElementById("TypeInputChange").value = Type.options[Type.selectedIndex].value;
+
+        var EmailVerified = document.getElementById("EmailVerifiedChange");
+        document.getElementById("EmailVerifiedInputChange").value = EmailVerified.options[EmailVerified.selectedIndex].value;
+    }
+
 </script>

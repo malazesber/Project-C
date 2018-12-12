@@ -115,80 +115,151 @@ namespace webtest.Controllers
             }
         }
 
-        public ActionResult User(bool? Type, bool? EmailVerified, string User_id = "", string add = "", string Name = "", string Surname = "", string Email = "",
-            string Phone_number = "", string Password = "", string ConfirmPassword = "")
+        public ActionResult User(User userData, bool? Type, bool? EmailVerified, string User_id_search = "", string Email_search = "", string add = "", string Name = "", string Surname = "", string Email = "",
+                    string Phone_number = "", string Password = "", string ConfirmPassword = "", bool delete = false, bool edit = false, bool cancel = false, bool change = false, string find = "")
         {
-            if (User_id != "")
+
+
+            if (add == "true")
             {
 
-                using (var db = new DatabaseEntities1())
-                {
-                    int User_id_int = Convert.ToInt32(User_id);
-                    var User = db.Users.Where(x => x.User_id == User_id_int).FirstOrDefault();
-                    Session["Admin_user"] = User;
-                    return View(User);
-                }
-            }
-            else if (add == "true")
-            {
-
-                bool TypeB = Convert.ToBoolean(Type);
-                bool EmailVerifiedB = Convert.ToBoolean(EmailVerified);
-                var passCrypto = Crypto.Hash(Password);
-                var confirmPassCrypto = Crypto.Hash(ConfirmPassword);
-                var ActivationCode = Guid.NewGuid();
-
-                User addUser = new User()
-                {
-                    Name = Name,
-                    Surname = Surname,
-                    Email = Email,
-                    Phone_number = Phone_number,
-                    Password = passCrypto,
-                    ConfirmPassword = confirmPassCrypto,
-                    IsEmailVerified = EmailVerifiedB,
-                    Type = TypeB
-
-
-
-                };
-
-                try
+                if (ModelState.IsValid)
                 {
                     using (var db = new DatabaseEntities1())
                     {
-                        db.Users.Add(addUser);
-                        db.SaveChanges();
-                    }
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
-                    {
-                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        //CHECK of de email al bestaat in de database.
+                        if (db.Users.Where(x => x.Email == userData.Email).ToList().Count == 0)
                         {
-                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                            bool EmailVerifiedB = Convert.ToBoolean(EmailVerified);
+                            bool TypeB = Convert.ToBoolean(Type);
+                            User addUser = new User()
+                            {
+                                Name = Name,
+                                Surname = Surname,
+                                Email = Email,
+                                Password = Crypto.Hash(Password),
+                                ConfirmPassword = Crypto.Hash(ConfirmPassword),
+                                Phone_number = Phone_number,
+                                Type = TypeB,
+                                IsEmailVerified = EmailVerifiedB,
+                                ActivationCode = Guid.NewGuid()
+                            };
+
+                            db.Users.Add(addUser);
+                            db.SaveChanges();
+                            TempData["Success"] = "<script>alert('Added to database !');</script>";
+                        }
+                        else
+                        {
+                            TempData["emailError"] = "<script>alert('Email already exists.');</script>";
+
                         }
                     }
+
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+                    foreach (var error in errors)
+                    {
+                        System.Diagnostics.Debug.WriteLine(error.ErrorMessage);
+                    }
+
+                }
+            }
+
+
+            if (Email_search != "")
+            {
+                if (find == "true")
+                {
+                    Session["Edit_User"] = null;
+                    change = false;
                 }
 
 
+                using (var db = new DatabaseEntities1())
+                {
+                    if (delete)
+                    {
+                        db.Users.Remove(db.Users.Where(x => x.Email == Email_search).FirstOrDefault());
+                        db.SaveChanges();
+                        Session["Edit_User"] = null;
+                        change = false;
+                        Session["Admin_User"] = null;
+                        TempData["Success"] = "<script>alert('Succesfully removed from database !');</script>";
+
+                        return View();
+                    }
+                    if (edit)
+                    {
+                        Session["Edit_User"] = Email_search;
+                    }
+                    else if (cancel)
+                    {
+                        Session["Edit_User"] = null;
+                        cancel = false;
+                    }
+                    else if (change)
+                    {
+                        try
+                        {
+                            bool EmailVerifiedB = Convert.ToBoolean(EmailVerified);
+                            bool TypeB = Convert.ToBoolean(Type);
+
+                            User userChange = db.Users.Where(x => x.Email == Email_search).SingleOrDefault();
+                            userChange.Name = Name;
+                            userChange.Surname = Surname;
+                            userChange.Email = Email;
+                            userChange.Phone_number = Phone_number;
+                            userChange.Password = userChange.Password;
+                            userChange.ConfirmPassword = userChange.Password;
+                            userChange.Type = TypeB;
+                            userChange.IsEmailVerified = EmailVerifiedB;
+
+                            db.SaveChanges();
+                            Session["Edit_User"] = null;
+                            change = false;
+                            Session["Admin_User"] = null;
+                            TempData["Success"] = "<script>alert('Succesfully edited user');</script>";
+                        }
+                        catch (Exception exception)
+                        {
+
+                        }
 
 
+                    }
 
-                return View();
+                    var User = db.Users.Where(x => x.Email == Email_search).FirstOrDefault();
+                    Session["Admin_user"] = User;
+                    if (User == null)
+                    {
+                        TempData["Success"] = "<script>alert('User not found');</script>";
+                    }
 
+                    return View(User);
+
+
+                }
 
             }
-            else
-            {
-                Session["Admin_User"] = null;
-                return View();
-            }
+
+
+
+
+
+
+
+
+            Session["Admin_User"] = null;
+
+            return View();
 
         }
-    
-    public ActionResult CatagorieStatistics()
+
+        public ActionResult CatagorieStatistics()
     {
         var db = new DatabaseEntities1();
         //var a = db.OrderDetails;
