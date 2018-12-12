@@ -12,8 +12,105 @@ namespace webtest.Controllers
         //Connectie met database
         DatabaseEntities1 db = new DatabaseEntities1();
 
-        public ActionResult Index()
+        public ActionResult Index(string Title, double? isbn, double? favo, double? cart)
         {
+            string favoISBN = favo.ToString();
+            string cartISBN = cart.ToString();
+            var _isbn = isbn.ToString();
+
+            if (favoISBN != "" && favoISBN != null)
+            {
+                if (Session["User_id"] == null)
+                {
+                    TempData["favo"] = "<script>alert('You need to login first.');</script>";
+
+                }
+                else
+                {
+                    var list = db.Favorites.Select(s => s);
+                    double isbnD = Convert.ToDouble(isbn);
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                    if (has)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Favorites.Remove(db.Favorites.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                            db.SaveChanges();
+                        }
+
+                    }
+                    else
+                    {
+                        // ISBN TOEVOEGEN AAN FAVORIETEN
+
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var favo1 = new Favorite() { User_id = User_id, ISBN = Convert.ToDouble(isbn) };
+                            db.Favorites.Add(favo1);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            //Cart button toevoegen
+            if (cartISBN != "" && cartISBN != null)
+            {
+                if (Session["User_id"] != null)
+                {
+                    var list = db.Carts.Select(s => s);
+                    double isbnD = Convert.ToDouble(isbn);
+                    int User_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+
+                    if (has)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == isbnD && cus.User_id == User_id));
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var cart1 = new Cart() { User_id = User_id, ISBN = Convert.ToDouble(isbn), Quantity = 1 };
+                            db.Carts.Add(cart1);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    // UNREGISTERED USER
+                    if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
+                    {
+                        Session["shoppingCart"] = isbn.ToString();
+                    }
+                    else
+                    {
+                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                        //Check of die al in je cart zit.
+                        //Deletes product from cart
+                        if (isbns.Contains(_isbn))
+                        {
+                            isbns.RemoveAll(s => _isbn == s);
+                            var newcart = String.Join(",", isbns);
+                            Session["shoppingCart"] = newcart;
+                        }
+                        else
+                        {
+                            Session["shoppingCart"] = Session["shoppingCart"] + "," + isbn.ToString();
+                        }
+                    }
+                }
+            }
+
             return View();
         }
         public ActionResult ShoppingCart(string isbn, double? del, double? favo, bool delete = false, bool plus = false, bool min = false)

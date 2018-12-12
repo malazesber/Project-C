@@ -234,6 +234,7 @@
     <Content Include="Content\Confirmation.css" />
     <Content Include="Content\FavoritePage.css" />
     <Content Include="Content\ForgotPassword.css" />
+    <Content Include="Content\Homepage.css" />
     <Content Include="Content\Images\go_back.png" />
     <Content Include="Content\Images\house.PNG" />
     <Content Include="Content\Images\Rating1Star.png" />

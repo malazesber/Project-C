@@ -1,14 +1,259 @@
-﻿@{
-                /**/
+﻿@using webtest.Models;
 
-                ViewBag.Title = "Home Page";
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
-@if (Session["User_id"] == null)
-{
-    <h1>Welcome, Guest !</h1>
-}
-else
-{
-    <h1>Welcome, @Session["Name"] !</h1>
-}
+<head>
+    <link href="~/Content/Homepage.css" rel="stylesheet" />
+</head>
+
+<div id="container">
+    <div id="results">
+
+        @{
+            DatabaseEntities1 db = new DatabaseEntities1();
+            DateTime today = DateTime.Today;
+
+            // Books for slideshow valentine theme
+            List<Book> valentineBooks = (from books in db.Books
+                                         where books.ISBN == 9780241982273 || books.ISBN == 9781444786316 || books.ISBN == 9781424553686 ||
+                                         books.ISBN == 9781423621058 || books.ISBN == 9780330458320
+                                         select books).ToList();
+
+            // Kort de samenvattingen bij de slide show in
+            string SummaryFunction(string summary)
+            {
+                var mktText = summary;
+                if (mktText == null || mktText == "")
+                {
+                    mktText = "";
+                }
+                else
+                {
+                    if (mktText.Length > 800)
+                    {
+                        var pos = mktText.LastIndexOf(" ", 800);
+
+                        mktText = mktText.Substring(0, pos) + "...";
+                    }
+                    else
+                    {
+                        mktText = summary;
+                    }
+                }
+                return mktText;
+            }
+
+            // Most populair books
+            // Select all the order details
+            Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
+
+            OrderDetail orderDetailObj = db.OrderDetails.FirstOrDefault();
+
+            // GET PRODUCTS
+            string[] products = orderDetailObj.Products.Split('|');
+
+            foreach (var item in products)
+            {
+                string[] books = item.Split('-');
+                double isbn = Convert.ToDouble(books[0]);
+                Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
+                int quantity = Convert.ToInt32(books[1]);
+                BookQuantity.Add(book, quantity);
+            }
+        }
+
+        <div class="slideshow-container">
+
+            @* Boeken die die getoont worden in de slide show *@
+            @{ foreach (var slide in valentineBooks)
+                {
+                    <div class="myslides fade">
+                        <a href="@Url.Action("Index", "Product", new { Title = slide.Name, isbn = slide.ISBN}) " class="text">@slide.Name</a>
+
+                        <a href="@Url.Action("Index", "Product", new { Title = slide.Name, isbn = slide.ISBN}) " class="subtext">@SummaryFunction(slide.Summary)</a>
+
+                        <a href="@Url.Action("Index", "Product", new { Title = slide.Name, isbn= slide.ISBN})">
+                            <img src="@slide.Image_src" class="imageSlideShow">
+                        </a>
+                    </div>
+                }
+            }
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+
+        <div style="text-align:center">
+            <span class="dots" onclick="currentSlide(1)"></span>
+            <span class="dots" onclick="currentSlide(2)"></span>
+            <span class="dots" onclick="currentSlide(3)"></span>
+            <span class="dots" onclick="currentSlide(4)"></span>
+            <span class="dots" onclick="currentSlide(5)"></span>
+        </div>
+
+        @{
+            for (int i = 1; i <= 3; i++)
+            {
+
+                var x = "";
+                var y = new List<Book>();
+
+                switch (i)
+                {
+                    case 1:
+                        x = "Newest books";
+                        y = (from books in db.Books
+                             where books.Date <= today
+                             orderby books.Date descending
+                             select books).Take(5).ToList();
+                        break;
+                    case 2:
+                        x = "Future Books";
+                        y = (from books in db.Books
+                             where books.Date >= today
+                             orderby books.Date ascending
+                             select books).Take(5).ToList();
+                        break;
+                    case 3:
+                        x = "Populair books";
+                        y = (from BQ in BookQuantity
+                             orderby BQ.Value descending
+                             select BQ.Key).Take(5).ToList();
+                        break;
+                }
+
+                @* Toont de informatie van de nieuwste boeken *@
+                <div id="title">@x</div>
+                <img id="stripe" src="~/Content/Images/stripe.png" />
+                <div id="productboxGrid">
+                    @{
+                        foreach (var book in y)
+                        {
+                            <div class="productGrid">
+                                <a href="@Url.Action("Index", "Product", new { Title = book.Name, isbn = book.ISBN})">
+                                    <img class="productImg" src="@book.Image_src" />
+                                </a>
+
+                                <a href="@Url.Action("Index", "Product", new { Title = book.Name, isbn = book.ISBN})" class="titleBook">@book.Name</a>
+                                <label class="author">@book.Author</label>
+
+                                @switch (book.Rating)
+                                {
+                                    case 1:
+                                        <img class="rating" src="~/Content/Images/Rating1Star.png" />
+                                        break;
+                                    case 2:
+                                        <img class="rating" src="~/Content/Images/Rating2Star.png" />
+                                        break;
+                                    case 3:
+                                        <img class="rating" src="~/Content/Images/Rating3Star.png" />
+                                        break;
+                                    case 4:
+                                        <img class="rating" src="~/Content/Images/Rating4Star.png" />
+                                        break;
+                                    case 5:
+                                        <img class="rating" src="~/Content/Images/Rating5Star.png" />
+                                        break;
+                                }
+
+                                <label class="price">€@book.Price</label>
+
+                                @{
+                                    if (Session["User_id"] != null)
+                                    {
+                                        var listCart = db.Carts.Select(s => s);
+                                        var listFavo = db.Favorites.Select(s => s);
+                                        int User_id = Convert.ToInt32(Session["User_id"]);
+
+                                        bool hasCart = listCart.Any(cus => cus.ISBN == book.ISBN && cus.User_id == User_id);
+
+                                        if (hasCart)
+                                        {
+                                            <a href="@Url.Action("Index", "Home", new {Title = book.Name, isbn = book.ISBN, cart = book.ISBN})" class="btnCart">Remove from cart</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Index", "Home", new {Title = book.Name, isbn = book.ISBN, cart = book.ISBN})" class="btnCart">Add to cart</a>
+                                        }
+
+                                        bool hasFavo = listFavo.Any(cus => cus.ISBN == book.ISBN && cus.User_id == User_id);
+
+                                        if (hasFavo)
+                                        {
+                                            <a href="@Url.Action("Index", "Home", new { Title = book.Name, isbn = book.ISBN, favo = book.ISBN}) " class="btnWishList">Remove from favorites</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Index", "Home", new { Title = book.Name, isbn = book.ISBN, favo = book.ISBN}) " class="btnWishList">Add to favorites</a>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        if (Session["shoppingCart"] == null)
+                                        {
+                                            <a href="@Url.Action("Index", "Home", new {Title = book.Name, isbn = book.ISBN, cart = book.ISBN})" class="btnCart">Add to cart</a>
+                                        }
+                                        else
+                                        {
+                                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+
+                                            if (isbns.Contains(book.ISBN.ToString()))
+                                            {
+                                                <a href="@Url.Action("Index", "Home", new { isbn = book.ISBN, delete = true, Title = book.Name})" class="btnCart">Remove from cart</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Index", "Home", new {Title = book.Name, isbn = book.ISBN, cart = book.ISBN})" class="btnCart">Add to cart</a>
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script>
+
+    var slideIndex = 1;
+    showSlide(slideIndex);
+
+    function plusSlides(n) {
+        showSlide(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlide(slideIndex = n);
+    }
+
+    function showSlide(n) {
+        var i;
+        var slides = document.getElementsByClassName("myslides");
+        var dots = document.getElementsByClassName("dots");
+
+        if (n > slides.length) { slideIndex = 1 };
+
+        if (n < 1) { slideIndex = slides.length };
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        };
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        };
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+
+</script>

@@ -24,7 +24,7 @@
                         if (Session["User_id"] != null)
                         {
                             <li><a href="@Url.Action("OrderHistory", "OrderHistory")"><i class="fa fa-eye site-nav--icon"></i>Order History</a></li>
-                            <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-star site-nav--icon"></i>Favorites</a></li>
+                            <li><a href="@Url.Action("Index", "Favorites")"><i class="fa fa-heart site-nav--icon"></i>Favorites</a></li>
                             if (Session["Admin"] != null)
                             {
                                 bool admin = Convert.ToBoolean(Session["Admin"]);

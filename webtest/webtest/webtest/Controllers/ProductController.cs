@@ -156,11 +156,10 @@ namespace webtest.Controllers
                                 where book.ISBN == isbn
                                 select book.Summary).FirstOrDefault();
 
-                var summaryLength = _summary.Count();
-
-
                 if (_summary != null)
                 {
+                    var summaryLength = _summary.Count();
+
                     if (readMore == 0)
                     {
                         if (summaryLength > 625)

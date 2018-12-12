@@ -88,11 +88,11 @@
                         //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
                         if (has)
                         {
-                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-star"> Remove from favorites list</a>
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-heart"> Remove from favorites list</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-star-o"> Add to favorites list</a>
+                            <a href="@Url.Action("ShoppingCart", "Home", new { Title = m.Name, isbn = m.ISBN, favo = m.ISBN }) " class="FavoButton fa fa-heart-o"> Add to favorites list</a>
                         }
                 
                         <a href="@Url.Action("ShoppingCart", "Home", new { del = m.ISBN, Title = m.Name, isbn = m.ISBN })" class="fa fa-trash-o deleteButton"> Delete product</a>
@@ -134,7 +134,6 @@
 
             </div>
 
-
             @{
                 if (Session["User_id"] != null)
                 {
@@ -168,4 +167,3 @@
         </div>
     </div>
 </div>
-
