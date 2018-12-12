@@ -84,6 +84,7 @@ namespace webtest.Controllers
                     {
                         //Essentially nothing happens, except for resetting the plus value.
                         plus = false;
+                        ViewBag.Error = "We only have " + BookStock.ToString() + " copies in stock. You have reached the maximum amount.";
                     }
                     else
                     {
@@ -91,6 +92,7 @@ namespace webtest.Controllers
                         book.Quantity += 1;
                         db.SaveChanges();
                         plus = false;
+                        ViewBag.Error = "";
                     }
                 }
 
@@ -174,6 +176,7 @@ namespace webtest.Controllers
                             Session["shoppingCart"] = newcart;
                
                             plus = false;
+                            ViewBag.Error = "";
                         }
                         else
                         {
