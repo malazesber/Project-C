@@ -227,6 +227,9 @@
     </Content>
     <Content Include="Content\Address.css" />
     <Content Include="Content\Admin.css" />
+    <Content Include="Content\alertify\alertify.bootstrap.css" />
+    <Content Include="Content\alertify\alertify.core.css" />
+    <Content Include="Content\alertify\alertify.default.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -270,6 +273,8 @@
       <DependentUpon>RegisterModel.edmx</DependentUpon>
       <LastGenOutput>RegisterModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\alertify\alertify.js" />
+    <Content Include="Scripts\alertify\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

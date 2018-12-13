@@ -147,11 +147,11 @@ namespace webtest.Controllers
 
                             db.Users.Add(addUser);
                             db.SaveChanges();
-                            TempData["Success"] = "<script>alert('Added to database !');</script>";
+                            TempData["Success"] = "<script>lertify.success('Added to database !');</script>";
                         }
                         else
                         {
-                            TempData["emailError"] = "<script>alert('Email already exists.');</script>";
+                            TempData["emailError"] = "<script>alertify.error('Email already exists');</script>";
 
                         }
                     }
@@ -188,8 +188,8 @@ namespace webtest.Controllers
                         Session["Edit_User"] = null;
                         change = false;
                         Session["Admin_User"] = null;
-                        TempData["Success"] = "<script>alert('Succesfully removed from database !');</script>";
-
+                        TempData["Success"] = "<script>alertify.success('Succesfully removed from database !');</script>";
+                       
                         return View();
                     }
                     if (edit)
@@ -222,7 +222,8 @@ namespace webtest.Controllers
                             Session["Edit_User"] = null;
                             change = false;
                             Session["Admin_User"] = null;
-                            TempData["Success"] = "<script>alert('Succesfully edited user');</script>";
+                            TempData["Success"] = "<script>alertify.success('Succesfully edited user !');</script>";
+
                         }
                         catch (Exception exception)
                         {
@@ -236,7 +237,7 @@ namespace webtest.Controllers
                     Session["Admin_user"] = User;
                     if (User == null)
                     {
-                        TempData["Success"] = "<script>alert('User not found');</script>";
+                        TempData["Success"] = "<script>alertify.error('User not found');</script>";
                     }
 
                     return View(User);
