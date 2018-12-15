@@ -12,8 +12,15 @@ namespace webtest.Controllers
     {
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Admin
-        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
+        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool addSession = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
         {
+            if (addSession == true)
+            {
+                Session["Add_Book"] = true;
+                Session["Admin_Book"] = null;
+                return View();
+            }
+
             if (ISBN != "")
             {
                 var isbn = Convert.ToDouble(ISBN);
@@ -110,6 +117,10 @@ namespace webtest.Controllers
             }
             else
             {
+                if (cancel == true)
+                {
+                    Session["Add_Book"] = null;
+                }
                 Session["Admin_Book"] = null;
                 return View();
             }

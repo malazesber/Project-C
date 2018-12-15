@@ -3,14 +3,37 @@
     height: 100%;
 }
 
+.sidenav {
+    width: 15%;
+    position: inherit;
+    z-index: 1;
+    margin-left: 15px;
+    margin-top: 15px;
+    background: white;
+    overflow-x: hidden;
+    padding: 8px 0;
+}
+
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #8a3366;
+        display: block;
+    }
+
+        .sidenav a:hover {
+            color: #65254A;
+        }
+
 #productBox {
     background: white;
     float: left;
     min-height: 200px;
     height: auto;
-    width: 55%;
-    margin-left: 15px;
-    margin-top: 15px;
+    width: 75%;
+    margin-left: 20%;
+    margin-top: -136px;
     margin-bottom: 15px;
 }
 
@@ -76,6 +99,27 @@
 
     #btnFind:hover {
         background-color: #977200;
+        cursor: pointer;
+    }
+
+#btnAdd {
+    display: inline-block;
+    background-color: #8a3366;
+    border: none;
+    color: white;
+    padding: 6px 9px;
+    border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    text-decoration: none;
+    text-align: center;
+    width: 25%;
+    cursor: pointer;
+}
+
+    #btnAdd:hover {
+        background-color: #65254A;
         cursor: pointer;
     }
 
