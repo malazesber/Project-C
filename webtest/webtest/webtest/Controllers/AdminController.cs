@@ -127,9 +127,14 @@ namespace webtest.Controllers
         }
 
         public ActionResult User(User userData, bool? Type, bool? EmailVerified, string User_id_search = "", string Email_search = "", string add = "", string Name = "", string Surname = "", string Email = "",
-                    string Phone_number = "", string Password = "", string ConfirmPassword = "", bool delete = false, bool edit = false, bool cancel = false, bool change = false, string find = "")
+                    string Phone_number = "", string Password = "", string ConfirmPassword = "", bool delete = false, bool addSession = false, bool edit = false, bool cancel = false, bool change = false, string find = "")
         {
-
+            if (addSession == true)
+            {
+                Session["Add_User"] = true;
+                Session["Admin_Book"] = null;
+                return View();
+            }
 
             if (add == "true")
             {

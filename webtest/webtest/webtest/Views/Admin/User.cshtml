@@ -15,8 +15,13 @@
 </head>
 
 <div id="container">
+    <div class="sidenav">
+        <a href="@Url.Action("Product", "Admin")">Products</a>
+        <a href="@Url.Action("User", "Admin")">User accounts</a>
+        <a href="@Url.Action("CatagorieStatistics", "Admin")">Statistics</a>
+    </div>
     <div id="productBox">
-        <div class="title">Product Control Panel</div>
+        <div class="title">User Control Panel</div>
         @{
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
@@ -25,6 +30,7 @@
                 <button id="btnFind">Find User</button>
             }
         }
+        <a href="@Url.Action("User", "Admin", new {addSession = true})" id="btnAdd">Add new user</a>
 
         @if (Session["Admin_user"] != null)
         {
@@ -79,72 +85,75 @@
                 </div>
             }
         }
-    </div>
 
-    <div id="addBox">
+    @if (Session["Add_User"] != null) { 
         <div class="title">Add a new User</div>
-        @{
+        {
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
-                @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
 
 
-                <div id="add">
+            <div id="add">
 
-                    <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Request.QueryString["Name"]" /><br />
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })<br />
-                    @*<input type="text" name="Name" placeholder="Name" class="inputField" /><br />*@
+                <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Request.QueryString["Name"]" /><br />
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })<br />
+                @*<input type="text" name="Name" placeholder="Name" class="inputField" /><br />*@
 
-                    <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Request.QueryString["Surname"]" /><br />
-                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })<br />
+                <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Request.QueryString["Surname"]" /><br />
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })<br />
 
-                    <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Request.QueryString["Email"]" /><br />
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })<br />
+                <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Request.QueryString["Email"]" /><br />
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })<br />
 
-                    <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" /><br />
-                    @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })<br />
+                <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" /><br />
+                @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })<br />
 
-                    <input type="text" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]" /><br />
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })<br />
+                <input type="text" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]" /><br />
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })<br />
 
-                    <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" , value="@Request.QueryString["ConfirmPassword"]" /><br />
-                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })<br />
-                    <input name="Add" , value="true" , style="display:none" />
-                    <select id="TypeAdd" , class="dropdownFilters inputField">
-                        <option>Select Type</option>
-                        <option value="true" @if (@Request.QueryString["Type"] == "true") { <text> selected="selected" </text> }>
-                            true
-                        </option>
-                        <option value="false" @if (@Request.QueryString["Type"] == "false") { <text> selected="selected" </text> }>
-                            false
-                        </option>
-                    </select><br />
-                    <select id="EmailVerifiedAdd" , class="dropdownFilters inputField">
-                        <option>Select Email Verified</option>
-                        <option value="true" @if (@Request.QueryString["EmailVerified"] == "true") { <text> selected="selected" </text> }>
-                            true
-                        </option>
-                        <option value="false" @if (@Request.QueryString["EmailVerified"] == "false") { <text> selected="selected" </text> }>
-                            false
-                        </option>
-                    </select><br />
+                <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" , value="@Request.QueryString["ConfirmPassword"]" /><br />
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })<br />
+                <input name="Add" , value="true" , style="display:none" />
+                <select id="TypeAdd" , class="dropdownFilters inputField">
+                    <option>Select Type</option>
+                    <option value="true" @if (@Request.QueryString["Type"] == "true")
+                    { <text> selected="selected" </text> }>
+                        true
+                    </option>
+                    <option value="false" @if (@Request.QueryString["Type"] == "false")
+                    { <text> selected="selected" </text> }>
+                        false
+                    </option>
+                </select><br />
+                <select id="EmailVerifiedAdd" , class="dropdownFilters inputField">
+                    <option>Select Email Verified</option>
+                    <option value="true" @if (@Request.QueryString["EmailVerified"] == "true")
+                    { <text> selected="selected" </text> }>
+                        true
+                    </option>
+                    <option value="false" @if (@Request.QueryString["EmailVerified"] == "false")
+                    { <text> selected="selected" </text> }>
+                        false
+                    </option>
+                </select><br />
 
-                    <input id="TypeInputAdd" type="text" name="Type" , style="display:none">
-                    <input id="EmailVerifiedInputAdd" type="text" name="EmailVerified" , style="display:none">
-                    <input name="add" , value="true" , style="display:none" />
+                <input id="TypeInputAdd" type="text" name="Type" , style="display:none">
+                <input id="EmailVerifiedInputAdd" type="text" name="EmailVerified" , style="display:none">
+                <input name="add" , value="true" , style="display:none" />
 
-                    <input name="Email_search" , value="@Request.QueryString["Email_search"]" , style="display:none" />
-
-
-
-                    <button class="btn" , onclick="setAdd()">Save new User</button>
+                <input name="Email_search" , value="@Request.QueryString["Email_search"]" , style="display:none" />
 
 
-                </div>
 
+                <button class="btn" , onclick="setAdd()">Save new User</button>
+
+
+            </div>
             }
         }
-    </div>
+    }
+</div>
 </div>
 @Html.Raw(TempData["Success"])
 @Html.Raw(TempData["emailError"])
