@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "DailySale";
+    Layout = "~/Views/Shared/_customLayout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+<h2>DailySale</h2>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#Date1").datepicker({
+            dateFormat: "mm/dd/yy",
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+            //gotoCurrent: true,
+        });
+    });
+    $(function () {
+        $("#Date2").datepicker({
+            dateFormat: "mm/dd/yy",
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+            //gotoCurrent: true,
+        });
+    });
+</script>
+<input id="Date1" name="Date1" type="text" value="6/30/2015 7:12:21 AM">
+<input id="Date2" name="Date2" type="text" value="6/30/2015 7:12:21 AM">

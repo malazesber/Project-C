@@ -412,10 +412,42 @@ namespace webtest.Controllers
             ViewBag.data = Users;
             return View();
         }
-        //public ActionResult DailySale(DateTime[] day)
-        //{
-        //    var db = new DatabaseEntities1();
-        //    int Sales = 0;
-        //}
-    }    
-}
+        public ActionResult DailySale(DateTime? date1, DateTime? date2)
+
+        {
+
+            var db = new DatabaseEntities1();
+            int Sales1 = 0;
+            int Sales2 = 0;
+            int[] Sales = new int[2];
+            foreach (Order order in db.Orders)
+            {
+                if (date1 == order.OrderDate)
+                {
+                    Sales1 = Sales1 + order.Payment.Amount;
+                    Sales[0] = Sales1;
+                }
+                if (date2 == order.OrderDate)
+                {
+                    Sales2 = Sales2 + order.Payment.Amount;
+                    Sales[1] = Sales2;
+                }
+                if (date1 == null)
+                {
+                    Sales1 = 0;
+                    Sales[0] = Sales1;
+                }
+                if (date2 == null)
+                {
+                    Sales2 = 0;
+                    Sales[1] = Sales2;
+                }
+
+            }
+            ViewBag.data = Sales;
+            return View();
+
+        }
+    }
+}    
+
