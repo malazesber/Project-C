@@ -209,6 +209,7 @@
     height: 30px;
     margin-left: 15px;
     margin-top: 5px;
+    display: block;
 }
 
 .inputFieldSummary {
@@ -216,6 +217,7 @@
     width: 80%;
     margin-left: 15px;
     margin-top: 5px;
+    display: block;
 }
 
 .btn {
@@ -231,4 +233,9 @@
     text-decoration: none;
     width: 50%;
     cursor: pointer;
+}
+
+label {
+    margin-top: 5px;
+    margin-left: 15px;
 }
