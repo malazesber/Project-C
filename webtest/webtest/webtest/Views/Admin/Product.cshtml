@@ -22,6 +22,7 @@
         @{
             using (Html.BeginForm("Product", "Admin", FormMethod.Get))
             {
+
                 <input type="text" name="ISBN" placeholder="ISBN" , value="@Request.QueryString["ISBN"]" id="inputfieldisbn"><br />
                 <button id="btnFind">Find product</button>
             }
@@ -99,8 +100,10 @@
                 using (Html.BeginForm("Product", "Admin", FormMethod.Get))
                 {
             <div id="add">
-                <input type="text" name="ISBN" placeholder="ISBN" value="@Request.QueryString["ISBN"]" class="inputField" /><br />
+                <label for="isbn"> <b>ISBN</b> </label>
+                <input type="text" name="ISBN" placeholder="ISBN" value="@Request.QueryString["ISBN"]" class="inputField" pattern="(^[0-9]+){13,15}"/> <br />
 
+                <label for="category"> <b>Category</b> </label>
                 <select id="categoryFilter" , class="dropdownFilters inputField">
                     <option>Select Category</option>
                     <option value="Art & Photography" @if (@Request.QueryString["Category"] == "Art & Photography") { <text> selected="selected" </text> }> Art & Photography</option>
@@ -120,18 +123,36 @@
                 </select><br />
 
                 <input id="categoryInput" type="text" name="Category" , style="display:none">
-                <input type="text" name="Name" placeholder="Name" class="inputField" /><br />
-                <input type="text" name="Author" placeholder="Author" class="inputField" /><br />
-                <input type="text" name="Date" placeholder="Date" class="inputField" /><br />
-                <textarea type="text" name="Summary" rows="4" placeholder="Summary" class="inputFieldSummary"></textarea><br />
+
+                <div class="form-group">
+                    <label for="name"> <b>Name</b> </label>
+                    <input type="text" name="Name" placeholder="Name" class="inputField" pattern="^[a-zA-Z .-]+${2,50}" /><br />
+                </div>
+
+                <label for="author"> <b>Author</b> </label>
+                <input type="text" name="Author" placeholder="Author" class="inputField" pattern="^[a-zA-Z ]+$" /> <br />
+
+                <label for="date"> <b>Date</b> </label>
+                <input type="text" name="Date" placeholder="Date" class="inputField" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}" /><br />
+
+                <label for="summary"> <b>Summary</b> </label>
+                <textarea type="text" name="Summary" rows="4" placeholder="Summary" class="inputFieldSummary" pattern="^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$"></textarea><br />
+
+                <label for="productImg"> <b>Image</b> </label>
                 <input type="text" name="Image_src" placeholder="Image_src" class="inputField" /><br />
-                <input type="text" name="Price" placeholder="Price" class="inputField" /><br />
-                <input type="text" name="Rating" placeholder="Rating" class="inputField" /><br />
-                <input type="text" name="Stock" placeholder="Stock" class="inputField" /><br />
+
+                <label for="price"> <b>Price</b> </label>
+                <input type="text" name="Price" placeholder="Price" class="inputField" pattern="\d+(\.\d{1,2})?" /><br />
+
+                <label for="rating"> <b>Rating</b> </label>
+                <input type="text" name="Rating" placeholder="Rating" class="inputField" pattern="^([1-5])$" /><br />
+
+                <label for="stock"> <b>Stock</b> </label>
+                <input type="text" name="Stock" placeholder="Stock" class="inputField" pattern="^[0-9]*$" /><br />
                 <input type="hidden" name="add" value="true" />
 
                 <button class="btn" , onclick="setCategory()">Save new product</button>
-                @Html.ActionLink("Cancel", "Product", "Admin", new { cancel = true}, new { id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
+                @Html.ActionLink("Cancel", "Product", "Admin", new { cancel = true }, new { id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
 
 
             </div>

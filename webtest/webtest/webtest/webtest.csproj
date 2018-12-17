@@ -190,6 +190,7 @@
     <Compile Include="Models\Favorite.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
