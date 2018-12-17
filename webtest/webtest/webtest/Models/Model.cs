@@ -1,63 +1,63 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.Text.RegularExpressions;
+//using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations;
+//using System;
+//using System.Text.RegularExpressions;
 
 
-namespace Webshop.Models //TODO: Foreign keys & correcte constraints. Ook datatype check just to be sure
-{
-    public class Book //PK -> ISBN
-    {
-        public string Category { get; set; }
+//namespace Webshop.Models //TODO: Foreign keys & correcte constraints. Ook datatype check just to be sure
+//{
+//    public class Book //PK -> ISBN
+//    {
+//        public string Category { get; set; }
 
-        //[Key]
-        [Display(Name = "ISBN")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please insert an ISBN number.")]
-        [RegularExpression("([0-9]+){13,15}", ErrorMessage = "The ISBN must consist of numbers only. The minimum amount is 13 numbers, and the maximum amount is 15")]
-        public float ISBN { get; set; }
+//        //[Key]
+//        [Display(Name = "ISBN")]
+//        [Required(AllowEmptyStrings = false, ErrorMessage = "Please insert an ISBN number.")]
+//        [RegularExpression("([0-9]+){13,15}", ErrorMessage = "The ISBN must consist of numbers only. The minimum amount is 13 numbers, and the maximum amount is 15")]
+//        public float ISBN { get; set; }
 
-        [Display(Name = "Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please insert a name for the book.")]
-        [RegularExpression("(^[a-zA-Z0-9 ,.'@ ]+${2,50}", ErrorMessage = "Minimum 2 characters and maximum 50 characters allowed. Please start the name with a capital letter.")]
-        public string Name { get; set; }
+//        [Display(Name = "Name")]
+//        [Required(AllowEmptyStrings = false, ErrorMessage = "Please insert a name for the book.")]
+//        [RegularExpression("(^[a-zA-Z0-9 ,.'@ ]+${2,50}", ErrorMessage = "Minimum 2 characters and maximum 50 characters allowed. Please start the name with a capital letter.")]
+//        public string Name { get; set; }
 
-        [Display(Name = "Author")]
-        [Required(AllowEmptyStrings = true)]
-        [RegularExpression("[a-zA-Z\\s]+", ErrorMessage = "The author name can not contain numbers or symbols.")]
-        public string Author { get; set; }
+//        [Display(Name = "Author")]
+//        [Required(AllowEmptyStrings = true)]
+//        [RegularExpression("[a-zA-Z\\s]+", ErrorMessage = "The author name can not contain numbers or symbols.")]
+//        public string Author { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Date")]
-        [Required(AllowEmptyStrings = false, ErrorMessage="Please insert a date.")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Date { get; set; } //Is hier een betere datatype voor of iets dergelijks? Misschien een dag,maand,jaar tuple?
+//        [DataType(DataType.Date)]
+//        [Display(Name = "Date")]
+//        [Required(AllowEmptyStrings = false, ErrorMessage="Please insert a date.")]
+//        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+//        public DateTime Date { get; set; } //Is hier een betere datatype voor of iets dergelijks? Misschien een dag,maand,jaar tuple?
 
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Summary")]
-        [Required(AllowEmptyStrings = true)]
-        [RegularExpression(@"^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$")]
-        [MaxLength(500, ErrorMessage = "Summary must be up to 500 characters long.")]
-        public string Summary { get; set; }
+//        [DataType(DataType.MultilineText)]
+//        [Display(Name = "Summary")]
+//        [Required(AllowEmptyStrings = true)]
+//        [RegularExpression(@"^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$")]
+//        [MaxLength(500, ErrorMessage = "Summary must be up to 500 characters long.")]
+//        public string Summary { get; set; }
 
         
-        public string Image_src { get; set; } //https://stackoverflow.com/questions/42183640/show-image-from-database-in-mvc
+//        public string Image_src { get; set; } //https://stackoverflow.com/questions/42183640/show-image-from-database-in-mvc
 
-        [Display(Name="Price")]
-        [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert price.")]
-        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage ="Please insert a valid price, using only numbers.")]
-        public decimal Price { get; set; }
+//        [Display(Name="Price")]
+//        [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert price.")]
+//        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage ="Please insert a valid price, using only numbers.")]
+//        public decimal Price { get; set; }
 
-        [Display(Name="Rating")]
-        [Required(AllowEmptyStrings = false, ErrorMessage ="Please insert rating.")]
-        [RegularExpression("^([1-5])$", ErrorMessage ="Please insert a number between 1 and 5.")]
-        public int Rating { get; set; }
+//        [Display(Name="Rating")]
+//        [Required(AllowEmptyStrings = false, ErrorMessage ="Please insert rating.")]
+//        [RegularExpression("^([1-5])$", ErrorMessage ="Please insert a number between 1 and 5.")]
+//        public int Rating { get; set; }
 
-        [Display(Name="Stock")]
-        [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert stock quantity.")]
-        [RegularExpression("^[0-9]*$", ErrorMessage ="Please insert a valid stock quantity.")]
-        [MinLength(1, ErrorMessage = "The minimum amount of valid stock quantity is 1 book.")]
-        public int Stock { get; set; }
-    }
+//        [Display(Name="Stock")]
+//        [Required(AllowEmptyStrings =false, ErrorMessage ="Please insert stock quantity.")]
+//        [RegularExpression("^[0-9]*$", ErrorMessage ="Please insert a valid stock quantity.")]
+//        [MinLength(1, ErrorMessage = "The minimum amount of valid stock quantity is 1 book.")]
+//        public int Stock { get; set; }
+//    }
 
 
 
@@ -106,4 +106,4 @@ namespace Webshop.Models //TODO: Foreign keys & correcte constraints. Ook dataty
     //    public DbSet<Book> Books { get; set; } //niet klaar
     //}
     
-}
+//}
