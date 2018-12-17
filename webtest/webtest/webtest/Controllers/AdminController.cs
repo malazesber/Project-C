@@ -62,6 +62,15 @@ namespace webtest.Controllers
                     add = false;
                     return View();
                 }
+
+                else if (edit == true)
+                {
+                    Session["Edit_Book"] = true;
+                    Session["Admin_Book"] = null;
+                    edit = false;
+                    return View(db.Books.Where(m => m.ISBN == isbn).FirstOrDefault());
+                }
+
                 else if (change == true)
                 {
                     var date = Convert.ToDateTime(Date);
@@ -93,19 +102,13 @@ namespace webtest.Controllers
 
                     Session["Edit_Book"] = null;
                     change = false;
-                    Session["Admin_Book"] = null;
-                    return View();
+                    Session["Admin_Book"] = db.Books.Where(m => m.ISBN == isbn).FirstOrDefault();
+                    return View(db.Books.Where(m => m.ISBN == isbn).FirstOrDefault());
                 }
 
                 else
                 {
-                    if (edit == true)
-                    {
-                        Session["Edit_Book"] = true;
-                        edit = false;
-                    }
-
-                    else if (cancel == true)
+                    if (cancel == true)
                     {
                         Session["Edit_Book"] = null;
                         cancel = false;
@@ -122,6 +125,36 @@ namespace webtest.Controllers
                     Session["Add_Book"] = null;
                 }
                 Session["Admin_Book"] = null;
+                return View();
+            }
+        }
+
+        public ActionResult ProductList(String Find = "", bool delete = false, double ISBN = 0.0)
+        {
+            if (delete == true)
+            {
+                db.Books.Remove(db.Books.Where(m => m.ISBN == ISBN).FirstOrDefault());
+                db.SaveChanges();
+
+                delete = false;
+                Session["Admin_BookList"] = null;
+                return View();
+            }
+
+            // Find product by title and ISBN
+            if (Find != "")
+            {
+                var select = db.Books.ToList();
+                select = db.Books.Where(m => m.Name.Contains(Find) || m.ISBN.ToString().Contains(Find)).ToList();
+                Session["Admin_BookList"] = select;
+
+                // return table with all results
+                return View(select);
+            }
+
+            else
+            {
+                Session["Admin_BookList"] = null;
                 return View();
             }
         }
