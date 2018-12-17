@@ -428,36 +428,59 @@ namespace webtest.Controllers
             ViewBag.data = Users;
             return View();
         }
-        public ActionResult DailySale(DateTime? date1, DateTime? date2)
+        
+        public ActionResult DailySale(string Date1 = "01/01/2018", string Date2 = "01/01/2018")
 
         {
-
+            var date1 = new DateTime();/*Convert.ToDateTime(Date1);*/
+            var date2 = new DateTime();/*Convert.ToDateTime(Date2);*/
+            if (Date1 == "" || Date2 == "")
+            {
+                date1 = Convert.ToDateTime("01/01/2018");
+                date2 = Convert.ToDateTime("01/01/2018");
+            }
+            else
+            {
+                date1 = Convert.ToDateTime(Date1);
+                date2 = Convert.ToDateTime(Date2);
+            }
             var db = new DatabaseEntities1();
             int Sales1 = 0;
             int Sales2 = 0;
             int[] Sales = new int[2];
             foreach (Order order in db.Orders)
             {
-                if (date1 == order.OrderDate)
+                if (date1.Day == order.OrderDate.Day && date1.Month == order.OrderDate.Month)
                 {
                     Sales1 = Sales1 + order.Payment.Amount;
                     Sales[0] = Sales1;
                 }
-                if (date2 == order.OrderDate)
+                if (date2.Day == order.OrderDate.Day && date2.Month == order.OrderDate.Month)
                 {
                     Sales2 = Sales2 + order.Payment.Amount;
                     Sales[1] = Sales2;
                 }
-                if (date1 == null)
+                if(date1.Day == 0 && date1.Month == order.OrderDate.Month)
                 {
-                    Sales1 = 0;
+                    Sales1 = Sales1 + order.Payment.Amount;
                     Sales[0] = Sales1;
                 }
-                if (date2 == null)
+                if (date2.Day == 0 && date2.Month == order.OrderDate.Month)
                 {
-                    Sales2 = 0;
+                    Sales2 = Sales2 + order.Payment.Amount;
                     Sales[1] = Sales2;
                 }
+
+                //if (date1 == null)
+                //{
+                //    Sales1 = 0;
+                //    Sales[0] = Sales1;
+                //}
+                //if (date2 == null)
+                //{
+                //    Sales2 = 0;
+                //    Sales[1] = Sales2;
+                //}
 
             }
             ViewBag.data = Sales;
@@ -465,5 +488,6 @@ namespace webtest.Controllers
 
         }
     }
-}    
+} 
+  
 

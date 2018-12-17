@@ -3,18 +3,30 @@
     ViewBag.Title = "UserOrderSta";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-@{
-    var UserOrderSta = ViewBag.data;
-}
-<h2>UserOrderSta</h2>
+<head>
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+</head>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+<div id="container">
+
+    <div class="sidenav">
+        <a href="@Url.Action("DailySale", "Admin")">Daily Sale</a>
+        <a href="@Url.Action("CatagorieStatistics", "Admin")">Catagory statistics</a>
+        <a href="@Url.Action("UserOrderSta", "Admin") ">User Order Statistics</a>
+    </div>
+    <div id="productBox">
+        @{
+            var UserOrderSta = ViewBag.data;
+        }
+        <h2>User Order Statistics</h2>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 
-<div class="container">
-    <canvas id="UserOrderSta"></canvas>
-</div>
-<script>
+        <div class="container">
+            <canvas id="UserOrderSta"></canvas>
+        </div>
+        <script>
     let UserOrderSta = document.getElementById('UserOrderSta').getContext('2d');
 
     //Global Options
@@ -23,7 +35,7 @@
     Chart.defaults.global.defaultFontColor = '#777';
 
     let UserOrderStaChart = new Chart(UserOrderSta, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: ["Unregisterd", "Registerd"],
             datasets: [{
@@ -66,4 +78,7 @@
             }
         }
     });
-</script>
+      
+        </script>
+    </div>
+</div>

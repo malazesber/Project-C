@@ -3,38 +3,125 @@
     ViewBag.Title = "DailySale";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-<head>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-</head>
-<h2>DailySale</h2>
 
-<script src="~/Scripts/jquery-3.1.1.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("#Date1").datepicker({
-            dateFormat: "mm/dd/yy",
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            //gotoCurrent: true,
-        });
+<head>
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+</head>
+
+<div id="container">
+
+    <div class="sidenav">
+        <a href="@Url.Action("DailySale", "Admin")">Daily Sale</a>
+        <a href="@Url.Action("CatagorieStatistics", "Admin")">Catagory statistics</a>
+        <a href="@Url.Action("UserOrderSta", "Admin") ">User Order Statistics</a>
+    </div>
+    <div id="productBox">
+        <h2>DailySale</h2>
+
+
+        @{
+            var DailySale = ViewBag.data;
+        }
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+
+
+        <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#Date1").datepicker({
+                    dateFormat: "mm/dd/yy",
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    autoclose: true,
+                    changeMonth: true,
+                    changeYear: true,
+                    //gotoCurrent: true,
+                });
+            });
+            $(function () {
+                $("#Date2").datepicker({
+                    dateFormat: "mm/dd/yy",
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    autoclose: true,
+                    changeMonth: true,
+                    changeYear: true,
+                    //gotoCurrent: true,
+                });
+            });
+        </script>
+
+        <div>
+            @using (Html.BeginForm())
+            {
+                <input id="D1" name="Date1" type="date" value="">
+                <input id="D2" name="Date2" type="date" value="">
+                <a href='@Url.Action("DailySale", "Admin")'>
+                    <input type="submit" value='Submit' />
+                </a>
+            }
+        </div>
+        <div class="container">
+            <canvas id="DailySale"></canvas>
+        </div>
+        <script>
+    var DailySale = document.getElementById('DailySale').getContext('2d');
+
+    //Global Options
+    Chart.defaults.global.defaultFontFamily = 'lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#777';
+
+    var DailySale = new Chart(DailySale, {
+        type: 'pie',
+        data: {
+            labels: ["Date1", "Date2"],
+            datasets: [{
+                lable: 'Daily Sale',
+                data: [@DailySale[0], @DailySale[1]],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)'
+                ],
+                borderColor: '#777',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Amount payed money',
+                fontSize: 25
+            },
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: '#000'
+                }
+
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom:0,
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
     });
-    $(function () {
-        $("#Date2").datepicker({
-            dateFormat: "mm/dd/yy",
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            //gotoCurrent: true,
-        });
-    });
-</script>
-<input id="Date1" name="Date1" type="text" value="6/30/2015 7:12:21 AM">
-<input id="Date2" name="Date2" type="text" value="6/30/2015 7:12:21 AM">
+        </script>
+    </div>
+</div>
