@@ -30,7 +30,7 @@
                                 bool admin = Convert.ToBoolean(Session["Admin"]);
                                 if (admin)
                                 {
-                                    <li><a href="@Url.Action("Product", "Admin")"><i class="fa fa-shield site-nav--icon"></i>Admin</a></li>
+                                    <li><a href="@Url.Action("ProductList", "Admin")"><i class="fa fa-shield site-nav--icon"></i>Admin</a></li>
                                 }
                             }
                             <li><a href="@Url.Action("Logout", "Login")"><i class="fa fa-user site-nav--icon"></i>Logout</a></li>

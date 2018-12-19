@@ -6,7 +6,7 @@
 }
 
 <head>
-    <link href="~/Content/Admin.css" rel="stylesheet" />
+    <link href="~/Content/Admin.css?v=1" rel="stylesheet" />
 </head>
 
 <div id="container">
@@ -37,23 +37,29 @@
             }
             else
             {
-                <table id="books">
+                <table>
                     <tr>
-                        <th>ISBN</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Options</th>
+                        <th style="width:10%">ISBN</th>
+                        <th style="width:40%">Title</th>
+                        <th style="width:15%">Author</th>
+                        <th style="width:10%">Options</th>
                     </tr>
                     @foreach (var m in Model)
                     {
                         <tr>
-                            <td>@m.ISBN</td>
-                            <td>@m.Name</td>
-                            <td>@m.Author</td>
-                            <td>
-                                <a id="link ">@Html.ActionLink("View", "Product", "Admin", new { ISBN = m.ISBN }, null)</a>
-                                <a id="link ">@Html.ActionLink("Edit", "Product", "Admin", new { ISBN = m.ISBN, edit = true }, null)</a>
-                                <a id="link ">@Html.ActionLink("Delete", "ProductList", "Admin", new { ISBN = m.ISBN, delete = true }, new { id = "btnDelete", onclick = "return confirm('Are you sure you want to delete this product?');" })</a>
+                            <td style="width:10%">@m.ISBN</td>
+                            <td style="width:40%">@m.Name</td>
+                            <td style="width:15%">@m.Author</td>
+                            <td style="width:10%">
+                                <a href="@Url.Action("Product", "Admin", new {ISBN = m.ISBN})" class="tooltip fa fa-eye">
+                                    <span class="tooltiptext">View product</span>
+                                </a>
+                                <a href="@Url.Action("Product", "Admin", new {ISBN = m.ISBN, edit = true})" style="color: #bf9000" class="tooltip fa fa-pencil">
+                                    <span class="tooltiptext">Edit product</span>
+                                </a>
+                                <a href="@Url.Action("Product", "Admin", new {ISBN = m.ISBN, delete = true})" onclick="return confirm('Are you sure you want to delete this product?')" style="color: red" class="tooltip fa fa-trash">
+                                    <span class="tooltiptext">Delete product</span>
+                                </a>
                             </td>
                         </tr>
                     }
