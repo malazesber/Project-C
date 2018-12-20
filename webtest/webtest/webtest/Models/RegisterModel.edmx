@@ -98,6 +98,18 @@
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Order_Number" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Review" Type="varchar(max)" Nullable="false" />
+          <Property Name="ISBN" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="User_id" />
@@ -209,6 +221,7 @@
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Address_id" Association="Self.FK_Address_id">
             <End Role="Address" EntitySet="Address" />
@@ -305,6 +318,7 @@
             <End Role="Payment" EntitySet="Payments" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <EntitySet Name="Reviews" EntityType="DatabaseModel.Review" />
           </EntityContainer>
         <EntityType Name="Creditcard_details">
           <Key>
@@ -491,6 +505,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Review1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="Double" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -613,6 +639,19 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Payment_date" ColumnName="Payment_date" />
                 <ScalarProperty Name="Payment_id" ColumnName="Payment_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="DatabaseModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Review1" ColumnName="Review" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

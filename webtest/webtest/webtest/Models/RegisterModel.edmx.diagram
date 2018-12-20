@@ -21,6 +21,7 @@
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_UserID" />
         <EntityTypeShape EntityType="DatabaseModel.Payment" Width="1.5" PointX="5.375" PointY="5" />
         <AssociationConnector Association="DatabaseModel.FK_ORDERS_PAYMENT" />
+        <EntityTypeShape EntityType="DatabaseModel.Review" Width="1.5" PointX="5.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

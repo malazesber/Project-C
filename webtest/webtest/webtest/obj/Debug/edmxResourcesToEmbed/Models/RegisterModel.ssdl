@@ -93,6 +93,18 @@
     <Property Name="Amount" Type="int" Nullable="false" />
     <Property Name="Order_Number" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Rating" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Review" Type="varchar(max)" Nullable="false" />
+    <Property Name="ISBN" Type="float" Nullable="false" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="User_id" />
@@ -204,6 +216,7 @@
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Address_id" Association="Self.FK_Address_id">
       <End Role="Address" EntitySet="Address" />

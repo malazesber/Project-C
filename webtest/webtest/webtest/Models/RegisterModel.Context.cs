@@ -34,5 +34,6 @@ namespace webtest.Models
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
     }
 }

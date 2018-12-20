@@ -216,6 +216,9 @@
       <DependentUpon>RegisterModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\Review.cs">
+      <DependentUpon>RegisterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>RegisterModel.tt</DependentUpon>
     </Compile>
