@@ -22,7 +22,7 @@ namespace webtest.Models
         public string Image_src { get; set; }
         public double ISBN { get; set; }
         public decimal Price { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
         public int Stock { get; set; }
     }
 }

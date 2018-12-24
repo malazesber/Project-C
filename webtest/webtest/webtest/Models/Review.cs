@@ -21,5 +21,6 @@ namespace webtest.Models
         public System.DateTime Date { get; set; }
         public string Review1 { get; set; }
         public double ISBN { get; set; }
+        public int User_id { get; set; }
     }
 }

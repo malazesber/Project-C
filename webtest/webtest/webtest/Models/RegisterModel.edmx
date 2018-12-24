@@ -29,7 +29,7 @@
           <Property Name="Image_src" Type="varchar(max)" Nullable="false" />
           <Property Name="ISBN" Type="float" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Cart">
@@ -109,6 +109,7 @@
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Review" Type="varchar(max)" Nullable="false" />
           <Property Name="ISBN" Type="float" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -297,7 +298,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Cart" EntitySet="Carts" />
           </AssociationSet>
-          <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
           <EntitySet Name="Addresses" EntityType="DatabaseModel.Address" />
           <AssociationSet Name="FK_Address_id" Association="DatabaseModel.FK_Address_id">
             <End Role="Address" EntitySet="Addresses" />
@@ -319,6 +319,7 @@
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="Reviews" EntityType="DatabaseModel.Review" />
+          <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
           </EntityContainer>
         <EntityType Name="Creditcard_details">
           <Key>
@@ -386,21 +387,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Book">
-          <Key>
-            <PropertyRef Name="ISBN" />
-          </Key>
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ISBN" Type="Double" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Rating" Type="Int32" Nullable="false" />
-          <Property Name="Stock" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Address_id" />
@@ -516,6 +502,22 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Review1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ISBN" Type="Double" Nullable="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="ISBN" />
+          </Key>
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="Double" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Rating" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -569,22 +571,6 @@
                 <ScalarProperty Name="ISBN" ColumnName="ISBN" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Books">
-            <EntityTypeMapping TypeName="DatabaseModel.Book">
-              <MappingFragment StoreEntitySet="Book">
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
-                <ScalarProperty Name="Image_src" ColumnName="Image_src" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -645,6 +631,7 @@
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="DatabaseModel.Review">
               <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="ISBN" ColumnName="ISBN" />
                 <ScalarProperty Name="Review1" ColumnName="Review" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -652,6 +639,22 @@
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="DatabaseModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Image_src" ColumnName="Image_src" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
