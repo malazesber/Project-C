@@ -96,7 +96,7 @@
         </div>
 
         @{
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 2; i++)
             {
                 // header is the title above the purple line
                 var header = "";
@@ -113,14 +113,8 @@
                                       orderby books.Date descending
                                       select books).Take(5).ToList();
                         break;
+
                     case 2:
-                        header = "Future Books";
-                        queryBooks = (from books in db.Books
-                                      where books.Date >= today
-                                      orderby books.Date ascending
-                                      select books).Take(5).ToList();
-                        break;
-                    case 3:
                         header = "Populair books";
                         queryBooks = (from BQ in BookQuantity
                                       orderby BQ.Value descending
