@@ -15,12 +15,13 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         List<string> cart = new List<string>();
         // GET: Product
-        public ActionResult Index(string Title, double? isbn, double? favo, double? cart, double? del, int readMore = 0, bool delete = false, bool plus = false, bool min = false)
+        public ActionResult Index(double? favo, double? cart, double? del, double isbn = 0, string date = "", bool addreview = false, int readMore = 0, bool delete = false, bool plus = false, bool min = false, decimal rating = 0, string review = "", string name = "", string surname = "", bool deleteReview = false, int deleteId = 0)
         {
             string favoISBN = favo.ToString();
             string cartISBN = cart.ToString();
             var _isbn = isbn.ToString();
             Dictionary<Book, int> cartQuantity = new Dictionary<Book, int>();
+            int User_id = 0;
 
             if (favoISBN != "" && favoISBN != null)
             {
@@ -41,7 +42,11 @@ namespace webtest.Controllers
 
             if (Session["User_id"] != null)
             {
-                int User_id = Convert.ToInt32(Session["User_id"]);
+                User_id = Convert.ToInt32(Session["User_id"]);
+
+                // Session voor de input fields
+                Review(_isbn);
+
 
                 //Verwijder item voor geregistreerde user
                 if (deleteISBN != "" && deleteISBN != null)
@@ -88,7 +93,6 @@ namespace webtest.Controllers
 
                     db.SaveChanges();
                 }
-
             }
 
             else
@@ -149,6 +153,45 @@ namespace webtest.Controllers
                 }
             }
 
+            // Adds the review to the review table in the database
+            if (addreview)
+            {
+                DateTime _date = Convert.ToDateTime(date);
+                int _user_id = Convert.ToInt32(Session["User_id"]);
+          
+                var maxId = db.Reviews.Max(m => m.Id);
+
+                var newReview = new Review()
+                {
+                    Id = maxId + 1,
+                    Name = name,
+                    Surname = surname,
+                    Rating = rating,
+                    Date = _date,
+                    Review1 = review,
+                    ISBN = isbn,
+                    User_id = _user_id
+
+                };
+
+                db.Reviews.Add(newReview);
+                db.SaveChanges();
+
+                // Hides the input fields in the view
+                Session["ReviewInput"] = null;
+
+            }
+
+            // Admin can delete reviews on the product page
+            if (deleteReview)
+            {
+                using (DatabaseEntities1 db = new DatabaseEntities1())
+                {
+                    db.Reviews.Remove(db.Reviews.Single(x => x.Id == deleteId));
+                    db.SaveChanges();
+                }
+            }
+
             //Read more button
             using (DatabaseEntities1 db = new DatabaseEntities1())
             {
@@ -188,9 +231,14 @@ namespace webtest.Controllers
                 }
             }
 
-            //Kiest de titel van het boek dat overeenkomst met die titel die Index ontvangt. 
-            string bookTitle = Title;
-            return View(db.Books.Where(m => m.Name == bookTitle).FirstOrDefault());
+            Tuple<Book, Review, User> productInfo;
+            var returnBook = db.Books.Where(m => m.ISBN == isbn).FirstOrDefault();
+            var returnReview = db.Reviews.Where(m => m.ISBN == isbn).FirstOrDefault();
+            var returnUser = db.Users.Where(m => m.User_id == User_id).FirstOrDefault();
+
+            productInfo = new Tuple<Book, Review, User>(returnBook, returnReview, returnUser);
+
+            return View(productInfo);
         }
 
         public ActionResult Results(string search, string Category, string Rating, string MinPrice, string MaxPrice, int? page, string Order, string isbn, string type, int Pagination = 5)
@@ -237,10 +285,42 @@ namespace webtest.Controllers
             {
                 select = select.Where(m => m.Category.Contains(Category)).ToList();
             }
+
+            //if (ratings.Contains(Rating))
+            //{
+            //    int rating = Convert.ToInt32(Rating);
+            //    select = select.Where(m => m.Rating == rating).ToList();
+            //}
+
             if (ratings.Contains(Rating))
             {
                 int rating = Convert.ToInt32(Rating);
-                select = select.Where(m => m.Rating == rating).ToList();
+
+                select = select.Where(m =>
+                {
+                    // Checks if there is a rating based on reviews by users
+                    try
+                    {
+                        Decimal average = (from r in db.Reviews
+                                       where r.ISBN == m.ISBN
+                                       select r.Rating).Average();
+
+                        bool ratingFromReview = average >= rating &&
+                                                average < rating + 1;
+
+                        return ratingFromReview;
+
+                    }
+
+                    // Gets the old rating in the book table
+                    catch
+                    {
+                        bool ratingFromBook = m.Rating >= rating && m.Rating < rating + 1;
+                        return ratingFromBook;
+                    }
+                }
+            ).ToList();
+
             }
 
             // Apply ordering
@@ -271,6 +351,8 @@ namespace webtest.Controllers
                         break;
                 }
             }
+
+
 
             // Return result
             return View(select.ToPagedList(page ?? 1, Pagination));
@@ -331,6 +413,62 @@ namespace webtest.Controllers
                 }
 
             }
+        }
+
+        public void Review(string isbn)
+        {
+            var list = db.Reviews.Select(s => s);
+            double isbnD = Convert.ToDouble(isbn);
+            int User_id = Convert.ToInt32(Session["User_id"]);
+
+            // Selects a list with all order numbers linked to the user account
+            var listOrderNumbers = (from o in db.Orders
+                        where o.User_id == User_id
+                        select o.Order_Number).ToList();
+
+            // Selects the products the user bought
+            var listBoughtProducts = (from t in listOrderNumbers
+                         from od in db.OrderDetails
+                         where t == od.Order_Number
+                         select od.Products).ToList();
+
+            // New list for the ISBNS the user bought
+            List<double> ISBNboughtProducts = new List<double>();
+
+            // Gets the ISBNS
+            foreach (var x in listBoughtProducts)
+            {
+                var products = x.Split('|');
+
+                foreach (var item in products)
+                {
+                    string[] books = item.Split('-');
+                    double _isbn = Convert.ToDouble(books[0]);
+
+                    ISBNboughtProducts.Add(_isbn);
+                }
+            }
+
+            // Checks if the user bought the book
+            bool boughtBook = ISBNboughtProducts.Contains(isbnD);
+
+            // Checks if the user already wrote a review
+            bool wroteReview = list.ToList().Any(r => r.ISBN == isbnD && r.User_id == User_id);
+
+            // Session["ReviewInput"] includes the input fields in the view
+            if (boughtBook)
+            {
+                Session["ReviewInput"] = true;
+            }
+            if (wroteReview)
+            {
+                Session["ReviewInput"] = null;
+            }
+            else
+            {
+                Session["ReviewInput"] = null;
+            }
+
         }
 
         public void FavoriteList(string isbn)

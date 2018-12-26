@@ -386,7 +386,7 @@ namespace webtest.Controllers
                 Session["Checkout"] = BookQuantity;
 
                 // CLEAR CARTS
-                if(Session["User_id"] != null)
+                if (Session["User_id"] != null)
                 {
                     int User_id = Convert.ToInt32(Session["User_id"]);
                     db.Carts.RemoveRange(db.Carts.Where(x => x.User_id == User_id));

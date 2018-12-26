@@ -51,8 +51,6 @@ namespace webtest.Controllers
                 OrderDetail orderDetailObj = db.OrderDetails.Where(x => x.Order_Number == id).FirstOrDefault();
                 Payment paymentObj = db.Payments.Where(x => x.Order_Number == id).FirstOrDefault();
 
-
-
                 // GET PRODUCTS
                 string[] products = orderDetailObj.Products.Split('|');
 

@@ -67,7 +67,7 @@
 
         <div class="slideshow-container">
 
-            @* Boeken die die getoont worden in de slide show *@
+            @* Boeken die getoont worden in de slide show *@
             @{ foreach (var slide in valentineBooks)
                 {
                     <div class="myslides fade">
@@ -98,67 +98,76 @@
         @{
             for (int i = 1; i <= 3; i++)
             {
+                // header is the title above the purple line
+                var header = "";
 
-                var x = "";
-                var y = new List<Book>();
+                // queryBooks are the selected books under the purple line
+                var queryBooks = new List<Book>();
 
                 switch (i)
                 {
                     case 1:
-                        x = "Newest books";
-                        y = (from books in db.Books
-                             where books.Date <= today
-                             orderby books.Date descending
-                             select books).Take(5).ToList();
+                        header = "Newest books";
+                        queryBooks = (from books in db.Books
+                                      where books.Date <= today
+                                      orderby books.Date descending
+                                      select books).Take(5).ToList();
                         break;
                     case 2:
-                        x = "Future Books";
-                        y = (from books in db.Books
-                             where books.Date >= today
-                             orderby books.Date ascending
-                             select books).Take(5).ToList();
+                        header = "Future Books";
+                        queryBooks = (from books in db.Books
+                                      where books.Date >= today
+                                      orderby books.Date ascending
+                                      select books).Take(5).ToList();
                         break;
                     case 3:
-                        x = "Populair books";
-                        y = (from BQ in BookQuantity
-                             orderby BQ.Value descending
-                             select BQ.Key).Take(5).ToList();
+                        header = "Populair books";
+                        queryBooks = (from BQ in BookQuantity
+                                      orderby BQ.Value descending
+                                      select BQ.Key).Take(5).ToList();
                         break;
                 }
 
+
                 @* Toont de informatie van de nieuwste boeken *@
-                <div id="title">@x</div>
+                <div id="title">@header</div>
                 <img id="stripe" src="~/Content/Images/stripe.png" />
                 <div id="productboxGrid">
                     @{
-                        foreach (var book in y)
+                        foreach (var book in queryBooks)
                         {
                             <div class="productGrid">
-                                <a href="@Url.Action("Index", "Product", new { Title = book.Name, isbn = book.ISBN})">
+                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN})">
                                     <img class="productImg" src="@book.Image_src" />
                                 </a>
 
-                                <a href="@Url.Action("Index", "Product", new { Title = book.Name, isbn = book.ISBN})" class="titleBook">@book.Name</a>
+                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN})" class="titleBook">@book.Name</a>
                                 <label class="author">@book.Author</label>
 
-                                @switch (book.Rating)
-                                {
-                                    case 1:
-                                        <img class="rating" src="~/Content/Images/Rating1Star.png" />
-                                        break;
-                                    case 2:
-                                        <img class="rating" src="~/Content/Images/Rating2Star.png" />
-                                        break;
-                                    case 3:
-                                        <img class="rating" src="~/Content/Images/Rating3Star.png" />
-                                        break;
-                                    case 4:
-                                        <img class="rating" src="~/Content/Images/Rating4Star.png" />
-                                        break;
-                                    case 5:
-                                        <img class="rating" src="~/Content/Images/Rating5Star.png" />
-                                        break;
+
+                                @{ string starsPerc = "";
+
+                                    // Selects the rating based on the stars given in reviews
+                                    try
+                                    {
+                                        var rating = (from r in db.Reviews
+                                                      where r.ISBN == book.ISBN
+                                                      select r.Rating).Average();
+                                        var stars = (rating * 20).ToString();
+                                        starsPerc = stars + "%";
+                                    }
+
+                                    // When there are no reviews yet then it takes the rating in Model.Books
+                                    catch
+                                    {
+                                        var stars = (book.Rating * 20).ToString();
+                                        starsPerc = stars + "%";
+                                    }
                                 }
+
+                                <label id="miLabel" class="star-ratings-sprite">
+                                    <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
+                                </label>
 
                                 <label class="price">€@book.Price</label>
 

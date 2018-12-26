@@ -23,16 +23,28 @@
     margin-left: 15px;
 }
 
-#moreInfo {
+#reviewBox {
     background: white;
     float: left;
     min-height: 165px;
+    height: auto;
+    width: 70%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+
+#moreInfo {
+    background: white;
+    float: left;
+    min-height: 160px;
     height: auto;
     width: 70%;
     margin-top: 15px;
     margin-bottom: 15px;
     margin-left: 15px;
 }
+
 
 /*Onderdelen in de result box*/
 #title {
@@ -67,6 +79,7 @@
     margin-right: 15%;
     margin-bottom: 15px;
 }
+
     #readMore:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -100,6 +113,7 @@
     width: 40%;
     cursor: pointer;
 }
+
     #btnCart:hover {
         background-color: #977200;
         cursor: pointer;
@@ -190,6 +204,214 @@
     margin-left: 15px;
 }
 
-#rating {
+.rating {
+    margin-left: 15px;
+}
+
+
+[duo-stars], duo-stars
+span {
+    color: #ccc;
+}
+
+.active {
+    color: #a70
+}
+
+.inputRating {
+    color: white;
+    width: 1px;
+    border: none;
+}
+
+.ratingbox {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.star-ratings-sprite {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
     width: 110px;
+}
+
+.star-ratings-sprite-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+}
+
+.checked {
+    color: orange;
+}
+
+/* Three column layout */
+.side {
+    float: left;
+    width: 15%;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.middle {
+    margin-top: 10px;
+    float: left;
+    width: 70%;
+}
+
+/* Place text to the right */
+.right {
+    text-align: right;
+    width: 9%;
+    margin-right: 15px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* The bar container */
+.bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+}
+
+/* Individual bars */
+.bar-5 {
+    height: 18px;
+    background-color: #8a3366;
+}
+
+.bar-4 {
+    height: 18px;
+    background-color: #8a3366;
+}
+
+.bar-3 {
+    height: 18px;
+    background-color: #8a3366;
+}
+
+.bar-2 {
+    height: 18px;
+    background-color: #8a3366;
+}
+
+.bar-1 {
+    height: 18px;
+    background-color: #8a3366;
+}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media (max-width: 400px) {
+    .side, .middle {
+        width: 100%;
+    }
+
+    .right {
+        display: none;
+    }
+}
+
+.UserReviewBox {
+    display: inline-block;
+    height: auto;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    width: 96%;
+}
+
+#ratingstars {
+    display: block;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: -10px;
+}
+
+.reviewtext {
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.reviewname {
+    margin-left: 5px;
+    font-weight: 600;
+    color: #65254A;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#btnDelete {
+    color: red;
+    font-weight: 400;
+    display: block;
+    margin-top: -20px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    float: right;
+}
+
+    #btnDelete:hover {
+        text-decoration: underline;
+    }
+
+.heading {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 75%;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+#btnSubmit {
+    display: inline-block;
+    text-align: center;
+    background-color: #8a3366;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    width: 155px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+    #btnSubmit:hover {
+        background-color: #65254A;
+        color: white;
+        cursor: pointer;
+    }
+
+.labelreview {
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.inputFieldSummary {
+    min-height: 30px;
+    width: 80%;
+    margin-left: 15px;
+    margin-top: 5px;
+    display: block;
+    margin-bottom: -60px;
 }

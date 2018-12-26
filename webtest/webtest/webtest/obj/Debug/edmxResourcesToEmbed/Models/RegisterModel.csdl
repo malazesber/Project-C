@@ -41,7 +41,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Cart" EntitySet="Carts" />
     </AssociationSet>
-    <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
     <EntitySet Name="Addresses" EntityType="DatabaseModel.Address" />
     <AssociationSet Name="FK_Address_id" Association="DatabaseModel.FK_Address_id">
       <End Role="Address" EntitySet="Addresses" />
@@ -63,6 +62,7 @@
       <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <EntitySet Name="Reviews" EntityType="DatabaseModel.Review" />
+    <EntitySet Name="Books" EntityType="DatabaseModel.Book" />
   </EntityContainer>
   <EntityType Name="Creditcard_details">
     <Key>
@@ -130,21 +130,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Book">
-    <Key>
-      <PropertyRef Name="ISBN" />
-    </Key>
-    <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="ISBN" Type="Double" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="Rating" Type="Int32" Nullable="false" />
-    <Property Name="Stock" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="Address">
     <Key>
       <PropertyRef Name="Address_id" />
@@ -260,5 +245,21 @@
     <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Review1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ISBN" Type="Double" Nullable="false" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="ISBN" />
+    </Key>
+    <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image_src" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ISBN" Type="Double" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Rating" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

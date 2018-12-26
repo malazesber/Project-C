@@ -3,13 +3,12 @@
     height: 100%;
 }
 #paginationFilter{
-    margin: 10px; 10px;
+    margin: 10px;
 }
 #orderFilter {
     float: right;
-    margin: 10px; 10px;
+    margin: 10px;
 }
-
 
 #results {
     background: white;
@@ -220,6 +219,33 @@
     padding: 7px 20px;
     border-radius: 4px;
 }
+
+#miLabel {
+    display: block;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.star-ratings-sprite {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 110px;
+    margin: 0 auto;
+}
+
+.star-ratings-sprite-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+}
+
 /* Scherm kleiner dan 1100px */
 @media only screen and (max-width: 1100px) {
     #topCategories {

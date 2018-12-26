@@ -1,44 +1,47 @@
-﻿@model webtest.Models.Book
-@using webtest.Models;
+﻿@using webtest.Models;
+@model Tuple<Book, Review, User>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_customLayout.cshtml";
-
 }
 
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
 <head>
-    <link href="~/Content/ProductPage.css" rel="stylesheet" />
+    <link href="~/Content/ProductPage.css?v=1" rel="stylesheet" />
 </head>
 
 @*<div id="navigation">
-     //Knop die history.back() doet. Daarmee wordt de gebruiker 1 terug gestuurd! Style="~" is de css, die is in dezelfde lijn aanwezig. 
-    <a href="javascript:history.back()" class="fa fa-arrow-circle-left" style="color: black; text-decoration: none; font-size:x-large; position:relative; top:10px; left:10px;  "> </a>
-</div>*@
+         //Knop die history.back() doet. Daarmee wordt de gebruiker 1 terug gestuurd! Style="~" is de css, die is in dezelfde lijn aanwezig.
+        <a href="javascript:history.back()" class="fa fa-arrow-circle-left" style="color: black; text-decoration: none; font-size:x-large; position:relative; top:10px; left:10px;  "> </a>
+    </div>*@
 
 <div id="container">
 
     @*Box waar de basis info van het boek staat*@
     <div id="result">
         <div id="product">
-            <img id="productImg" src="@Model.Image_src" />
-            <label id="title">@Model.Name</label>
-            <label id="author">By @Model.Author</label>
+            <img id="productImg" src="@Model.Item1.Image_src" />
+            <label id="title">@Model.Item1.Name</label>
+            <label id="author">By @Model.Item1.Author</label>
             <label id="summary">@ViewBag.summary</label>
-            <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, readMore = ViewBag.Code})" id="readMore">@ViewBag.Text</a>
+            <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, readMore = ViewBag.Code })" id="readMore">@ViewBag.Text</a>
         </div>
     </div>
 
     @*Box waar de prijs en knoppen staan*@
     <div id="orderBox">
-        <label id="price">€@Model.Price</label>
+        <label id="price">€@Model.Item1.Price</label>
         <div id="amountBox">
-            <a href="@Url.Action("Index", "Product", new {isbn = Model.ISBN, min = true, Title = Model.Name})" id="minButton">-</a>
+            <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, min = true })" id="minButton">-</a>
             @{
                 if (Session["User_id"] != null)
                 {
                     var _db = new DatabaseEntities1();
-                    var item = _db.Carts.Where(x => x.ISBN == Model.ISBN).FirstOrDefault();
+                    var item = _db.Carts.Where(x => x.ISBN == Model.Item1.ISBN).FirstOrDefault();
 
                     try
                     {
@@ -51,11 +54,11 @@
                 }
                 else
                 {
-                    <a id="amount">@ViewData[Model.ISBN.ToString()]</a>
+                    <a id="amount">@ViewData[Model.Item1.ISBN.ToString()]</a>
                 }
             }
 
-            <a href="@Url.Action("Index", "Product", new {isbn = Model.ISBN, plus = true, Title = Model.Name, cart = Model.ISBN})" id="plusButton">+</a>
+            <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, plus = true, cart = Model.Item1.ISBN })" id="plusButton">+</a>
         </div>
 
 
@@ -67,15 +70,15 @@
                 var listCart = dbCart.Carts.Select(s => s);
                 int User_id_Cart = Convert.ToInt32(Session["User_id"]);
 
-                bool hasCart = listCart.Any(cus => cus.ISBN == Model.ISBN && cus.User_id == User_id_Cart);
+                bool hasCart = listCart.Any(cus => cus.ISBN == Model.Item1.ISBN && cus.User_id == User_id_Cart);
 
                 if (hasCart)
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Remove from cart</a>
+                    <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, cart = Model.Item1.ISBN })" id="btnCart">Remove from cart</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
+                    <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, cart = Model.Item1.ISBN })" id="btnCart">Add to cart</a>
                 }
 
             }
@@ -83,19 +86,19 @@
             {
                 if (Session["shoppingCart"] == null)
                 {
-                    <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
+                    <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, cart = Model.Item1.ISBN })" id="btnCart">Add to cart</a>
                 }
                 else
                 {
                     List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
 
-                    if (isbns.Contains(Model.ISBN.ToString()))
+                    if (isbns.Contains(Model.Item1.ISBN.ToString()))
                     {
-                        <a href="@Url.Action("Index", "Product", new { isbn = Model.ISBN, delete = true, Title = Model.Name})" id="btnCart">Remove from cart</a>
+                        <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, delete = true })" id="btnCart">Remove from cart</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("Index", "Product", new {Title = Model.Name, isbn = Model.ISBN, cart = Model.ISBN})" id="btnCart">Add to cart</a>
+                        <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, cart = Model.Item1.ISBN })" id="btnCart">Add to cart</a>
                     }
                 }
             }
@@ -108,18 +111,18 @@
             {
                 var db = new DatabaseEntities1();
                 var list = db.Favorites.Select(s => s);
-                double isbnD = Convert.ToDouble(Model.ISBN);
+                double isbnD = Convert.ToDouble(Model.Item1.ISBN);
                 int User_id = Convert.ToInt32(Session["User_id"]);
 
                 bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
                 //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
                 if (has)
                 {
-                    <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Remove from favorites list</a>
+                    <a href="@Url.Action("Index", new { isbn = Model.Item1.ISBN, favo = Model.Item1.ISBN }) " id="btnWishList">Remove from favorites list</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("Index", new { Title = Model.Name, isbn = Model.ISBN, favo = Model.ISBN}) " id="btnWishList">Add to favorites list</a>
+                    <a href="@Url.Action("Index", new { isbn = Model.Item1.ISBN, favo = Model.Item1.ISBN }) " id="btnWishList">Add to favorites list</a>
                 }
             }
 
@@ -129,35 +132,333 @@
     @*More information box*@
     <div id="moreInfo">
         <label id="miTitle">More Information</label>
+        <label id="miLabel"><b>Publish Date:</b> @Model.Item1.Date.ToString("dd-MM-yyyy")</label>
+        <label id="miLabel"><b>ISBN:</b> @Model.Item1.ISBN</label>
+        <label id="miLabel"><b>Author:</b> @Model.Item1.Author</label>
+        <label id="miLabel"><b>Category:</b> @Model.Item1.Category</label>
         @*Label om de Stock te laten zien. Staat nu dus bij de eigenschappen van het boek.*@
-        <label id="miLabel"><b>Stock: </b> @Model.Stock</label>
-        <label id="miLabel"><b>Publish Date:</b> @Model.Date.ToString("dd-MM-yyyy")</label>
-        <label id="miLabel"><b>ISBN:</b> @Model.ISBN</label>
-        <label id="miLabel"><b>Author:</b> @Model.Author</label>
-
-        <label id="miLabel">
-            <b>Rating:</b>
-            @switch (Model.Rating)
-            {
-                case 1:
-                    <img id="rating" src="~/Content/Images/Rating1Star.png" />
-                    break;
-                case 2:
-                    <img id="rating" src="~/Content/Images/Rating2Star.png" />
-                    break;
-                case 3:
-                    <img id="rating" src="~/Content/Images/Rating3Star.png" />
-                    break;
-                case 4:
-                    <img id="rating" src="~/Content/Images/Rating4Star.png" />
-                    break;
-                case 5:
-                    <img id="rating" src="~/Content/Images/Rating5Star.png" />
-                    break;
-            }
-        </label>
-
-        <label id="miLabel"><b>Category:</b> @Model.Category</label>
+        <label id="miLabel"><b>Stock: </b> @Model.Item1.Stock</label>
         @Html.Raw(TempData["favo"])
+
+    </div>
+
+    @* Review box *@
+    <div id="reviewBox">
+        <div id="miTitle">Review</div>
+
+        <!-- Input fields to write a review only show when the user bought the book and didn't write a review yet. -->
+        @{ if (Session["ReviewInput"] != null)
+            {
+                <div class="heading">Write a review</div>
+                using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                {
+
+                    <!-- Input field star rating -->
+                    <div ng-app="Duo">
+                        <label class="labelreview" for="rating"> <b>Rating</b> </label><br />
+                        <div class="rating">
+                            <duo-stars ng-model="myval" max="5"></duo-stars>
+                            <input id="rating" ng-model="myval" name="rating" class="inputRating" value="@Request.QueryString["rating"]" />
+                        </div>
+                        <p id="errortext"></p>
+                    </div>
+
+                    <!-- Input filed summary -->
+                    <label class="labelreview" for="summary"> <b>Review</b> </label><br />
+                    <textarea type="text" name="review" placeholder="Review" class="inputFieldSummary" rows="6" maxlength="3000" minlength="10" value="@Request.QueryString["Review"]"></textarea><br />
+
+                    <!-- Input fields that are not visible for the users -->
+                    <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.Item1.ISBN"><br />
+                    <input type="hidden" name="date" placeholder="Date" , value="@DateTime.Today.ToString()"><br />
+                    <input type="hidden" name="name" placeholder="Name" , value="@Model.Item3.Name"><br />
+                    <input type="hidden" name="surname" placeholder="Surname" , value="@Model.Item3.Surname"><br />
+                    <input type="hidden" name="addreview" value="true" />
+
+                    <div style="margin-left:15px">Your first name will be shown with the review.</div>
+                    <button id="btnSubmit" onclick="return ratingCheck()">Submit</button>
+                }
+            }
+        }
+
+        @{
+            var _database = new DatabaseEntities1();
+            string starsPerc;
+            Decimal rating;
+            int countTotal = 0;
+
+            // Variables for the star rating bars
+            int count1 = 0;
+            int count2 = 0;
+            int count3 = 0;
+            int count4 = 0;
+            int count5 = 0;
+
+            string percentRating1 = "0%";
+            string percentRating2 = "0%";
+            string percentRating3 = "0%";
+            string percentRating4 = "0%";
+            string percentRating5 = "0%";
+
+
+            try
+            {
+                var query = from r in _database.Reviews
+                            where r.ISBN == Model.Item1.ISBN
+                            select r.Rating;
+
+                // Gets the average rating per book
+                rating = query.Average();
+
+                // Gets the total amount of reviews given
+                countTotal = query.Count();
+
+                // Calculates the % rating to color the stars based on given reviews
+                var stars = (rating * 20).ToString();
+                starsPerc = stars + "%";
+
+                // Function to calculate the amount of reviews given per star
+                int countperStar(int star)
+                {
+                    var count = (from r in _database.Reviews
+                                 where r.ISBN == Model.Item1.ISBN
+                                 && r.Rating == star
+                                 select r.Rating).Count();
+
+                    return count;
+                }
+
+                count1 = countperStar(1);
+                count2 = countperStar(2);
+                count3 = countperStar(3);
+                count4 = countperStar(4);
+                count5 = countperStar(5);
+
+                percentRating1 = (count1 * 100 / countTotal).ToString() + "%";
+                percentRating2 = (count2 * 100 / countTotal).ToString() + "%";
+                percentRating3 = (count3 * 100 / countTotal).ToString() + "%";
+                percentRating4 = (count4 * 100 / countTotal).ToString() + "%";
+                percentRating5 = (count5 * 100 / countTotal).ToString() + "%";
+
+
+            }
+            catch
+            {
+                // Calculates the % rating to color the stars based on the ratings in the table Book
+                rating = Model.Item1.Rating;
+                var stars = (Model.Item1.Rating * 20).ToString();
+                starsPerc = stars + "%";
+            }
+
+        }
+
+        @{ try
+            {
+
+                <div class="ratingbox">
+                    <div class="heading">Customer rating</div>
+
+                    <!-- Star rating -->
+                    <label id="miLabel" class="star-ratings-sprite">
+                        <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
+                    </label>
+                    <div style="margin-left:15px">@String.Format("{0:0.0}", rating) average based on @countTotal reviews.</div>
+                    <hr style="border:3px solid #f1f1f1">
+
+                    <!-- Five star bar -->
+                    <div class="row">
+                        <div class="side">
+                            <div>5 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-5" style="width: @percentRating5"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@count5</div>
+                        </div>
+                    </div>
+
+                    <!-- Four star bar -->
+                    <div class="row">
+                        <div class="side">
+                            <div>4 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-4" style="width: @percentRating4"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@count4</div>
+                        </div>
+                    </div>
+
+                    <!-- Three star bar -->
+                    <div class="row">
+                        <div class="side">
+                            <div>3 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-3" style="width: @percentRating3"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@count3</div>
+                        </div>
+                    </div>
+
+                    <!-- Two star bar -->
+                    <div class="row">
+                        <div class="side">
+                            <div>2 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-2" style="width: @percentRating2"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@count2</div>
+                        </div>
+                    </div>
+
+                    <!-- One star bar -->
+                    <div class="row">
+                        <div class="side">
+                            <div>1 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-1" style="width:@percentRating1"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@count1</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                var _db = new DatabaseEntities1();
+                var listReviews = _db.Reviews.Where(m => m.ISBN == Model.Item2.ISBN).ToList();
+
+                foreach (var x in listReviews)
+                {
+                <div class="UserReviewBox">
+
+                    @switch (x.Rating)
+                    {
+                        case 1:
+                            <label id="ratingstars" class="star-ratings-sprite">
+                                <span style="width:20%" class="star-ratings-sprite-rating"></span>
+                            </label>
+                            break;
+                        case 2:
+                            <label id="ratingstars" class="star-ratings-sprite">
+                                <span style="width:40%" class="star-ratings-sprite-rating"></span>
+                            </label>
+                            break;
+                        case 3:
+                            <label id="ratingstars" class="star-ratings-sprite">
+                                <span style="width:60%" class="star-ratings-sprite-rating"></span>
+                            </label>
+                            break;
+                        case 4:
+                            <label id="ratingstars" class="star-ratings-sprite">
+                                <span style="width:80%" class="star-ratings-sprite-rating"></span>
+                            </label>
+                            break;
+                        case 5:
+                            <label id="ratingstars" class="star-ratings-sprite">
+                                <span style="width:100%" class="star-ratings-sprite-rating"></span>
+                            </label>
+                            break;
+                    } <br />
+
+                    @{ if (Session["Admin"] != null)
+                        {
+                            bool admin = Convert.ToBoolean(Session["Admin"]);
+                            if (admin)
+                            {
+                                @Html.ActionLink("Delete this review", "Index", "Product", new { deleteId = x.Id, deleteReview = true, isbn = Model.Item1.ISBN }, new { id = "btnDelete", onclick = "return confirm('Are you sure you want to delete this comment?');" });
+                            }
+                        }
+                    }
+                    <div class="reviewname">By @x.Name | @x.Date</div>
+
+                    <div class="reviewtext">@x.Review1</div>
+
+                </div>
+                }
+
+            }
+            catch
+            {
+                <div style="margin-left: 15px">No reviews yet.</div>
+            }
+        }
+
     </div>
 </div>
+
+<script>
+    function ratingCheck() {
+        var x, text;
+
+        // Get the value of the input field with id="rating"
+        x = document.getElementById("rating").value;
+
+        // If x is Not a Number or less than 1 or greater than 5
+        if (isNaN(x) || x < 1 || x > 6) {
+            text = "Input not valid";
+            document.getElementById("errortext").innerHTML = text;
+            return false;
+        }
+    }
+
+    // Function for the star rating input field
+    (function () {
+        angular.module('Duo', []).directive('duoStars', function () {
+            return {
+                scope: {
+                    "ngModel": "=",
+                    "max": "="
+                },
+                restrict: "EA",
+
+                // Template includes the fa fa-icon and css
+                template: '<span ng-repeat="star in stars" ng-class="{\'active\':$index<ngModel}" ng-click="setVal(star)"><i class="fa fa-star" style="font-size:28px; margin-right:5px;margin-top:5px;"></i></span>',
+                require: "ngModel",
+                link: function (scope, elem, attr) {
+                    if (attr.value) {
+                        scope.ngModel = attr.value;
+                    }
+                    if ((attr.readonly != null)) {
+                        return scope.readonly = true;
+                    }
+                },
+                controller: function ($scope) {
+                    var _i, _ref, _results;
+                    $scope.stars = (function () {
+                        _results = [];
+                        for (var _i = 1, _ref = $scope.max; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) { _results.push(_i); }
+                        return _results;
+                    }).apply(this);
+                    return $scope.setVal = function (index) {
+                        if ($scope.readonly) {
+                            return;
+                        }
+                        if (($scope.ngModel === index && index === 1)) {
+                            return $scope.ngModel = 0;
+                        } else {
+                            return $scope.ngModel = index;
+                        }
+                    };
+                }
+            };
+        });
+
+    }).call(this);
+</script>

@@ -12,15 +12,13 @@
 <head>
     <link href="~/Content/SearchResults.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" />
-    @*ALERTIFY*@ 
+    @*ALERTIFY*@
     <link href="~/Content/alertify/alertify.bootstrap.css" rel="stylesheet" />
     <link href="~/Content/alertify/alertify.core.css" rel="stylesheet" />
     <link href="~/Content/alertify/alertify.default.css" rel="stylesheet" />
     <script src="~/Scripts/alertify/alertify.js"></script>
     <script src="~/Scripts/alertify/alertify.min.js"></script>
 </head>
-
-
 
 <div id="container">
 
@@ -48,10 +46,10 @@
                 </select>
                 <input id="orderInput" type="text" name="Order" , style="display:none">
                 <input id="paginationInput" type="text" name="Pagination" , style="display:none">
-                <input name="minPrice" , value="@Request.QueryString["minPrice"]", style=" display:none">
-                <input name="maxPrice" , value="@Request.QueryString["maxPrice"]", style="display:none">
-                <input name="Category" , value="@Request.QueryString["Category"]", style=" display:none">
-                <input name="Rating" ,value="@Request.QueryString["Rating"]", style="display:none">
+                <input name="minPrice" , value="@Request.QueryString["minPrice"]" , style=" display:none">
+                <input name="maxPrice" , value="@Request.QueryString["maxPrice"]" , style="display:none">
+                <input name="Category" , value="@Request.QueryString["Category"]" , style=" display:none">
+                <input name="Rating" ,value="@Request.QueryString["Rating"]" , style="display:none">
 
                 <button id="submitOrderItems" , style="display:none"></button>
             }
@@ -74,10 +72,10 @@
                 <!-- Select rating top -->
                 <select id="filterTopSelect">
                     <option>Select Rating</option>
-                    <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }>1</option>
-                    <option value="2" @if (@Request.QueryString["Rating"] == "2") { <text> selected="selected" </text> }>2</option>
-                    <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }>3</option>
-                    <option value="4" @if (@Request.QueryString["Rating"] == "4") { <text> selected="selected" </text> }>4</option>
+                    <option value="1" @if (@Request.QueryString["Rating"] == "1") { <text> selected="selected" </text> }>1-2</option>
+                    <option value="2" @if (@Request.QueryString["Rating"] == "2") { <text> selected="selected" </text> }>2-3</option>
+                    <option value="3" @if (@Request.QueryString["Rating"] == "3") { <text> selected="selected" </text> }>3-4</option>
+                    <option value="4" @if (@Request.QueryString["Rating"] == "4") { <text> selected="selected" </text> }>4-5</option>
                     <option value="5" @if (@Request.QueryString["Rating"] == "5") { <text> selected="selected" </text> }>5</option>
                 </select>
                 <!-- save button Top -->
@@ -99,119 +97,100 @@
         @foreach (var m in Model)
         {
             <!-- De ForEachLoop zorgt ervoor dat alle producten met verschillende waardes en dezelfde opmaak onder elkaar worden geplaatst.-->
-        <div id="product">
-            <a name="@m.Name"></a>
-            <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN})">
-                <img id="productImg" src="@m.Image_src" />
-            </a>
+            <div id="product">
+                <a name="@m.Name"></a>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN})">
+                    <img id="productImg" src="@m.Image_src" />
+                </a>
 
-            <label id="price">€@m.Price</label>
-            <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="title">@m.Name</a>
-            <!-- Change to author-->
-            <label id="author">@m.Author</label>
-            @switch (m.Rating)
-            {
-                case 1:
-                    <img id="rating" src="~/Content/Images/Rating1Star.png" />
-                    break;
-                case 2:
-                    <img id="rating" src="~/Content/Images/Rating2Star.png" />
-                    break;
-                case 3:
-                    <img id="rating" src="~/Content/Images/Rating3Star.png" />
-                    break;
-                case 4:
-                    <img id="rating" src="~/Content/Images/Rating4Star.png" />
-                    break;
-                case 5:
-                    <img id="rating" src="~/Content/Images/Rating5Star.png" />
-                    break;
-            }
+                <label id="price">€@m.Price</label>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="title">@m.Name</a>
+                <!-- Change to author-->
+                <label id="author">@m.Author</label>
+                @{ DatabaseEntities1 _db = new DatabaseEntities1();
+                    string starsPerc = "";
 
-            <label id="summary">
-                @{string mktText = m.Summary;
-                    if (mktText == null)
+                    // Selects the rating based on the stars given in reviews
+                    try
                     {
-                        mktText = "";
+                        var rating = (from r in _db.Reviews
+                                      where r.ISBN == m.ISBN
+                                      select r.Rating).Average();
+                        var stars = (rating * 20).ToString();
+                        starsPerc = stars + "%";
                     }
-                    else
-                    {
-                        if (mktText.Length > 200)
-                        {
-                            int pos = mktText.LastIndexOf(" ", 200);
 
-                            mktText = mktText.Substring(0, pos) + "...";
+                    // When there are no reviews yet then it takes the rating in Model.Books
+                    catch
+                    {
+                        var stars = (m.Rating * 20).ToString();
+                        starsPerc = stars + "%";
+                    }
+                }
+
+                <label id="miLabel" class="star-ratings-sprite">
+                    <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
+                </label>
+
+                <label id="summary">
+                    @{string mktText = m.Summary;
+                        if (mktText == null)
+                        {
+                            mktText = "";
+                        }
+                        else
+                        {
+                            if (mktText.Length > 200)
+                            {
+                                int pos = mktText.LastIndexOf(" ", 200);
+
+                                mktText = mktText.Substring(0, pos) + "...";
+                            }
+                        }
+                    }
+                    @mktText
+                </label>
+                <label id="priceSmall">@m.Price</label>
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="moreInfo">More info</a>
+
+                @*LOAD FAVORITE BUTTONS*@
+                @{
+                    var db = new DatabaseEntities1();
+                    if (Session["User_id"] != null)
+                    {
+                        var list = db.Favorites.Select(s => s);
+                        double isbnD = Convert.ToDouble(m.ISBN);
+                        int User_id = Convert.ToInt32(Session["User_id"]);
+
+                        bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
+                        //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
+                        if (has)
+                        {
+                            <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})#@m.Name " id="btnWishList" class="fa fa-heart" onclick="return true" />
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})#@m.Name " id="btnWishList" class="fa fa-heart-o" onclick="return true" />
                         }
                     }
                 }
-                @mktText
-            </label>
-            <label id="priceSmall">@m.Price</label>
-            <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="moreInfo">More info</a>
 
-            @*LOAD FAVORITE BUTTONS*@
-            @{
-                var db = new DatabaseEntities1();
-                if (Session["User_id"] != null)
-                {
-                    var list = db.Favorites.Select(s => s);
-                    double isbnD = Convert.ToDouble(m.ISBN);
-                    int User_id = Convert.ToInt32(Session["User_id"]);
+                @** LOAD ADD CART BUTTONS*@
 
-                    bool has = list.Any(cus => cus.ISBN == isbnD && cus.User_id == User_id);
-                    //CHECKEN OF ISBN AL IN FAVORIETEN ZIT VAN DE GEBRUIKER.
-                    if (has)
+                @{
+                    if (Session["User_id"] != null)
                     {
-                        <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})#@m.Name " id="btnWishList" class="fa fa-heart" onclick="return true"/>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})#@m.Name " id="btnWishList" class="fa fa-heart-o" onclick="return true"/>
-                    }
-                }
+                        var dbCart = new DatabaseEntities1();
+                        var listCart = db.Carts.Select(s => s);
+                        double isbnDCart = Convert.ToDouble(m.ISBN);
+                        int User_id_Cart = Convert.ToInt32(Session["User_id"]);
 
+                        bool hasCart = listCart.Any(cus => cus.ISBN == isbnDCart && cus.User_id == User_id_Cart);
 
-            }
-
-            @** LOAD ADD CART BUTTONS*@
-
-            @{
-                if (Session["User_id"] != null)
-                {
-                    var dbCart = new DatabaseEntities1();
-                    var listCart = db.Carts.Select(s => s);
-                    double isbnDCart = Convert.ToDouble(m.ISBN);
-                    int User_id_Cart = Convert.ToInt32(Session["User_id"]);
-
-                    bool hasCart = listCart.Any(cus => cus.ISBN == isbnDCart && cus.User_id == User_id_Cart);
-
-                    if (hasCart)
-                    {
-                        <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Remove From Cart</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Add to Cart</a>
-                    }
-
-                }
-                else
-                {
-                    if (Session["shoppingCart"] == null)
-                    {
-                        <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-                                MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Add to Cart</a>
-                            }
-                    else
-                    {
-                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
-
-                            if (isbns.Contains(m.ISBN.ToString()))
-                            {
+                        if (hasCart)
+                        {
                             <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
        MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Remove From Cart</a>
                         }
@@ -220,15 +199,38 @@
                             <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
        MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Add to Cart</a>
                         }
+
                     }
+                    else
+                    {
+                        if (Session["shoppingCart"] == null)
+                        {
+                            <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+                                MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Add to Cart</a>
+                        }
+                        else
+                        {
+                            List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+
+                            if (isbns.Contains(m.ISBN.ToString()))
+                            {
+                                <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Remove From Cart</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})#@m.Name" id="btnCart">Add to Cart</a>
+                            }
+                        }
+                    }
+
                 }
 
-            }
+                <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN})" id="moreInfoSmall">More info</a>
+                <img id="stripe" src="~/Content/Images/stripe.png" />
 
-            <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN})" id="moreInfoSmall">More info</a>
-            <img id="stripe" src="~/Content/Images/stripe.png" />
-
-        </div>
+            </div>
         }
         <!-- Dit is de PagedListPager die  ervoor zorgt dat er maar 3 items per pagina worden laten zien.-->
         <!-- De PagedListPager past zich automatisch aan en zal de pagina's zelf weergeven.-->
@@ -283,7 +285,7 @@
 
 
             <input id="orderInput" type="text" name="Order" , value="@Request.QueryString["Order"]" , style="display:none">
-            <input id="paginationInput" type="text" name="Pagination", value="@Request.QueryString["Pagination"]" , style="display:none">
+            <input id="paginationInput" type="text" name="Pagination" , value="@Request.QueryString["Pagination"]" , style="display:none">
             <input id="categoryInput" type="text" name="Category" , style="display:none">
             <input id="ratingInput" type="text" name="Rating" , style="display:none">
 
