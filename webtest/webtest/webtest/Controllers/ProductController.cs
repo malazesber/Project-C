@@ -31,7 +31,59 @@ namespace webtest.Controllers
             //Cart button toevoegen
             if (cartISBN != "" && cartISBN != null)
             {
-                ShoppingCart(_isbn);
+                if (Session["User_id"] != null)
+                {
+                    var list = db.Carts.Select(s => s);
+
+                    int user_id = Convert.ToInt32(Session["User_id"]);
+
+                    bool has = list.Any(cus => cus.ISBN == cart && cus.User_id == user_id);
+
+                    if (has && plus != true)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            db.Carts.Remove(db.Carts.Single(cus => cus.ISBN == cart && cus.User_id == user_id));
+                            db.SaveChanges();
+                        }
+
+                    }
+                    else if (plus != true)
+                    {
+                        using (DatabaseEntities1 db = new DatabaseEntities1())
+                        {
+                            var cartObj = new Cart() { User_id = user_id, ISBN = Convert.ToDouble(cart), Quantity = 1 };
+                            db.Carts.Add(cartObj);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    // UNREGISTERED USER
+                    if (Session["shoppingCart"] == null || Session["shoppingCart"] == "")
+                    {
+                        Session["shoppingCart"] = cartISBN;
+                        plus = false;
+                    }
+                    else if (plus == false)
+                    {
+                        List<string> isbns = Session["shoppingCart"].ToString().Split(',').ToList();
+                        //Check of die al in je cart zit.
+                        if (isbns.Contains(cartISBN))
+                        {
+
+                            isbns.Remove(cartISBN);
+                            var newcart = String.Join(",", isbns);
+                            Session["shoppingCart"] = newcart;
+
+                        }
+                        else
+                        {
+                            Session["shoppingCart"] = Session["shoppingCart"] + "," + cartISBN;
+                        }
+                    }
+                }
             }
 
             decimal totalPrice = 0;
@@ -413,6 +465,7 @@ namespace webtest.Controllers
                 }
 
             }
+
         }
 
         public void Review(string isbn)
