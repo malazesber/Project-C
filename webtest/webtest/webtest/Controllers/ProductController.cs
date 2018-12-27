@@ -511,11 +511,14 @@ namespace webtest.Controllers
             // Session["ReviewInput"] includes the input fields in the view
             if (boughtBook)
             {
-                Session["ReviewInput"] = true;
-            }
-            if (wroteReview)
-            {
-                Session["ReviewInput"] = null;
+                if (wroteReview)
+                {
+                    Session["ReviewInput"] = null;
+                }
+                else
+                {
+                    Session["ReviewInput"] = true;
+                }
             }
             else
             {

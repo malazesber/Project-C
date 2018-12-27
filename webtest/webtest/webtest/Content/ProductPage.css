@@ -7,7 +7,8 @@
 #orderBox {
     background: white;
     float: right;
-    height: 190px;
+    min-height: 150px;
+    height: auto;
     width: 25%;
     margin-right: 15px;
     margin-top: 15px;
@@ -127,7 +128,7 @@
     color: #8a3366;
     padding: 10px 15px;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
     text-decoration: none;
@@ -183,7 +184,7 @@
 #amountBox {
     float: left;
     margin-top: 75px;
-    margin-left: -20px;
+    margin-left: -45px;
 }
 
 /*Onderdelen input moreInfo box*/
