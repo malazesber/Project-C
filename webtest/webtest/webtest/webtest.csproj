@@ -337,6 +337,7 @@
     <Content Include="Views\Admin\UserOrderSta.cshtml" />
     <Content Include="Views\Admin\DailySale.cshtml" />
     <Content Include="Views\Admin\ProductList.cshtml" />
+    <Content Include="Views\Admin\MonthSales.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderHistory\OrderHistory.cshtml" />

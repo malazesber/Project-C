@@ -25,7 +25,100 @@
         .sidenav a:hover {
             color: #65254A;
         }
+#hornav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #8a3366;
+}
 
+#hornav1 {
+    float: left;
+}
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+        /* Change the link color to #111 (black) on hover */
+        li a:hover:not(.active) {
+            background-color: #702952;
+        }
+        .active {
+            background-color: #381529;
+        }
+#D1 {
+    width: 20%;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 1px #8a3366 solid;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+    .dropdown .dropbtn {
+        border: none;
+        outline: none;
+        color: #8a3366;
+        padding: 8px 0;
+        
+        background-color: white;
+        font-size: 25px;
+        margin: 0px 0px 0px 15px;
+    }
+
+    .nav3 a:hover, .dropdown:hover .dropbtn {
+        background-color: #f9f9f9;
+        color: #8a3366;
+    }
+
+.dropdown-content {
+    margin-left: 15px;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        float: none;
+        color: #8a3366;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+#Dsubmit {
+    display: inline-block;
+    background-color: #bf9000;
+    border: none;
+    color: white;
+    padding: 6px 9px;
+    border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    text-decoration: none;
+    width: 15%;
+    cursor: pointer;
+}
 #productBox {
     background: white;
     float: left;

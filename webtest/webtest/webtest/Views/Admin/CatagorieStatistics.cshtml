@@ -11,9 +11,40 @@
 <div id="container">
 
     <div class="sidenav">
-        <a href="@Url.Action("DailySale", "Admin")">Daily Sale</a>
-        <a href="@Url.Action("CatagorieStatistics", "Admin")">Catagory statistics</a>
-        <a href="@Url.Action("UserOrderSta", "Admin") ">User Order Statistics</a>
+        <a href="@Url.Action("ProductList", "Admin")">Products</a>
+        <a href="@Url.Action("User", "Admin")">User accounts</a>
+        @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
+        <div class="dropdown">
+            <button class="dropbtn">
+                Statistics
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+
+                @Html.ActionLink(
+                     "Daily Sale",                                                  // linkText
+                     "DailySale",                                    // actionName
+                     "Admin"                                                   // controllerName
+
+                )
+
+                @Html.ActionLink(
+                    "Catagory statistics",                                                  // linkText
+                    "CatagorieStatistics",                                    // actionName
+                    "Admin"                                                   // controllerName
+
+               )
+
+                @Html.ActionLink(
+                     "User/Order Statistics",                                                  // linkText
+                     "UserORderSta",                                    // actionName
+                     "Admin"                                                   // controllerName
+
+                )
+
+
+            </div>
+        </div>
     </div>
     <div id="productBox">
         @{

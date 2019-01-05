@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -238,7 +239,7 @@ namespace webtest.Controllers
                         change = false;
                         Session["Admin_User"] = null;
                         TempData["Success"] = "<script>alertify.success('Succesfully removed from database !');</script>";
-                       
+
                         return View();
                     }
                     if (edit)
@@ -310,131 +311,131 @@ namespace webtest.Controllers
         }
 
         public ActionResult CatagorieStatistics()
-    {
-        var db = new DatabaseEntities1();
-        //var a = db.OrderDetails;
-        //foreach (OrderDetail orderDetailObj in a)
-        //{
-        //    Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
-
-        //    {
-        //        // GET PRODUCTS
-        //        string[] products = orderDetailObj.Products.Split('|');
-
-        //        foreach (var item in products)
-        //        {
-        //            string[] books = item.Split('-');
-        //            double isbn = Convert.ToDouble(books[0]);
-        //            Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
-        //            int quantity = Convert.ToInt32(books[1]);
-        //            BookQuantity.Add(book, quantity);
-        //        }
-
-        //}
-        int Tottal = 0;
-        foreach (Book prod1 in db.Books)
         {
-            Tottal = Tottal + prod1.Stock;
-        }
+            var db = new DatabaseEntities1();
+            //var a = db.OrderDetails;
+            //foreach (OrderDetail orderDetailObj in a)
+            //{
+            //    Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
+
+            //    {
+            //        // GET PRODUCTS
+            //        string[] products = orderDetailObj.Products.Split('|');
+
+            //        foreach (var item in products)
+            //        {
+            //            string[] books = item.Split('-');
+            //            double isbn = Convert.ToDouble(books[0]);
+            //            Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
+            //            int quantity = Convert.ToInt32(books[1]);
+            //            BookQuantity.Add(book, quantity);
+            //        }
+
+            //}
+            int Tottal = 0;
+            foreach (Book prod1 in db.Books)
+            {
+                Tottal = Tottal + prod1.Stock;
+            }
 
 
-        int Fiction = 0;
-        int Biography = 0;
-        int Sports = 0;
-        int Art = 0;
-        int Science = 0;
-        int Business = 0;
-        int Education = 0;
-        int Food = 0;
-        int Style = 0;
-        int Diet = 0;
-        int History = 0;
-        int Home = 0;
-        int Mind = 0;
-        int Parenting = 0;
-        int[] statistcs = new int[14];
+            int Fiction = 0;
+            int Biography = 0;
+            int Sports = 0;
+            int Art = 0;
+            int Science = 0;
+            int Business = 0;
+            int Education = 0;
+            int Food = 0;
+            int Style = 0;
+            int Diet = 0;
+            int History = 0;
+            int Home = 0;
+            int Mind = 0;
+            int Parenting = 0;
+            int[] statistcs = new int[14];
 
 
-        foreach (Book prod1 in db.Books)
-        {
-            if (prod1.Category == "Fiction")
+            foreach (Book prod1 in db.Books)
             {
-                int Fictionper = 0;
-                Fiction = Fiction + prod1.Stock;
-                statistcs[0] = Fiction;
-                Fictionper = (Fiction * 100) / Tottal;
+                if (prod1.Category == "Fiction")
+                {
+                    int Fictionper = 0;
+                    Fiction = Fiction + prod1.Stock;
+                    statistcs[0] = Fiction;
+                    Fictionper = (Fiction * 100) / Tottal;
+
+                }
+
+                if (prod1.Category == "Biography")
+                {
+                    Biography = Biography + prod1.Stock;
+                    statistcs[1] = Biography;
+                }
+                if (prod1.Category == "Sports")
+                {
+                    Sports = Sports + prod1.Stock;
+                    statistcs[2] = Sports;
+                }
+                if (prod1.Category == "Art & Photography")
+                {
+                    Art = Art + prod1.Stock;
+                    statistcs[3] = Art;
+                }
+                if (prod1.Category == "Science & Nature")
+                {
+                    Science = Science + prod1.Stock;
+                    statistcs[4] = Science;
+                }
+                if (prod1.Category == "Business")
+                {
+                    Business = Business + prod1.Stock;
+                    statistcs[5] = Business;
+                }
+                if (prod1.Category == "Education")
+                {
+                    Education = Education + prod1.Stock;
+                    statistcs[6] = Education;
+                }
+                if (prod1.Category == "Food & Drink")
+                {
+                    Food = Food + prod1.Stock;
+                    statistcs[7] = Food;
+                }
+                if (prod1.Category == "Style & Beauty")
+                {
+                    Style = Style + prod1.Stock;
+                    statistcs[8] = Style;
+                }
+                if (prod1.Category == "Diet & Fitness")
+                {
+                    Diet = Diet + prod1.Stock;
+                    statistcs[9] = Diet;
+                }
+                if (prod1.Category == "History & Politics")
+                {
+                    History = History + prod1.Stock;
+                    statistcs[10] = History;
+                }
+                if (prod1.Category == "Home & Garden")
+                {
+                    Home = Home + prod1.Stock;
+                    statistcs[11] = Home;
+                }
+                if (prod1.Category == "Mind Body Spirit")
+                {
+                    Mind = Mind + prod1.Stock;
+                    statistcs[12] = Mind;
+                }
+                if (prod1.Category == "Parenting")
+                {
+                    Parenting = Parenting + prod1.Stock;
+                    statistcs[13] = Parenting;
+                }
 
             }
-
-            if (prod1.Category == "Biography")
-            {
-                Biography = Biography + prod1.Stock;
-                statistcs[1] = Biography;
-            }
-            if (prod1.Category == "Sports")
-            {
-                Sports = Sports + prod1.Stock;
-                statistcs[2] = Sports;
-            }
-            if (prod1.Category == "Art & Photography")
-            {
-                Art = Art + prod1.Stock;
-                statistcs[3] = Art;
-            }
-            if (prod1.Category == "Science & Nature")
-            {
-                Science = Science + prod1.Stock;
-                statistcs[4] = Science;
-            }
-            if (prod1.Category == "Business")
-            {
-                Business = Business + prod1.Stock;
-                statistcs[5] = Business;
-            }
-            if (prod1.Category == "Education")
-            {
-                Education = Education + prod1.Stock;
-                statistcs[6] = Education;
-            }
-            if (prod1.Category == "Food & Drink")
-            {
-                Food = Food + prod1.Stock;
-                statistcs[7] = Food;
-            }
-            if (prod1.Category == "Style & Beauty")
-            {
-                Style = Style + prod1.Stock;
-                statistcs[8] = Style;
-            }
-            if (prod1.Category == "Diet & Fitness")
-            {
-                Diet = Diet + prod1.Stock;
-                statistcs[9] = Diet;
-            }
-            if (prod1.Category == "History & Politics")
-            {
-                History = History + prod1.Stock;
-                statistcs[10] = History;
-            }
-            if (prod1.Category == "Home & Garden")
-            {
-                Home = Home + prod1.Stock;
-                statistcs[11] = Home;
-            }
-            if (prod1.Category == "Mind Body Spirit")
-            {
-                Mind = Mind + prod1.Stock;
-                statistcs[12] = Mind;
-            }
-            if (prod1.Category == "Parenting")
-            {
-                Parenting = Parenting + prod1.Stock;
-                statistcs[13] = Parenting ;
-            }
-
-        }
             ViewBag.data = statistcs;
-        return View();
+            return View();
         }
         public ActionResult UserOrderSta()
         {
@@ -442,16 +443,16 @@ namespace webtest.Controllers
             int[] Users = new int[2];
             int unregisterd = 0;
             int registerd = 0;
-            foreach(Order order in db.Orders)
+            foreach (Order order in db.Orders)
             {
                 if (order.User_id == null)
                 {
                     unregisterd = unregisterd + order.Payment.Amount;
-                    Users[0] = unregisterd; 
+                    Users[0] = unregisterd;
 
                 }
 
-                if (order.User_id != 0 )
+                if (order.User_id != 0)
                 {
                     registerd = registerd + order.Payment.Amount;
                     Users[1] = registerd;
@@ -461,7 +462,7 @@ namespace webtest.Controllers
             ViewBag.data = Users;
             return View();
         }
-        
+
         public ActionResult DailySale(string Date1 = "01/01/2018", string Date2 = "01/01/2018")
 
         {
@@ -493,7 +494,7 @@ namespace webtest.Controllers
                     Sales2 = Sales2 + order.Payment.Amount;
                     Sales[1] = Sales2;
                 }
-                if(date1.Day == 0 && date1.Month == order.OrderDate.Month)
+                if (date1.Day == 0 && date1.Month == order.OrderDate.Month)
                 {
                     Sales1 = Sales1 + order.Payment.Amount;
                     Sales[0] = Sales1;
@@ -520,7 +521,36 @@ namespace webtest.Controllers
             return View();
 
         }
+        public ActionResult MonthSales(string month1 , string month2)
+        {
+            var db = new DatabaseEntities1();
+           
+            int Sales1 = 0;
+            int Sales2 = 0;
+            int[] Sales = new int[2];
+            foreach (Order order in db.Orders)
+            {
+                if (month1 == "" || month2 == "")
+                {
+                    Sales1 = 10;
+                    Sales2 = 10;
+                }
+                if (month1 == order.OrderDate.Month.ToString("d2"))
+                {
+                    Sales1 = Sales1 + order.Payment.Amount;
+                    Sales[0] = Sales1;
+                }
+                if (month2 == order.OrderDate.Month.ToString(format:"d2"))
+                {
+                    Sales2 = Sales2 + order.Payment.Amount;
+                    Sales[1] = Sales2;
+                }
+
+            }
+            ViewBag.data = Sales;
+            return View();
+        }
     }
-} 
+}
   
 
