@@ -23,6 +23,11 @@
     margin-bottom: 20px;
 }
 
+.error{
+    margin-top: 2px;
+    margin-bottom: 3px;
+    color: red;
+}
 .grid-sub-container {
     display: grid;
     grid-template-columns: auto auto;
@@ -62,7 +67,7 @@
     width: 155px;
     border-style: none;
     float: right;
-    margin-top: 15px;
+    margin-top: 75px;
     margin-bottom: 15px;
 }
 
