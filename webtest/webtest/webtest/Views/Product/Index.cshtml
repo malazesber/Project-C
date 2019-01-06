@@ -35,35 +35,42 @@
     @*Box waar de prijs en knoppen staan*@
     <div id="orderBox">
         <label id="price">€@Model.Item1.Price</label>
-        <div id="amountBox">
-            <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, min = true })" id="minButton">-</a>
-            @{
-                if (Session["User_id"] != null)
-                {
-                    var _db = new DatabaseEntities1();
-                    var item = _db.Carts.Where(x => x.ISBN == Model.Item1.ISBN).FirstOrDefault();
-
-                    try
+        @if (Model.Item1.Stock != 0)
+        {
+            <div id="amountBox">
+                <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, min = true })" id="minButton">-</a>
+                @{
+                    if (Session["User_id"] != null)
                     {
-                        <a id="amount">@item.Quantity</a>
+                        var _db = new DatabaseEntities1();
+                        var item = _db.Carts.Where(x => x.ISBN == Model.Item1.ISBN).FirstOrDefault();
+
+                        try
+                        {
+                            <a id="amount">@item.Quantity</a>
+                        }
+                        catch
+                        {
+
+                        }
                     }
-                    catch
+                    else
                     {
-
+                        <a id="amount">@ViewData[Model.Item1.ISBN.ToString()]</a>
                     }
                 }
-                else
-                {
-                    <a id="amount">@ViewData[Model.Item1.ISBN.ToString()]</a>
-                }
-            }
 
-            <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, plus = true, cart = Model.Item1.ISBN })" id="plusButton">+</a>
-        </div>
+                <a href="@Url.Action("Index", "Product", new { isbn = Model.Item1.ISBN, plus = true, cart = Model.Item1.ISBN })" id="plusButton">+</a>
+            </div>
+        }
+        else
+        {
+            <p style="font-weight:bold; text-align:center; color:#ff0000"> <br /> <br /><br />The stock of this item has depleted. Quite sorry for the inconvenience caused.</p>
+        }
 
 
-
-        @{
+        @if (Model.Item1.Stock != 0)
+        {
             if (Session["User_id"] != null)
             {
                 var dbCart = new DatabaseEntities1();
@@ -102,8 +109,8 @@
                     }
                 }
             }
-
         }
+
 
         @*FAVORIETEN*@
         @{
@@ -346,51 +353,51 @@
 
                 foreach (var x in listReviews)
                 {
-                <div class="UserReviewBox">
+                    <div class="UserReviewBox">
 
-                    @switch (x.Rating)
-                    {
-                        case 1:
-                            <label id="ratingstars" class="star-ratings-sprite">
-                                <span style="width:20%" class="star-ratings-sprite-rating"></span>
-                            </label>
-                            break;
-                        case 2:
-                            <label id="ratingstars" class="star-ratings-sprite">
-                                <span style="width:40%" class="star-ratings-sprite-rating"></span>
-                            </label>
-                            break;
-                        case 3:
-                            <label id="ratingstars" class="star-ratings-sprite">
-                                <span style="width:60%" class="star-ratings-sprite-rating"></span>
-                            </label>
-                            break;
-                        case 4:
-                            <label id="ratingstars" class="star-ratings-sprite">
-                                <span style="width:80%" class="star-ratings-sprite-rating"></span>
-                            </label>
-                            break;
-                        case 5:
-                            <label id="ratingstars" class="star-ratings-sprite">
-                                <span style="width:100%" class="star-ratings-sprite-rating"></span>
-                            </label>
-                            break;
-                    } <br />
-
-                    @{ if (Session["Admin"] != null)
+                        @switch (x.Rating)
                         {
-                            bool admin = Convert.ToBoolean(Session["Admin"]);
-                            if (admin)
+                            case 1:
+                                <label id="ratingstars" class="star-ratings-sprite">
+                                    <span style="width:20%" class="star-ratings-sprite-rating"></span>
+                                </label>
+                                break;
+                            case 2:
+                                <label id="ratingstars" class="star-ratings-sprite">
+                                    <span style="width:40%" class="star-ratings-sprite-rating"></span>
+                                </label>
+                                break;
+                            case 3:
+                                <label id="ratingstars" class="star-ratings-sprite">
+                                    <span style="width:60%" class="star-ratings-sprite-rating"></span>
+                                </label>
+                                break;
+                            case 4:
+                                <label id="ratingstars" class="star-ratings-sprite">
+                                    <span style="width:80%" class="star-ratings-sprite-rating"></span>
+                                </label>
+                                break;
+                            case 5:
+                                <label id="ratingstars" class="star-ratings-sprite">
+                                    <span style="width:100%" class="star-ratings-sprite-rating"></span>
+                                </label>
+                                break;
+                        } <br />
+
+                        @{ if (Session["Admin"] != null)
                             {
-                                @Html.ActionLink("Delete this review", "Index", "Product", new { deleteId = x.Id, deleteReview = true, isbn = Model.Item1.ISBN }, new { id = "btnDelete", onclick = "return confirm('Are you sure you want to delete this comment?');" });
+                                bool admin = Convert.ToBoolean(Session["Admin"]);
+                                if (admin)
+                                {
+                                    @Html.ActionLink("Delete this review", "Index", "Product", new { deleteId = x.Id, deleteReview = true, isbn = Model.Item1.ISBN }, new { id = "btnDelete", onclick = "return confirm('Are you sure you want to delete this comment?');" });
+                                }
                             }
                         }
-                    }
-                    <div class="reviewname">By @x.Name | @x.Date</div>
+                        <div class="reviewname">By @x.Name | @x.Date</div>
 
-                    <div class="reviewtext">@x.Review1</div>
+                        <div class="reviewtext">@x.Review1</div>
 
-                </div>
+                    </div>
                 }
 
             }

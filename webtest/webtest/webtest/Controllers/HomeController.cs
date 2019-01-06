@@ -228,7 +228,7 @@ namespace webtest.Controllers
                     if (i.Stock == 0)
                     //If the stock is 0 -> The whole item should not be taken into consideration when using the shopping cart.
                     {
-                        ViewBag.Error = "The stock of " + i.Name.ToString() + " has depleted. Sorry for the inconvenience.";
+                        ViewBag.Error = ViewBag.Error + "The stock of " + i.Name.ToString() + " has depleted. Sorry for the inconvenience.   ";
 
                         //The item gets deleted from the shopping cart too, so that it won't show up again.
                         using (DatabaseEntities1 db = new DatabaseEntities1())
