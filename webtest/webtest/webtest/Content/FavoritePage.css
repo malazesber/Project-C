@@ -32,7 +32,7 @@
     color: black;
 }
 
-    #title:hover{
+    #title:hover {
         text-decoration: underline;
         cursor: pointer;
     }
@@ -77,6 +77,14 @@
     text-decoration: none;
 }
 
+#noStock {
+    float: left;
+    margin-top: 15px;
+    margin-left: 15px;
+    border: none;
+    text-decoration: none;
+}
+
 #btnWishList {
     float: left;
     margin-top: -10px;
@@ -84,10 +92,11 @@
     color: #bf9000;
     font-weight: bold;
     margin-left: 15px;
-    text-decoration:none;
+    text-decoration: none;
 }
-    #btnWishList:hover{
-        cursor:pointer;
+
+    #btnWishList:hover {
+        cursor: pointer;
     }
 
 #txtTitle {

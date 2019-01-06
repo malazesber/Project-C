@@ -63,7 +63,11 @@
 
                 <label id="price">€@m.Price</label><br />
 
-                @{
+                @*
+                    Check whether the stock of the book is 0. If it is, the shopping cart buttons will be replaced by an error message.
+                *@
+                @if (m.Stock != 0)
+                {
                     if (Session["User_id"] != null)
                     {
                         var dbCart = new DatabaseEntities1();
@@ -82,6 +86,10 @@
                             <a href="@Url.Action("Index", "Favorites", new {cart = m.ISBN})" id="btnCart">Add to Cart</a>
                         }
                     }
+                }
+                else
+                {
+                    <small style="font-weight:bold; text-align:center; color:#ff0000" id="noStock">The stock of this item has depleted.</small>
                 }
             </div>
         }
