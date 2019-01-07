@@ -113,9 +113,9 @@
     Chart.defaults.global.defaultFontColor = '#777';
 
             var YearlySales = new Chart(YearlySales, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ["@YearSales"],
+            labels: ["January", "February","March","April","May","June","July","August", "Septemper","October", "November","December"],
             datasets: [{
                 lable: 'Daily Sale',
                 data: [@YearSales[0], @YearSales[1], @YearSales[2], @YearSales[3], @YearSales[4], @YearSales[5] , @YearSales[6], @YearSales[7], @YearSales[8], @YearSales[9], @YearSales[10], @YearSales[11]],
@@ -159,28 +159,28 @@
                     bottom: 0,
                 }
             },
-            gridlines: {
-                display: false
-            },
-            scales: {
-                yAxes: [{
+            //gridlines: {
+            //    display: false
+            //},
+            //scales: {
+            //    yAxes: [{
 
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Euro'
-                    }
-                }],
-                xAxes: [{
+            //        ticks: {
+            //            beginAtZero: true
+            //        },
+            //        scaleLabel: {
+            //            display: true,
+            //            labelString: 'Euro'
+            //        }
+            //    }],
+            //    xAxes: [{
 
-                    ticks: {
-                        beginAtZero: true
-                    }
+            //        ticks: {
+            //            beginAtZero: true
+            //        }
 
-                }]
-            }
+            //    }]
+            //}
         }
     });
         </script>
