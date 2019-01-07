@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "DailySale";
+    ViewBag.Title = "YearlySales";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
 
@@ -54,62 +54,85 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <div id="productBox">
         <ul id="hornav">
-            <li id="hornav1"><a class="active" href="@Url.Action("DailySale","Admin")">DailySale</a></li>
-            <li id="hornav1"><a href="@Url.Action("MonthSales","Admin")"">Month Sales</a></li>
-            @*<li id="hornav1"><a href="contact.asp">Contact</a></li>
-            <li id="hornav1"><a href="about.asp">About</a></li>*@
+            <li id="hornav1"><a href="@Url.Action("DailySale","Admin")">DailySale</a></li>
+            <li id="hornav1"><a  href="@Url.Action("MonthSales","Admin")">Month Sales</a></li>
+            <li id="hornav1"><a class="active" href="@Url.Action("YearlySales","Admin")">Year Sales</a></li>
+            
         </ul>
 
 
-            @{
-                var DailySale = ViewBag.data;
+        @{
+            var YearSales = ViewBag.data;
+        }
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+
+
+
+
+        <div>
+            @using (Html.BeginForm())
+            {
+                @*<input id="month1" name="month1" type="text" value="">*@
+                <tr>
+
+                    
+                    <td id="year" name="year">
+                        @Html.DropDownList("year", new List<SelectListItem>
+                        {
+                           new SelectListItem{ Text="2018", Value = "2018" },
+                           new SelectListItem{ Text="2019", Value = "2019" },
+
+                        })
+                    </td>
+                </tr>
+                @*<input id="month2" name="month2" type="text" value="">*@
+                <a href='@Url.Action("YearlySales", "Admin")'>
+                    <input id="Dsubmit" type="submit" value='Submit' />
+                </a>
             }
 
-            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
-
-
-
-            
-
-            <div>
-                @using (Html.BeginForm())
-                {
-                    <input id="D1" name="Date1" type="date" value="">
-                    <input id="D1" name="Date2" type="date" value="">
-                    <a href='@Url.Action("DailySale", "Admin")'>
-                        <input id="Dsubmit" type="submit" value='Submit' />
-                    </a>
-                }
-            </div>
-        
-            <div class="container">
-                <canvas id="DailySale"></canvas>
-            </div>
-            <script>
-    var DailySale = document.getElementById('DailySale').getContext('2d');
+        </div>
+        <div class="container">
+            <canvas id="YearlySales"></canvas>
+        </div>
+        <script>
+            var YearlySales = document.getElementById('YearlySales').getContext('2d');
 
     //Global Options
     Chart.defaults.global.defaultFontFamily = 'lato';
     Chart.defaults.global.defaultFontSize = 18;
     Chart.defaults.global.defaultFontColor = '#777';
 
-    var DailySale = new Chart(DailySale, {
+            var YearlySales = new Chart(YearlySales, {
         type: 'bar',
         data: {
-            labels: ["@DailySale[2]"+"/"+"@DailySale[3]"+"/"+"@DailySale[4]","@DailySale[5]"+"/"+"@DailySale[6]"+"/"+"@DailySale[7]"],
+            labels: ["@YearSales"],
             datasets: [{
                 lable: 'Daily Sale',
-                data: [@DailySale[0], @DailySale[1]],
+                data: [@YearSales[0], @YearSales[1], @YearSales[2], @YearSales[3], @YearSales[4], @YearSales[5] , @YearSales[6], @YearSales[7], @YearSales[8], @YearSales[9], @YearSales[10], @YearSales[11]],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)'
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(200, 33, 100, 0.6)',
+                    'rgba(80, 155, 135, 0.6)',
+                    'rgba(60, 106, 186, 0.6)',
+                    'rgba(175, 92, 92, 0.6)',
+                    'rgba(53, 202, 155, 0.6)',
+                    'rgba(55, 59, 244, 0.6)',
+                    'rgba(243, 202, 200, 0.6)'
                 ],
                 borderColor: '#777',
                 borderWidth: 1
@@ -118,8 +141,8 @@
         options: {
             title: {
                 display: true,
-                text: 'Daily Sale wil compare the sales of two chosen dates in euros select the two date and then press on submit to see the chart',
-                fontSize: 25
+                text: 'Month sale wil compare the sales of two chosen month in euros select the month date and then press on submit to see the chart',
+                fontSize: 15
             },
             legend: {
                 display: false,
@@ -133,7 +156,7 @@
                 padding: {
                     left: 50,
                     right: 0,
-                    bottom:0,
+                    bottom: 0,
                 }
             },
             gridlines: {
@@ -141,7 +164,7 @@
             },
             scales: {
                 yAxes: [{
-                    
+
                     ticks: {
                         beginAtZero: true
                     },
@@ -155,11 +178,13 @@
                     ticks: {
                         beginAtZero: true
                     }
-                    
+
                 }]
             }
         }
     });
-            </script>
-        </div>
+        </script>
+    </div>
 </div>
+
+

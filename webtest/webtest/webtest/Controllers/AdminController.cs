@@ -481,7 +481,14 @@ namespace webtest.Controllers
             var db = new DatabaseEntities1();
             int Sales1 = 0;
             int Sales2 = 0;
-            int[] Sales = new int[2];
+           
+            int[] Sales = new int[8];
+            Sales[2] = date1.Day;
+            Sales[3] = date1.Month;
+            Sales[4] = date1.Year;
+            Sales[5] = date2.Day;
+            Sales[6] = date2.Month;
+            Sales[7] = date2.Year;
             foreach (Order order in db.Orders)
             {
                 if (date1.Day == order.OrderDate.Day && date1.Month == order.OrderDate.Month)
@@ -521,13 +528,13 @@ namespace webtest.Controllers
             return View();
 
         }
-        public ActionResult MonthSales(string month1 , string month2)
+        public ActionResult MonthSales(string month1 , string month2, string year)
         {
             var db = new DatabaseEntities1();
            
             int Sales1 = 0;
             int Sales2 = 0;
-            int[] Sales = new int[2];
+            int[] Sales = new int[6];
             foreach (Order order in db.Orders)
             {
                 if (month1 == "" || month2 == "")
@@ -535,21 +542,120 @@ namespace webtest.Controllers
                     Sales1 = 10;
                     Sales2 = 10;
                 }
-                if (month1 == order.OrderDate.Month.ToString("d2"))
+                if (month1 == order.OrderDate.Month.ToString(format: "D2") && year == order.OrderDate.Year.ToString(format: "d4"))
                 {
                     Sales1 = Sales1 + order.Payment.Amount;
                     Sales[0] = Sales1;
+                    Sales[2] = order.OrderDate.Month;
+                    Sales[3] = order.OrderDate.Year;
                 }
-                if (month2 == order.OrderDate.Month.ToString(format:"d2"))
+                if (month2 == order.OrderDate.Month.ToString(format:"D2") && year == order.OrderDate.Year.ToString(format: "d4"))
                 {
                     Sales2 = Sales2 + order.Payment.Amount;
                     Sales[1] = Sales2;
+                    Sales[4] = order.OrderDate.Month;
+                    Sales[5] = order.OrderDate.Year;
                 }
 
             }
             ViewBag.data = Sales;
             return View();
         }
+        //    public ActionResult YearlySales(int a = 2018)
+        //    {
+
+        //        var db = new DatabaseEntities1();
+
+        //        int Sales1 = 0;
+        //        int Sales2 = 0;
+        //        int Sales3 = 0;
+        //        int Sales4 = 0;
+        //        int Sales5 = 0;
+        //        int Sales6 = 0;
+        //        int Sales7 = 0;
+        //        int Sales8 = 0;
+        //        int Sales9 = 0;
+        //        int Sales10 = 0;
+        //        int Sales11 = 0;
+        //        int Sales12 = 0;
+
+        //        int[] Sales = new int[13];
+        //        foreach (Order order in db.Orders)
+        //        {
+        //            //if (year == "")
+        //            //{
+        //            //    Sales1 = 0;
+        //            //}
+        //            if (a == order.OrderDate.Year)
+        //            {
+        //                Sales[12] = order.OrderDate.Year;
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "1")
+        //                {
+        //                    Sales1 = Sales1 + order.Payment.Amount;
+        //                    Sales[0] = Sales1;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "2")
+        //                {
+        //                    Sales2 = Sales2 + order.Payment.Amount;
+        //                    Sales[1] = Sales2;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "3")
+        //                {
+        //                    Sales3 = Sales3 + order.Payment.Amount;
+        //                    Sales[2] = Sales3;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "4")
+        //                {
+        //                    Sales4 = Sales4 + order.Payment.Amount;
+        //                    Sales[3] = Sales4;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "5")
+        //                {
+        //                    Sales5 = Sales5 + order.Payment.Amount;
+        //                    Sales[4] = Sales5;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "6")
+        //                {
+        //                    Sales6 = Sales6 + order.Payment.Amount;
+        //                    Sales[5] = Sales6;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "7")
+        //                {
+        //                    Sales7 = Sales7 + order.Payment.Amount;
+        //                    Sales[6] = Sales7;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "8")
+        //                {
+        //                    Sales8 = Sales8 + order.Payment.Amount;
+        //                    Sales[7] = Sales8;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "9")
+        //                {
+        //                    Sales9 = Sales9 + order.Payment.Amount;
+        //                    Sales[8] = Sales9;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "10")
+        //                {
+        //                    Sales10 = Sales10 + order.Payment.Amount;
+        //                    Sales[9] = Sales10;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "11")
+        //                {
+        //                    Sales11 = Sales11 + order.Payment.Amount;
+        //                    Sales[10] = Sales11;
+        //                }
+        //                if (order.OrderDate.Month.ToString(format: "2d") == "12")
+        //                {
+        //                    Sales12 = Sales12 + order.Payment.Amount;
+        //                    Sales[11] = Sales12;
+        //                }
+        //            }
+
+
+        //        }
+        //        ViewBag.data = Sales;
+        //        return View();
+        //    }
     }
 }
   

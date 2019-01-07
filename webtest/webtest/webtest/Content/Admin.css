@@ -393,3 +393,26 @@ table {
     .tooltip:hover .tooltiptext {
         visibility: visible;
     }
+
+h2 {
+    margin-top: 5px;
+    margin-left: 15px;
+}
+#month1 {
+    width: 20%;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 1px #8a3366 solid;
+}
+#month2 {
+    width: 20%;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 1px #8a3366 solid;
+}
+#year {
+    width: 20%;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 1px #8a3366 solid;
+}

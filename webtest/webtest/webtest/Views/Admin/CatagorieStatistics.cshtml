@@ -29,7 +29,7 @@
                 )
 
                 @Html.ActionLink(
-                    "Catagory statistics",                                                  // linkText
+                    "Category statistics",                                                  // linkText
                     "CatagorieStatistics",                                    // actionName
                     "Admin"                                                   // controllerName
 
@@ -51,12 +51,12 @@
             var CataSta = ViewBag.data;
         }
 
-        <h2>CatagorieStatistics</h2>
+        <h2>Category Statistics</h2>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 
         <div class="container">
-            <canvas id="cataChart"></canvas>
+            <canvas id="cataChart" width="400" height="200"></canvas>
         </div>
         <script>
     let cataChart = document.getElementById('cataChart').getContext('2d');
@@ -97,8 +97,11 @@
         options: {
             title: {
                 display: true,
-                text: 'Stock of each catagory',
-                fontSize: 25
+                text: ['Stock of each category if you hover on a slice of the pie you will see how many books we have from this category', 
+                'to hide one of the categories clicks on the category name within the legends'],
+                fontSize: 15,
+                position: "top",
+                paddingleft: 25
             },
             legend: {
                 position: 'right',
@@ -114,13 +117,27 @@
                     bottom:0,
                 }
             },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            //scales: {
+            //    xAxes: [{
+            //        gridlines: {
+            //            display: false
+            //        },
+            //        //angleLines: {
+            //        //    display: false
+            //        //}
+            //    }],
+            //    yAxes: [{
+            //        gridlines: {
+            //            display: false
+            //        },
+            //        ticks: {
+            //            beginAtZero: true
+            //        },
+            //        angleLines: {
+            //            display: false
+            //        }
+            //    }]
+            //}
         }
     });
         </script>

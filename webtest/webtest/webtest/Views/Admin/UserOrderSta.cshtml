@@ -51,7 +51,7 @@
             @{
                 var UserOrderSta = ViewBag.data;
             }
-            <h2>User Order Statistics</h2>
+            <h2>User/Order Statistics</h2>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
@@ -85,8 +85,8 @@
         options: {
             title: {
                 display: true,
-                text: 'Amount money payed by each type user',
-                fontSize: 25
+                text: 'User/order statistics show the percentage of total paid money by registered and unregistered users ',
+                fontSize: 15
             },
             legend: {
                 position: 'right',
@@ -102,13 +102,26 @@
                     bottom:0,
                 }
             },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                        return percentage + "%";
                     }
-                }]
+                }
             }
+            //scales: {
+            //    yAxes: [{
+            //        ticks: {
+            //            beginAtZero: true
+            //        }
+            //    }]
+            //}
         }
     });
 
