@@ -4,8 +4,7 @@
     "\\webtest",
     "\\webtest\\webtest",
     "\\webtest\\webtest\\webtest",
-    "\\webtest\\webtest\\webtest\\App_Data",
-    "\\webtest\\webtest\\webtest\\Content",
+    "\\webtest\\webtest\\webtest\\Content\\Images",
     "\\webtest\\webtest\\webtest\\Controllers",
     "\\webtest\\webtest\\webtest\\Views"
   ],

@@ -103,7 +103,16 @@
                     <img id="productImg" src="@m.Image_src" />
                 </a>
 
-                <label id="price">€@m.Price</label>
+                @*Een check of het book 0 stock heeft. Als de stock 0 is zal de prijs niet meer laten zien worden, en komt er een error message boven de titel.*@
+                @if (m.Stock == 0)
+                {
+                    <label id="EmptyStock" style="font-weight:bold; text-align:center; color:#ff0000">The stock of this item has depleted.</label>
+                }
+                else
+                {
+                    <label id="price">€@m.Price</label>
+                }
+
                 <a href="@Url.Action("Index", "Product", new {Title = m.Name, isbn = m.ISBN}) " id="title">@m.Name</a>
                 <!-- Change to author-->
                 <label id="author">@m.Author</label>
@@ -179,7 +188,8 @@
 
                 @** LOAD ADD CART BUTTONS*@
 
-                @{
+                @if (m.Stock != 0)
+                {
                     if (Session["User_id"] != null)
                     {
                         var dbCart = new DatabaseEntities1();
