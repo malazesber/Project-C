@@ -43,6 +43,8 @@
                     <option value="Title: Z - A" @if (@Request.QueryString["Order"] == "Title: Z - A") { <text> selected="selected" </text> }> Title: Z - A</option>
                     <option value="Author: A - Z" @if (@Request.QueryString["Order"] == "Author: A - Z") { <text> selected="selected" </text> }> Author: A - Z</option>
                     <option value="Author: Z - A" @if (@Request.QueryString["Order"] == "Author: Z - A") { <text> selected="selected" </text> }> Author: Z - A</option>
+                    <option value="Date: Ascending" @if (@Request.QueryString["Order"] == "Date: Ascending") { <text> selected="selected" </text> }> Date: Ascending</option>
+                    <option value="Date: Descending" @if (@Request.QueryString["Order"] == "Date: Descending") { <text> selected="selected" </text> }> Date: Descending</option>
                 </select>
                 <input id="orderInput" type="text" name="Order" , style="display:none">
                 <input id="paginationInput" type="text" name="Pagination" , style="display:none">

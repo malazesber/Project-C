@@ -300,8 +300,13 @@ namespace webtest.Controllers
             List<string> ratings = new List<string>() { "1", "2", "3", "4", "5" };
             List<string> categories = new List<string>() { "Parenting", "Food & Drink", "History & Politics", "Home & Garden", "Mind Body Spirit",
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
-            List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A" };
+            List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A", "Date: Descending", "Date: Ascending" };
 
+            var reviewTable = (from r in db.Reviews
+                               select r).ToList();
+
+            var isbnReviews = (from r in db.Reviews
+                               select r.ISBN).Distinct();
 
             // CHECK OF ER EEN ISBN IS MEEGEGEVEN
             if (isbn != "" && isbn != null)
@@ -351,11 +356,13 @@ namespace webtest.Controllers
                 select = select.Where(m =>
                 {
                     // Checks if there is a rating based on reviews by users
-                    try
+                    if (isbnReviews.Contains(m.ISBN))
                     {
-                        Decimal average = (from r in db.Reviews
-                                       where r.ISBN == m.ISBN
-                                       select r.Rating).Average();
+
+                        Decimal average = (from r in reviewTable
+                                           where r.ISBN == m.ISBN
+                                           select r.Rating).Average();
+
 
                         bool ratingFromReview = average >= rating &&
                                                 average < rating + 1;
@@ -365,7 +372,7 @@ namespace webtest.Controllers
                     }
 
                     // Gets the old rating in the book table
-                    catch
+                    else
                     {
                         bool ratingFromBook = m.Rating >= rating && m.Rating < rating + 1;
                         return ratingFromBook;
@@ -397,6 +404,12 @@ namespace webtest.Controllers
                         break;
                     case "Author: Z - A":
                         select = select.OrderByDescending(x => x.Author).ToList();
+                        break;
+                    case "Date: Descending":
+                        select = select.OrderByDescending(x => x.Date).ToList();
+                        break;
+                    case "Date: Ascending":
+                        select = select.OrderBy(x => x.Date).ToList();
                         break;
                     default:
                         Console.WriteLine("Could not find the OrderBy value");

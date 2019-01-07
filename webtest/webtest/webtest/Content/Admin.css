@@ -24,8 +24,14 @@
 
         .sidenav a:hover {
             color: #65254A;
+            border-left: solid 3px #65254A;
         }
-#hornav {
+
+.active {
+    border-left: solid 3px #65254A;
+}
+
+/*#hornav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -46,18 +52,19 @@
     }
 
         /* Change the link color to #111 (black) on hover */
-        li a:hover:not(.active) {
+/*li a:hover:not(.active) {
             background-color: #702952;
         }
         .active {
             background-color: #381529;
-        }
-#D1 {
+        }*/
+/*#D1 {
     width: 20%;
     margin-left: 5px;
     margin-top: 5px;
     border: 1px #8a3366 solid;
-}
+}*/
+
 .dropdown {
     float: left;
     overflow: hidden;
