@@ -5,7 +5,7 @@
 }
 
 <head>
-    <link href="~/Content/Admin.css" rel="stylesheet" />
+    <link href="~/Content/Statistics.css" rel="stylesheet" />
 </head>
 
 <div id="container">
@@ -60,8 +60,7 @@
         <ul id="hornav">
             <li id="hornav1"><a class="active" href="@Url.Action("DailySale","Admin")">DailySale</a></li>
             <li id="hornav1"><a href="@Url.Action("MonthSales","Admin")"">Month Sales</a></li>
-            @*<li id="hornav1"><a href="contact.asp">Contact</a></li>
-            <li id="hornav1"><a href="about.asp">About</a></li>*@
+            <li id="hornav1"><a href="@Url.Action("YearlySales","Admin")">Year Sales</a></li>
         </ul>
 
 

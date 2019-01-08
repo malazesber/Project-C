@@ -249,6 +249,7 @@
     <Content Include="Content\Images\Rating3Star.png" />
     <Content Include="Content\Images\Rating4Star.png" />
     <Content Include="Content\Images\Rating5Star.png" />
+    <Content Include="Content\Statistics.css" />
     <Content Include="Content\Images\stripe.png" />
     <Content Include="Content\Images\test.jpg" />
     <Content Include="Content\Login.css" />
