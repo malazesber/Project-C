@@ -3,65 +3,71 @@
     ViewBag.Title = "DailySale";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
+@if (Session["Admin_User"] == null)
+{
+    Response.Redirect("/Login");
+}
+else
+{
 
-<head>
-    <link href="~/Content/Statistics.css" rel="stylesheet" />
-</head>
+    <head>
+        <link href="~/Content/Statistics.css" rel="stylesheet" />
+    </head>
 
-<div id="container">
+    <div id="container">
 
-    <div class="sidenav">
-        <a href="@Url.Action("ProductList", "Admin")">Products</a>
-        <a href="@Url.Action("User", "Admin")">User accounts</a>
-        @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
-        <div class="dropdown">
-            <button class="dropbtn">
-                Statistics
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
+        <div class="sidenav">
+            <a href="@Url.Action("ProductList", "Admin")">Products</a>
+            <a href="@Url.Action("User", "Admin")">User accounts</a>
+            @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Statistics
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
 
-                <a>
-                    @Html.ActionLink(
-                                  "Daily Sale",                                                  // linkText
-                                  "DailySale",                                    // actionName
-                                  "Admin"                                                   // controllerName
+                    <a>
+                        @Html.ActionLink(
+                   "Daily Sale",                                                  // linkText
+                   "DailySale",                                    // actionName
+                   "Admin"                                                   // controllerName
 
-                             )
-                </a>
+              )
+                    </a>
 
-                <a>
-                    @Html.ActionLink(
-                                 "Catagory statistics",                                                  // linkText
-                                 "CatagorieStatistics",                                    // actionName
-                                 "Admin"                                                   // controllerName
+                    <a>
+                        @Html.ActionLink(
+                  "Catagory statistics",                                                  // linkText
+                  "CatagorieStatistics",                                    // actionName
+                  "Admin"                                                   // controllerName
 
-                            )
-                </a>
-
-
-
-                <a>
-                    @Html.ActionLink(
-                                      "User/Order Statistics",                                                  // linkText
-                                      "UserORderSta",                                    // actionName
-                                      "Admin"                                                   // controllerName
-
-                                 )
-                </a>
+             )
+                    </a>
 
 
+
+                    <a>
+                        @Html.ActionLink(
+                       "User/Order Statistics",                                                  // linkText
+                       "UserORderSta",                                    // actionName
+                       "Admin"                                                   // controllerName
+
+                  )
+                    </a>
+
+
+                </div>
             </div>
         </div>
-    </div>
-    
-    
-    <div id="productBox">
-        <ul id="hornav">
-            <li id="hornav1"><a class="active" href="@Url.Action("DailySale","Admin")">DailySale</a></li>
-            <li id="hornav1"><a href="@Url.Action("MonthSales","Admin")"">Month Sales</a></li>
-            <li id="hornav1"><a href="@Url.Action("YearlySales","Admin")">Year Sales</a></li>
-        </ul>
+
+
+        <div id="productBox">
+            <ul id="hornav">
+                <li id="hornav1"><a class="active" href="@Url.Action("DailySale", "Admin")">DailySale</a></li>
+                <li id="hornav1"><a href="@Url.Action("MonthSales", "Admin")" ">Month Sales</a></li>
+                <li id="hornav1"><a href="@Url.Action("YearlySales", "Admin")">Year Sales</a></li>
+            </ul>
 
 
             @{
@@ -75,7 +81,7 @@
 
 
 
-            
+
 
             <div>
                 @using (Html.BeginForm())
@@ -87,7 +93,7 @@
                     </a>
                 }
             </div>
-        
+
             <div class="container">
                 <canvas id="DailySale"></canvas>
             </div>
@@ -140,7 +146,7 @@
             },
             scales: {
                 yAxes: [{
-                    
+
                     ticks: {
                         beginAtZero: true
                     },
@@ -154,11 +160,12 @@
                     ticks: {
                         beginAtZero: true
                     }
-                    
+
                 }]
             }
         }
     });
             </script>
         </div>
-</div>
+    </div>
+                }

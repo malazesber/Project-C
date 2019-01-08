@@ -4,6 +4,13 @@
     ViewBag.Title = "CatagorieStatistics";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
+@if (Session["Admin_User"] == null)
+{
+    Response.Redirect("/Login");
+}
+else
+{
+
 <head>
     <link href="~/Content/Admin.css" rel="stylesheet" />
 </head>
@@ -22,25 +29,25 @@
             <div class="dropdown-content">
 
                 @Html.ActionLink(
-                     "Daily Sale",                                                  // linkText
-                     "DailySale",                                    // actionName
-                     "Admin"                                                   // controllerName
+          "Daily Sale",                                                  // linkText
+          "DailySale",                                    // actionName
+          "Admin"                                                   // controllerName
 
-                )
-
-                @Html.ActionLink(
-                    "Category statistics",                                                  // linkText
-                    "CatagorieStatistics",                                    // actionName
-                    "Admin"                                                   // controllerName
-
-               )
+     )
 
                 @Html.ActionLink(
-                     "User/Order Statistics",                                                  // linkText
-                     "UserORderSta",                                    // actionName
-                     "Admin"                                                   // controllerName
+         "Category statistics",                                                  // linkText
+         "CatagorieStatistics",                                    // actionName
+         "Admin"                                                   // controllerName
 
-                )
+    )
+
+                @Html.ActionLink(
+          "User/Order Statistics",                                                  // linkText
+          "UserORderSta",                                    // actionName
+          "Admin"                                                   // controllerName
+
+     )
 
 
             </div>
@@ -143,3 +150,4 @@
         </script>
     </div>
 </div>
+            }
