@@ -21,12 +21,12 @@ else
         <a href="@Url.Action("ProductList", "Admin")">Products</a>
         <a href="@Url.Action("User", "Admin")">User accounts</a>
         @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
-        <div class="dropdown">
-            <button class="dropbtn">
+        <div class="submenu active">
+            <a class="subMenubtn">
                 Statistics
                 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
+            </a>
+            <div class="submenu-content">
 
                 @Html.ActionLink(
           "Daily Sale",                                                  // linkText

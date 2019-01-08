@@ -65,28 +65,28 @@
     border: 1px #8a3366 solid;
 }*/
 
-.dropdown {
+.submenu {
     float: left;
     overflow: hidden;
 }
 
-    .dropdown .dropbtn {
+    .submenu .subMenubtn {
         border: none;
         outline: none;
         color: #8a3366;
-        padding: 8px 0;
-        
         background-color: white;
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
         font-size: 25px;
-        margin: 0px 0px 0px 15px;
+        display: block;
     }
 
-    .nav3 a:hover, .dropdown:hover .dropbtn {
+/*.nav3 a:hover, .submenu:hover .subMenubtn:hover {
         background-color: #f9f9f9;
         color: #8a3366;
-    }
+    }*/
 
-.dropdown-content {
+.submenu-content {
     margin-left: 15px;
     display: none;
     position: absolute;
@@ -96,7 +96,7 @@
     z-index: 1;
 }
 
-    .dropdown-content a {
+    .submenu-content a {
         float: none;
         color: #8a3366;
         padding: 12px 16px;
@@ -105,13 +105,14 @@
         text-align: left;
     }
 
-        .dropdown-content a:hover {
+/*.submenu-content a:hover {
             background-color: #ddd;
-        }
+        }*/
 
-.dropdown:hover .dropdown-content {
+.submenu:hover .submenu-content {
     display: block;
 }
+
 #Dsubmit {
     display: inline-block;
     background-color: #bf9000;
@@ -126,6 +127,7 @@
     width: 15%;
     cursor: pointer;
 }
+
 #productBox {
     background: white;
     float: left;
@@ -405,18 +407,21 @@ h2 {
     margin-top: 5px;
     margin-left: 15px;
 }
+
 #month1 {
     width: 20%;
     margin-left: 5px;
     margin-top: 5px;
     border: 1px #8a3366 solid;
 }
+
 #month2 {
     width: 20%;
     margin-left: 5px;
     margin-top: 5px;
     border: 1px #8a3366 solid;
 }
+
 #year {
     width: 20%;
     margin-left: 5px;
