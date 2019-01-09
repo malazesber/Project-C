@@ -142,7 +142,7 @@
                 {
                     <div id="subtitle">Add a new product</div>
                     {
-                        using (Html.BeginForm("Product", "Admin", FormMethod.Get))
+                        using (Html.BeginForm("Product", "Admin", FormMethod.Get, new { enctype = "multipart/form-data" }))
                         {
                             <div id="add">
                                 <label for="isbn"> <b>ISBN</b> </label>
@@ -207,7 +207,7 @@
 
                                 <label for="author"> <b>Author</b> </label>
                                 <input type="text" name="Author" placeholder="Author" class="inputField"
-                                       pattern="^[a-zA-Z .]+$"
+                                       pattern="^[a-zA-Z .]+$" required
                                        title="The author name can not contain numbers or symbols." /> <br />
 
                                 <label for="date"> <b>Date</b> </label>
@@ -217,13 +217,19 @@
 
                                 <label for="summary"> <b>Summary</b> </label>
                                 <textarea type="text" name="Summary" rows="4" placeholder="Summary" class="inputFieldSummary"
-                                          pattern="^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$"
+                                          pattern="^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$" required
                                           title="The summary must be up to 500 characters long."></textarea><br />
 
                                 <label for="productImg"> <b>Image</b> </label>
-                                <input type="text" name="Image_src" placeholder="Image_src" class="inputField"
-                                       pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?" required
-                                       title="Insert an URL here." /><br />
+                                <div>
+                                    <img id="Img_src" height="110" width="100" style="border:solid" />
+                                </div>
+                                <div>
+                                    <input type="file" title="search_image" id="file" name="file" onchange="show(this)" required />
+                                </div>
+                                @*<input type="text" name="Image_src" placeholder="Image_src" class="inputField"
+                                    pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?"
+                                    title="Insert an URL here." />*@<br />
 
                                 <label for="price"> <b>Price</b> </label>
                                 <input type="text" name="Price" placeholder="Price" class="inputField"
@@ -272,3 +278,17 @@ else
     Response.Redirect("/Login");
 
 }
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    //gekozen foto tonen
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#Img_src').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

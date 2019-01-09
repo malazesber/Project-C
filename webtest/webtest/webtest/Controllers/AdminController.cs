@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using webtest.Models;
+using System.IO;
 
 namespace webtest.Controllers
 {
@@ -13,6 +14,7 @@ namespace webtest.Controllers
     {
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Admin
+        [HttpGet]
         public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool addSession = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
         {
             if (addSession == true)
@@ -660,6 +662,42 @@ namespace webtest.Controllers
             ViewBag.data = Sales;
             return View();
         }
+
+        DatabaseEntities1 obj = new DatabaseEntities1();
+        //public ActionResult Product()
+        //{
+        //    return View();
+        //}
+
+        [HttpPost]
+        public ActionResult Product(FormCollection fc, HttpPostedFileBase file)
+        {
+            Book book = new Book();
+            var allowedExtensions = new[] {
+            ".Jpg", ".png", ".jpg", "jpeg"
+        };
+            book.Image_src = file.ToString(); //hele url ophalen  
+            book.Name = fc["Name"].ToString();
+            var fileName = Path.GetFileName(file.FileName);
+            var ext = Path.GetExtension(file.FileName);
+            if (allowedExtensions.Contains(ext)) //bestandsextensie checken  
+            {
+                string name = Path.GetFileNameWithoutExtension(fileName); //bestandsextensie wordt eruit gelaten 
+                string myfile = name + "_" + book.ISBN + ext; //myfile krijgt ISBN erbij 
+
+                var path = Path.Combine(Server.MapPath("~/BookCover"), myfile); //bestand opslaan in projectmap BookCover
+                book.Image_src = path;
+                obj.Books.Add(book);
+                obj.SaveChanges();
+                file.SaveAs(path);
+            }
+            else
+            {
+                ViewBag.message = "Only an Image file can be chosen. No other type is allowed.";
+            }
+            return View();
+        }
+
     }
 }
   

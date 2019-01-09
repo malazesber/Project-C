@@ -356,6 +356,7 @@
     <Content Include="Views\OrderHistory\OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BookCover\" />
     <Folder Include="Models\UserEntities\" />
   </ItemGroup>
   <ItemGroup>

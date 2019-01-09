@@ -428,3 +428,15 @@ h2 {
     margin-top: 5px;
     border: 1px #8a3366 solid;
 }
+
+.error {
+    color: red;
+}
+
+img#Img_src {
+    margin-left: 15px;
+}
+
+input#file {
+    margin-left: 15px;
+}
