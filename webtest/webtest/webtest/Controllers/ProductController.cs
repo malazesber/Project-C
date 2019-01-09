@@ -15,8 +15,12 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         List<string> cart = new List<string>();
         // GET: Product
-        public ActionResult Index(double? favo, double? cart, double? del, double isbn = 0, string date = "", bool addreview = false, int readMore = 0, bool delete = false, bool plus = false, bool min = false, decimal rating = 0, string review = "", string name = "", string surname = "", bool deleteReview = false, int deleteId = 0)
+        public ActionResult Index(double? favo, string url, double? cart, double? del, double isbn = 0, string date = "", bool addreview = false, int readMore = 0, bool delete = false, bool plus = false, bool min = false, decimal rating = 0, string review = "", string name = "", string surname = "", bool deleteReview = false, int deleteId = 0, bool urlBool = false)
         {
+            if (urlBool == true)
+            {
+                Session["URL"] = url;
+            }
             string favoISBN = favo.ToString();
             string cartISBN = cart.ToString();
             var _isbn = isbn.ToString();
@@ -210,7 +214,7 @@ namespace webtest.Controllers
             {
                 DateTime _date = Convert.ToDateTime(date);
                 int _user_id = Convert.ToInt32(Session["User_id"]);
-          
+
                 var maxId = db.Reviews.Max(m => m.Id);
 
                 var newReview = new Review()
@@ -232,6 +236,20 @@ namespace webtest.Controllers
                 // Hides the input fields in the view
                 Session["ReviewInput"] = null;
 
+                decimal averageRating = (from r in db.Reviews
+                                         where r.ISBN == isbn
+                                         select r.Rating).Average();
+
+                var BooksTable = (from b in db.Books
+                                  where b.ISBN == isbn
+                                  select b).ToList();
+
+                foreach (var x in BooksTable)
+                {
+                    x.Rating = averageRating;
+                }
+
+                db.SaveChanges();
             }
 
             // Admin can delete reviews on the product page
@@ -241,6 +259,33 @@ namespace webtest.Controllers
                 {
                     db.Reviews.Remove(db.Reviews.Single(x => x.Id == deleteId));
                     db.SaveChanges();
+
+                    var BooksTable = (from b in db.Books
+                                      where b.ISBN == isbn
+                                      select b).ToList();
+
+                    try
+                    {
+                        Decimal averageRating = (from r in db.Reviews
+                                                 where r.ISBN == isbn
+                                                 select r.Rating).Average();
+
+                        foreach (var x in BooksTable)
+                        {
+                            x.Rating = averageRating;
+                        }
+
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        foreach (var x in BooksTable)
+                        {
+                            x.Rating = 0;
+                        }
+
+                        db.SaveChanges();
+                    }
                 }
             }
 
@@ -302,12 +347,6 @@ namespace webtest.Controllers
             "Science & Nature", "Sports", "Style & Beauty", "Fiction", "Education", "Diet & Fitness", "Business", "Biography", "Art & Photography"};
             List<string> orders = new List<string>() { "Price: Ascending", "Price: Descending", "Title: A - Z", "Title: Z - A", "Author: A -Z", "Author: Z - A", "Date: Descending", "Date: Ascending" };
 
-            var reviewTable = (from r in db.Reviews
-                               select r).ToList();
-
-            var isbnReviews = (from r in db.Reviews
-                               select r.ISBN).Distinct();
-
             // CHECK OF ER EEN ISBN IS MEEGEGEVEN
             if (isbn != "" && isbn != null)
             {
@@ -343,42 +382,10 @@ namespace webtest.Controllers
                 select = select.Where(m => m.Category.Contains(Category)).ToList();
             }
 
-            //if (ratings.Contains(Rating))
-            //{
-            //    int rating = Convert.ToInt32(Rating);
-            //    select = select.Where(m => m.Rating == rating).ToList();
-            //}
-
             if (ratings.Contains(Rating))
             {
                 int rating = Convert.ToInt32(Rating);
-
-                select = select.Where(m =>
-                {
-                    // Checks if there is a rating based on reviews by users
-                    if (isbnReviews.Contains(m.ISBN))
-                    {
-
-                        Decimal average = (from r in reviewTable
-                                           where r.ISBN == m.ISBN
-                                           select r.Rating).Average();
-
-
-                        bool ratingFromReview = average >= rating &&
-                                                average < rating + 1;
-
-                        return ratingFromReview;
-
-                    }
-
-                    // Gets the old rating in the book table
-                    else
-                    {
-                        return false;
-                    }
-                }
-            ).ToList();
-
+                select = select.Where(m => m.Rating >= rating && m.Rating < rating + 1).ToList();
             }
 
             // Apply ordering
@@ -488,14 +495,14 @@ namespace webtest.Controllers
 
             // Selects a list with all order numbers linked to the user account
             var listOrderNumbers = (from o in db.Orders
-                        where o.User_id == User_id
-                        select o.Order_Number).ToList();
+                                    where o.User_id == User_id
+                                    select o.Order_Number).ToList();
 
             // Selects the products the user bought
             var listBoughtProducts = (from t in listOrderNumbers
-                         from od in db.OrderDetails
-                         where t == od.Order_Number
-                         select od.Products).ToList();
+                                      from od in db.OrderDetails
+                                      where t == od.Order_Number
+                                      select od.Products).ToList();
 
             // New list for the ISBNS the user bought
             List<double> ISBNboughtProducts = new List<double>();

@@ -466,3 +466,14 @@ span {
 .ratingAverage {
     font-size: 30px;
 }
+
+.backbtn{
+    color: black;
+    margin-left: 15px;
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.backbtn:hover{
+    color: dimgray;
+}

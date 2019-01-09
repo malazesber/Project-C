@@ -15,7 +15,7 @@ namespace webtest.Controllers
         DatabaseEntities1 db = new DatabaseEntities1();
         // GET: Admin
         [HttpGet]
-        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool addSession = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", string Rating = "", string Stock = "")
+        public ActionResult Product(string ISBN = "", bool delete = false, bool add = false, bool addSession = false, bool change = false, bool edit = false, bool cancel = false, string Category = "", string Name = "", string Summary = "", string Date = "", string Author = "", string Image_src = "", string Price = "", decimal Rating = 0, string Stock = "")
         {
             if (addSession == true)
             {
@@ -41,7 +41,6 @@ namespace webtest.Controllers
                 {
                     var date = Convert.ToDateTime(Date);
                     var price = Convert.ToDecimal(Price);
-                    var rating = Convert.ToInt32(Rating);
                     var stock = Convert.ToInt32(Stock);
 
                     var bookNew = new Book()
@@ -54,7 +53,7 @@ namespace webtest.Controllers
                         Author = Author,
                         Image_src = Image_src,
                         Price = price,
-                        Rating = rating,
+                        Rating = Rating,
                         Stock = stock
                     };
 
@@ -78,7 +77,6 @@ namespace webtest.Controllers
                 {
                     var date = Convert.ToDateTime(Date);
                     var price = Convert.ToDecimal(Price);
-                    var rating = Convert.ToInt32(Rating);
                     var stock = Convert.ToInt32(Stock);
 
                     var _change = (from book in db.Books
@@ -96,7 +94,7 @@ namespace webtest.Controllers
                         x.Author = Author;
                         x.Image_src = Image_src;
                         x.Price = price;
-                        x.Rating = rating;
+                        x.Rating = Rating;
                         x.Stock = stock;
 
                     }

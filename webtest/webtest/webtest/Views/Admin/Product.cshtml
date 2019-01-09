@@ -123,14 +123,15 @@
                             <label for="price"> <b>Price</b> </label>
                             <input type="text" name="Price" placeholder="Price" , value="@Model.Price" class="inputField"><br />
 
-                            <label for="rating"> <b>Rating</b> </label>
-                            <input type="text" name="Rating" placeholder="Rating" , value="@Model.Rating" class="inputField"><br />
+                            @*<label for="rating"> <b>Rating</b> </label>*@
+                            @*<input type="text" name="Rating" value="@Model.Rating" class="inputField"><br />*@
 
                             <label for="stock"> <b>Stock</b> </label>
                             <input type="text" name="Stock" placeholder="Stock" , value="@Model.Stock" class="inputField"><br />
 
                             <input type="hidden" name="change" value="true" />
-                            <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.ISBN"><br />
+                            <input type="hidden" name="Rating" value="@Model.Rating">
+                            <input type="hidden" name="ISBN" value="@Model.ISBN"><br />
 
                             <button class="btn" , onclick="setCategory()">Apply changes</button>
                             @Html.ActionLink("Cancel", "Product", "Admin", new { cancel = true, ISBN = Model.ISBN }, new { id = "btnCancel", onclick = "return confirm('Are you sure you want to cancel?');" })
@@ -237,8 +238,8 @@
                                        title="Please insert a valid price e.g. 20.00"
                                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" /><br />
 
-                                <label for="rating"> <b>Rating</b> </label>
-                                <input type="text" name="Rating" placeholder="Rating" class="inputField"
+                                @*<label for="rating"> <b>Rating</b> </label>*@
+                                <input type="hidden" name="Rating" value="0"
                                        pattern="^([1-5])$" required
                                        title="Please insert a number between 1 and 5." /><br />
 
