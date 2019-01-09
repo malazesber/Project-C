@@ -116,6 +116,7 @@ namespace webtest.Controllers
 
         public ActionResult LogOut()
         {
+            Session["Admin"] = null;
             Session["User_id"] = null;
             Session["ReviewInput"] = null;
             return RedirectToAction("Index", "Home");

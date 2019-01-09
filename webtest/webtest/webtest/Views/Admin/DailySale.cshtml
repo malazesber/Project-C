@@ -3,29 +3,29 @@
     ViewBag.Title = "DailySale";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-@if (Session["Admin_User"] == null)
+
+@if (Session["Admin"] != null)
 {
-    Response.Redirect("/Login");
-}
-else
-{
+    bool admin = Convert.ToBoolean(Session["Admin"]);
+    if (admin)
+    {
+        <head>
+            <link href="~/Content/Statistics.css" rel="stylesheet" />
+            <link href="~/Content/Admin.css" rel="stylesheet" />
+        </head>
 
-    <head>
-        <link href="~/Content/Statistics.css" rel="stylesheet" />
-    </head>
+        <div id="container">
 
-    <div id="container">
-
-        <div class="sidenav">
-            <a href="@Url.Action("ProductList", "Admin")">Products</a>
-            <a href="@Url.Action("User", "Admin")">User accounts</a>
-            @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
-            <div class="submenu active">
-                <a class="subMenubtn">
-                    Statistics
-                    <i class="fa fa-caret-down"></i>
-                </a>
-                <div class="submenu-content">
+            <div class="sidenav">
+                <a href="@Url.Action("ProductList", "Admin")">Products</a>
+                <a href="@Url.Action("User", "Admin")">User accounts</a>
+                @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
+                <div class="submenu active">
+                    <a class="subMenubtn">
+                        Statistics
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <div class="submenu-content">
 
                         @Html.ActionLink(
                    "Daily Sale",                                                  // linkText
@@ -48,47 +48,47 @@ else
 
                   )
 
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <div id="productBox">
-            <ul id="hornav">
-                <li id="hornav1"><a class="active" href="@Url.Action("DailySale", "Admin")">DailySale</a></li>
-                <li id="hornav1"><a href="@Url.Action("MonthSales", "Admin")" ">Month Sales</a></li>
-                <li id="hornav1"><a href="@Url.Action("YearlySales", "Admin")">Year Sales</a></li>
-            </ul>
+            <div id="productBox">
+                <ul id="hornav">
+                    <li id="hornav1"><a class="active" href="@Url.Action("DailySale", "Admin")">DailySale</a></li>
+                    <li id="hornav1"><a href="@Url.Action("MonthSales", "Admin")" ">Month Sales</a></li>
+                    <li id="hornav1"><a href="@Url.Action("YearlySales", "Admin")">Year Sales</a></li>
+                </ul>
 
 
-            @{
-                var DailySale = ViewBag.data;
-            }
-
-            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
-
-
-
-
-
-            <div>
-                @using (Html.BeginForm())
-                {
-                    <input id="D1" name="Date1" type="date" value="">
-                    <input id="D1" name="Date2" type="date" value="">
-                    <a href='@Url.Action("DailySale", "Admin")'>
-                        <input id="Dsubmit" type="submit" value='Submit' />
-                    </a>
+                @{
+                    var DailySale = ViewBag.data;
                 }
-            </div>
 
-            <div class="container">
-                <canvas id="DailySale"></canvas>
-            </div>
-            <script>
+                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+                <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+
+
+
+
+                <div>
+                    @using (Html.BeginForm())
+                    {
+                        <input id="D1" name="Date1" type="date" value="">
+                        <input id="D1" name="Date2" type="date" value="">
+                        <a href='@Url.Action("DailySale", "Admin")'>
+                            <input id="Dsubmit" type="submit" value='Submit' />
+                        </a>
+                    }
+                </div>
+
+                <div class="container">
+                    <canvas id="DailySale"></canvas>
+                </div>
+                <script>
     var DailySale = document.getElementById('DailySale').getContext('2d');
 
     //Global Options
@@ -156,7 +156,18 @@ else
             }
         }
     });
-            </script>
+                </script>
+            </div>
         </div>
-    </div>
-                }
+    }
+    else
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+else
+{
+    Response.Redirect("/Login");
+
+}
