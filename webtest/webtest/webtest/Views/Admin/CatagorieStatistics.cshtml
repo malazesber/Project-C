@@ -4,68 +4,67 @@
     ViewBag.Title = "CatagorieStatistics";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-@if (Session["Admin_User"] == null)
+
+@if (Session["Admin"] != null)
 {
-    Response.Redirect("/Login");
-}
-else
-{
+    bool admin = Convert.ToBoolean(Session["Admin"]);
+    if (admin)
+    {
+        <head>
+            <link href="~/Content/Admin.css" rel="stylesheet" />
+        </head>
 
-<head>
-    <link href="~/Content/Admin.css" rel="stylesheet" />
-</head>
+        <div id="container">
 
-<div id="container">
+            <div class="sidenav">
+                <a href="@Url.Action("ProductList", "Admin")">Products</a>
+                <a href="@Url.Action("User", "Admin")">User accounts</a>
+                @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
+                <div class="submenu active">
+                    <a class="subMenubtn">
+                        Statistics
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <div class="submenu-content">
 
-    <div class="sidenav">
-        <a href="@Url.Action("ProductList", "Admin")">Products</a>
-        <a href="@Url.Action("User", "Admin")">User accounts</a>
-        @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
-        <div class="dropdown">
-            <button class="dropbtn">
-                Statistics
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
+                        @Html.ActionLink(
+                  "Daily Sale",                                                  // linkText
+                  "DailySale",                                    // actionName
+                  "Admin"                                                   // controllerName
 
-                @Html.ActionLink(
-          "Daily Sale",                                                  // linkText
-          "DailySale",                                    // actionName
-          "Admin"                                                   // controllerName
+             )
 
-     )
+                        @Html.ActionLink(
+                 "Category statistics",                                                  // linkText
+                 "CatagorieStatistics",                                    // actionName
+                 "Admin"                                                   // controllerName
 
-                @Html.ActionLink(
-         "Category statistics",                                                  // linkText
-         "CatagorieStatistics",                                    // actionName
-         "Admin"                                                   // controllerName
+            )
 
-    )
+                        @Html.ActionLink(
+                  "User/Order Statistics",                                                  // linkText
+                  "UserORderSta",                                    // actionName
+                  "Admin"                                                   // controllerName
 
-                @Html.ActionLink(
-          "User/Order Statistics",                                                  // linkText
-          "UserORderSta",                                    // actionName
-          "Admin"                                                   // controllerName
-
-     )
+             )
 
 
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div id="productBox">
-        @{
-            var CataSta = ViewBag.data;
-        }
+            <div id="productBox">
+                @{
+                    var CataSta = ViewBag.data;
+                }
 
-        <h2>Category Statistics</h2>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+                <h2>Category Statistics</h2>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 
-        <div class="container">
-            <canvas id="cataChart" width="400" height="200"></canvas>
-        </div>
-        <script>
+                <div class="container">
+                    <canvas id="cataChart" width="400" height="200"></canvas>
+                </div>
+                <script>
     let cataChart = document.getElementById('cataChart').getContext('2d');
 
     //Global Options
@@ -104,7 +103,7 @@ else
         options: {
             title: {
                 display: true,
-                text: ['Stock of each category if you hover on a slice of the pie you will see how many books we have from this category', 
+                text: ['Stock of each category if you hover on a slice of the pie you will see how many books we have from this category',
                 'to hide one of the categories clicks on the category name within the legends'],
                 fontSize: 15,
                 position: "top",
@@ -147,7 +146,18 @@ else
             //}
         }
     });
-        </script>
-    </div>
-</div>
-            }
+                </script>
+            </div>
+        </div>
+    }
+    else
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+else
+{
+    Response.Redirect("/Login");
+
+}

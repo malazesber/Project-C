@@ -1,0 +1,72 @@
+﻿@using webtest.Models
+@model Tuple<Order, OrderDetail, Payment>
+@{
+    ViewBag.Title = "Confirmationdetails";
+    Layout = null;
+}
+
+<head>
+    <link href="~/Content/Confirmation.css" rel="stylesheet" />
+</head>
+
+<div id="container">
+    <div class="grid-container">
+        <div id="title">Thank you for shopping in our website</div>
+        <div id="subtitle">In this page you can see the details of your order.</div>
+
+        <table>
+            <tr>
+                <th>Quantity</th>
+                <th>Title</th>
+                <th>Book Price</th>
+                <th>Total Price</th>
+            </tr>
+            @{
+                Dictionary<Book, int> bookQuantity = (Dictionary<Book, int>)Session["Checkout"];
+                decimal sum = 0;
+
+                foreach (var book in bookQuantity)
+                {
+
+                    decimal total = book.Key.Price * Convert.ToDecimal(book.Value);
+                    sum += total;
+                    <tr>
+                        <td>@book.Value</td>
+                        <td>@book.Key.Name</td>
+                        <td>€ @book.Key.Price</td>
+                        <td>€ @total</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <div class="grid-sub-container">
+            <div class="personalInfo">
+                <div class="subtitle">Personal information</div>
+                <p>@Model.Item2.Name @Model.Item2.Surname</p>
+                <p>@Model.Item2.Email</p>
+                <p>@Model.Item2.Street_Name @Model.Item2.House_number</p>
+                <p>@Model.Item2.Zip_code</p>
+                <p> @Model.Item2.Country</p>
+            </div>
+
+            <div class="orderInfoGrid">
+                <div class="subtitle">Order information</div>
+                <div class="orderInfoTitle">
+                    <p>Price</p>
+                    <p>Delivery Costs</p>
+                    <p>Total price</p>
+                </div>
+                <div class="orderInfoPrice">
+                    <p>€ @sum</p>
+                    <p>€ 0</p>
+                    <p>€ @sum</p>
+                </div>
+                <p>
+                    <b>Order date </b>@Model.Item2.OrderDate<br /><br />
+                    <b>Order number </b>@Model.Item1.Order_Number
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

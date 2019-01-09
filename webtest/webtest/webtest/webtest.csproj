@@ -58,6 +58,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -278,6 +281,10 @@
       <DependentUpon>RegisterModel.edmx</DependentUpon>
       <LastGenOutput>RegisterModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\alertify\alertify.js" />
     <Content Include="Scripts\alertify\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -292,6 +299,7 @@
     <Content Include="Models\RegisterModel.edmx.diagram">
       <DependentUpon>RegisterModel.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -340,6 +348,7 @@
     <Content Include="Views\Admin\ProductList.cshtml" />
     <Content Include="Views\Admin\MonthSales.cshtml" />
     <Content Include="Views\Admin\YearlySales.cshtml" />
+    <Content Include="Views\Checkout\Confirmationdetails.cshtml" />
     <None Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderHistory\OrderHistory.cshtml" />

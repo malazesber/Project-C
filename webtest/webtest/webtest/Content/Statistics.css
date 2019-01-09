@@ -67,7 +67,7 @@ li a {
     border: 1px #8a3366 solid;
 }
 
-.dropdown {
+/*.dropdown {
     float: left;
     overflow: hidden;
 }
@@ -112,7 +112,7 @@ li a {
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
+}*/
 
 #Dsubmit {
     display: inline-block;

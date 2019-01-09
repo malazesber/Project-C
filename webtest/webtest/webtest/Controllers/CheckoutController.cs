@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using webtest.Models;
-
+using Rotativa;
 
 namespace webtest.Controllers
 {
@@ -254,6 +254,7 @@ namespace webtest.Controllers
 
                             db.SaveChanges();
 
+
                             return RedirectToAction("Confirmation", new { orderNumber = Ordernumber });
                         }
                         else
@@ -366,9 +367,11 @@ namespace webtest.Controllers
                 Order orderObj = db.Orders.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
                 OrderDetail orderDetailObj = db.OrderDetails.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
                 Payment paymentObj = db.Payments.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
+                int currentuser_id = Convert.ToInt32(Session["User_id"]);
+                User currentuser = db.Users.Where(x => x.User_id == currentuser_id).FirstOrDefault();
 
-
-
+                string Email = Convert.ToString(currentuser.Email);
+                SendConEmail(Email, orderNumber);
                 // GET PRODUCTS
                 string[] products = orderDetailObj.Products.Split('|');
 
@@ -397,9 +400,41 @@ namespace webtest.Controllers
                     Session["ShoppingCart"] = null;
                 }
             }
+            
+            
             return View(info);
         }
+        public ActionResult Confirmationdetails(int orderNumber)
+        {
 
+            Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();
+            Tuple<Order, OrderDetail, Payment> info;
+            using (var db = new DatabaseEntities1())
+            {
+                Order orderObj = db.Orders.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
+                OrderDetail orderDetailObj = db.OrderDetails.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
+                Payment paymentObj = db.Payments.Where(x => x.Order_Number == orderNumber).FirstOrDefault();
+
+
+
+                // GET PRODUCTS
+                string[] products = orderDetailObj.Products.Split('|');
+
+                foreach (var item in products)
+                {
+                    string[] books = item.Split('-');
+                    double isbn = Convert.ToDouble(books[0]);
+                    Book book = db.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
+                    int quantity = Convert.ToInt32(books[1]);
+                    BookQuantity.Add(book, quantity);
+                }
+
+                info = new Tuple<Order, OrderDetail, Payment>(orderObj, orderDetailObj, paymentObj);
+
+                Session["Checkout"] = BookQuantity;
+            }
+            return View(info);
+        }
 
         [NonAction]
         public void SendVerificationLinkEmail(string email, string activationCode, string emailFor = "VerifyAccount")
@@ -447,6 +482,45 @@ namespace webtest.Controllers
                 smtp.Send(message);
         }
 
+        [NonAction]
+        public void SendConEmail(string email, int orderNumber)
+        {
+            var verifyUrl = "/Checkout/" + "Confirmationdetails" + "?orderNumber=" + orderNumber;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+            var fromEmail = new MailAddress("bookus094@gmail.com", "BookStore");
+            var toEmail = new MailAddress(email);
+            var fromEmailPassword = "Hogeschool_rotterdam1";
+
+            string subject = "";
+            string body = "";
+            
+                subject = "Your account is successfully created";
+
+                body = "<br/><br/> Thank you for shopping by BooksRus" +
+                   " Where doing our best to deliver your books as soon as possible. If you click on the link below you will be directed to your order conformation" +
+                   " <br/><br/><a herf='" + link + "'>" + link + "</a> ";
+            
+
+          
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
+        }
 
     }
 }

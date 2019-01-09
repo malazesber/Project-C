@@ -149,6 +149,74 @@
 
     </div>
 
+    @{
+        var _database = new DatabaseEntities1();
+        string starsPerc;
+        Decimal rating = 0;
+        int countTotal = 0;
+
+        // Variables for the star rating bars
+        int count1 = 0;
+        int count2 = 0;
+        int count3 = 0;
+        int count4 = 0;
+        int count5 = 0;
+
+        string percentRating1 = "0%";
+        string percentRating2 = "0%";
+        string percentRating3 = "0%";
+        string percentRating4 = "0%";
+        string percentRating5 = "0%";
+
+
+        try
+        {
+            var query = from r in _database.Reviews
+                        where r.ISBN == Model.Item1.ISBN
+                        select r.Rating;
+
+            // Gets the average rating per book
+            rating = query.Average();
+
+            // Gets the total amount of reviews given
+            countTotal = query.Count();
+
+            // Calculates the % rating to color the stars based on given reviews
+            var stars = (rating * 20).ToString();
+            starsPerc = stars + "%";
+
+            // Function to calculate the amount of reviews given per star
+            int countperStar(int star)
+            {
+                var count = (from r in _database.Reviews
+                             where r.ISBN == Model.Item1.ISBN
+                             && r.Rating == star
+                             select r.Rating).Count();
+
+                return count;
+            }
+
+            count1 = countperStar(1);
+            count2 = countperStar(2);
+            count3 = countperStar(3);
+            count4 = countperStar(4);
+            count5 = countperStar(5);
+
+            percentRating1 = (count1 * 100 / countTotal).ToString() + "%";
+            percentRating2 = (count2 * 100 / countTotal).ToString() + "%";
+            percentRating3 = (count3 * 100 / countTotal).ToString() + "%";
+            percentRating4 = (count4 * 100 / countTotal).ToString() + "%";
+            percentRating5 = (count5 * 100 / countTotal).ToString() + "%";
+
+
+        }
+        catch
+        {
+            starsPerc = "0%";
+        }
+
+    }
+
     @* Review box *@
     <div id="reviewBox">
         <div id="miTitle">Review</div>
@@ -187,93 +255,22 @@
             }
         }
 
-        @{
-            var _database = new DatabaseEntities1();
-            string starsPerc;
-            Decimal rating;
-            int countTotal = 0;
+        <div class="ratingbox">
+            <div class="heading">Customer rating</div>
 
-            // Variables for the star rating bars
-            int count1 = 0;
-            int count2 = 0;
-            int count3 = 0;
-            int count4 = 0;
-            int count5 = 0;
-
-            string percentRating1 = "0%";
-            string percentRating2 = "0%";
-            string percentRating3 = "0%";
-            string percentRating4 = "0%";
-            string percentRating5 = "0%";
-
-
-            try
-            {
-                var query = from r in _database.Reviews
-                            where r.ISBN == Model.Item1.ISBN
-                            select r.Rating;
-
-                // Gets the average rating per book
-                rating = query.Average();
-
-                // Gets the total amount of reviews given
-                countTotal = query.Count();
-
-                // Calculates the % rating to color the stars based on given reviews
-                var stars = (rating * 20).ToString();
-                starsPerc = stars + "%";
-
-                // Function to calculate the amount of reviews given per star
-                int countperStar(int star)
-                {
-                    var count = (from r in _database.Reviews
-                                 where r.ISBN == Model.Item1.ISBN
-                                 && r.Rating == star
-                                 select r.Rating).Count();
-
-                    return count;
-                }
-
-                count1 = countperStar(1);
-                count2 = countperStar(2);
-                count3 = countperStar(3);
-                count4 = countperStar(4);
-                count5 = countperStar(5);
-
-                percentRating1 = (count1 * 100 / countTotal).ToString() + "%";
-                percentRating2 = (count2 * 100 / countTotal).ToString() + "%";
-                percentRating3 = (count3 * 100 / countTotal).ToString() + "%";
-                percentRating4 = (count4 * 100 / countTotal).ToString() + "%";
-                percentRating5 = (count5 * 100 / countTotal).ToString() + "%";
-
-
-            }
-            catch
-            {
-                // Calculates the % rating to color the stars based on the ratings in the table Book
-                rating = Model.Item1.Rating;
-                var stars = (Model.Item1.Rating * 20).ToString();
-                starsPerc = stars + "%";
-            }
-
-        }
-
-        @{ try
+            @if (countTotal != 0)
             {
 
-                <div class="ratingbox">
-                    <div class="heading">Customer rating</div>
-
-                    <!-- Star rating -->
-                    <label id="miLabel" class="star-ratings-sprite">
-                        <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
-                    </label>
-                    <div style="margin-left:15px">@String.Format("{0:0.0}", rating) average based on @countTotal reviews.</div>
-                    <hr style="border:3px solid #f1f1f1">
-
+                <!-- Star rating -->
+                <label id="miLabel" class="star-ratings-sprite">
+                    <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
+                </label>
+                <div style="margin-left:15px">@String.Format("{0:0.0}", rating) average based on @countTotal reviews.</div>
+                <hr style="border:3px solid #f1f1f1">
+                <div>
                     <!-- Five star bar -->
                     <div class="row">
-                        <div class="side">
+                        <div class="side left">
                             <div>5 star</div>
                         </div>
                         <div class="middle">
@@ -282,13 +279,13 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@count5</div>
+                            <div>@count5 votes</div>
                         </div>
                     </div>
 
                     <!-- Four star bar -->
                     <div class="row">
-                        <div class="side">
+                        <div class="side  left">
                             <div>4 star</div>
                         </div>
                         <div class="middle">
@@ -297,13 +294,13 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@count4</div>
+                            <div>@count4 votes</div>
                         </div>
                     </div>
 
                     <!-- Three star bar -->
                     <div class="row">
-                        <div class="side">
+                        <div class="side  left">
                             <div>3 star</div>
                         </div>
                         <div class="middle">
@@ -312,13 +309,13 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@count3</div>
+                            <div>@count3 votes</div>
                         </div>
                     </div>
 
                     <!-- Two star bar -->
                     <div class="row">
-                        <div class="side">
+                        <div class="side  left">
                             <div>2 star</div>
                         </div>
                         <div class="middle">
@@ -327,13 +324,13 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@count2</div>
+                            <div>@count2 votes</div>
                         </div>
                     </div>
 
                     <!-- One star bar -->
                     <div class="row">
-                        <div class="side">
+                        <div class="side  left">
                             <div>1 star</div>
                         </div>
                         <div class="middle">
@@ -342,7 +339,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@count1</div>
+                            <div>@count1 votes</div>
                         </div>
                     </div>
 
@@ -401,12 +398,27 @@
                 }
 
             }
-            catch
-            {
-                <div style="margin-left: 15px">No reviews yet.</div>
-            }
-        }
 
+
+            else
+            {
+                bool admin = Convert.ToBoolean(Session["Admin"]);
+                if (Session["ReviewInput"] != null || admin)
+                {
+                    <div style="margin-left: 15px">
+                        Be the first one to submit a review for this book! <br />
+                    </div>
+                }
+                else
+                {
+                    <div style="margin-left: 15px">
+                        Be the first one to submit a review for this book! <br />
+                        <p><a href="@Url.Action("Index", "Login")" class="loginbtn">Log in</a> now if you've read it!</p>
+                    </div>
+                }
+
+            }
+        </div>
     </div>
 </div>
 

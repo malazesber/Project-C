@@ -3,69 +3,69 @@
     ViewBag.Title = "UserOrderSta";
     Layout = "~/Views/Shared/_customLayout.cshtml";
 }
-@if (Session["Admin_User"] == null)
-{
-    Response.Redirect("/Login");
-}
-else
-{
-    <head>
-        <link href="~/Content/Admin.css" rel="stylesheet" />
-    </head>
 
-    <div id="container">
+@if (Session["Admin"] != null)
+{
+    bool admin = Convert.ToBoolean(Session["Admin"]);
+    if (admin)
+    {
+        <head>
+            <link href="~/Content/Admin.css" rel="stylesheet" />
+        </head>
 
         <div id="container">
 
-            <div class="sidenav">
-                <a href="@Url.Action("ProductList", "Admin")">Products</a>
-                <a href="@Url.Action("User", "Admin")">User accounts</a>
-                @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Statistics
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
+            <div id="container">
 
-                        @Html.ActionLink(
-                             "Daily Sale",                                                  // linkText
-                             "DailySale",                                    // actionName
-                             "Admin"                                                   // controllerName
+                <div class="sidenav">
+                    <a href="@Url.Action("ProductList", "Admin")">Products</a>
+                    <a href="@Url.Action("User", "Admin")">User accounts</a>
+                    @*<a href="@Url.Action("DailySale", "Admin") ">Statistics</a>*@
+                    <div class="submenu active">
+                        <a class="subMenubtn">
+                            Statistics
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="submenu-content">
 
-                        )
+                            @Html.ActionLink(
+"Daily Sale",                                                  // linkText
+"DailySale",                                    // actionName
+"Admin"                                                   // controllerName
 
-                        @Html.ActionLink(
-                            "Catagory statistics",                                                  // linkText
-                            "CatagorieStatistics",                                    // actionName
-                            "Admin"                                                   // controllerName
+)
 
-                       )
+                            @Html.ActionLink(
+"Catagory statistics",                                                  // linkText
+"CatagorieStatistics",                                    // actionName
+"Admin"                                                   // controllerName
 
-                        @Html.ActionLink(
-                             "User/Order Statistics",                                                  // linkText
-                             "UserORderSta",                                    // actionName
-                             "Admin"                                                   // controllerName
+)
 
-                        )
+                            @Html.ActionLink(
+"User/Order Statistics",                                                  // linkText
+"UserORderSta",                                    // actionName
+"Admin"                                                   // controllerName
+
+)
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="productBox">
-                @{
-                    var UserOrderSta = ViewBag.data;
-                }
-                <h2>User/Order Statistics</h2>
+                <div id="productBox">
+                    @{
+                        var UserOrderSta = ViewBag.data;
+                    }
+                    <h2>User/Order Statistics</h2>
 
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 
-                <div class="container">
-                    <canvas id="UserOrderSta"></canvas>
+                    <div class="container">
+                        <canvas id="UserOrderSta"></canvas>
+                    </div>
                 </div>
-    </div>
                 <script>
     let UserOrderSta = document.getElementById('UserOrderSta').getContext('2d');
 
@@ -135,5 +135,14 @@ else
                 </script>
             </div>
         </div>
-        }
+    }
+
+    else
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+else
+{
+    Response.Redirect("/Login");
 }
