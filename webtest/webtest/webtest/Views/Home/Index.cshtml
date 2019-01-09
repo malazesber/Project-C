@@ -169,11 +169,10 @@
                                         starsPerc = stars + "%";
                                     }
 
-                                    // When there are no reviews yet then it takes the rating in Model.Books
+                                    // When there are no reviews yet
                                     catch
                                     {
-                                        var stars = (book.Rating * 20).ToString();
-                                        starsPerc = stars + "%";
+                                        starsPerc = "0%";
                                     }
                                 }
 

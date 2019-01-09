@@ -374,8 +374,7 @@ namespace webtest.Controllers
                     // Gets the old rating in the book table
                     else
                     {
-                        bool ratingFromBook = m.Rating >= rating && m.Rating < rating + 1;
-                        return ratingFromBook;
+                        return false;
                     }
                 }
             ).ToList();
