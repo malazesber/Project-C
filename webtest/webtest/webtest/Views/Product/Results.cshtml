@@ -52,7 +52,7 @@
                     <input name="minPrice" , value="@Request.QueryString["minPrice"]" , style=" display:none">
                     <input name="maxPrice" , value="@Request.QueryString["maxPrice"]" , style="display:none">
                     <input name="Category" , value="@Request.QueryString["Category"]" , style=" display:none">
-                    <input name="Rating" ,value="@Request.QueryString["Rating"]" , style="display:none">
+                    <input name="Rating" , value="@Request.QueryString["Rating"]" , style="display:none">
 
                     <button id="submitOrderItems" , style="display:none"></button>
                 }
@@ -178,12 +178,12 @@
                             if (has)
                             {
                                 <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})" id="btnWishList" class="fa fa-heart" onclick="return true" />
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], ISBN = m.ISBN.ToString(), type = "favorite"})" id="btnWishList" class="fa fa-heart" onclick="return true" />
                             }
                             else
                             {
                                 <a href="@Url.Action("Results", new { page = Request.QueryString["page"], search = Request.QueryString["search"], Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], ISBN = m.ISBN.ToString(), type = "favorite"})" id="btnWishList" class="fa fa-heart-o" onclick="return true" />
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], ISBN = m.ISBN.ToString(), type = "favorite"})" id="btnWishList" class="fa fa-heart-o" onclick="return true" />
                             }
                         }
                     }
@@ -204,12 +204,12 @@
                             if (hasCart)
                             {
                                 <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
                             }
                             else
                             {
                                 <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
                             }
 
                         }
@@ -218,7 +218,7 @@
                             if (Session["shoppingCart"] == null)
                             {
                                 <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-                                MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+                                MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
                             }
                             else
                             {
@@ -227,12 +227,12 @@
                                 if (isbns.Contains(m.ISBN.ToString()))
                                 {
                                     <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], isbn = m.ISBN, type = "cart"})" id="btnCart">Remove From Cart</a>
                                 }
                                 else
                                 {
                                     <a href="@Url.Action("Results", "Product", new {page = Request.QueryString["page"], search = Request.QueryString["search"],Category = Request.QueryString["Category"] , Order = Request.QueryString["Order"] ,MinPrice = Request.QueryString["MinPrice"],
-       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
+       MaxPrice = Request.QueryString["MaxPrice"], Rating = Request.QueryString["Rating"], Pagination = Request.QueryString["Pagination"], isbn = m.ISBN, type = "cart"})" id="btnCart">Add to Cart</a>
                                 }
                             }
                         }
