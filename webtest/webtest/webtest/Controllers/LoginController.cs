@@ -28,15 +28,6 @@ namespace webtest.Controllers
                 var Data = db.Users.Where(x => x.Email == userModel.Email
                  && x.Password == userPassword).FirstOrDefault();
 
-                if(userData.Type)
-                {
-                    Session["Admin"] = true;
-                }
-                else
-                {
-                    Session["Admin"] = false;
-                }
-
                 if (userData == null)
                 {
                     userModel.LoginErrorMessage = "Wrong Email or Password";
@@ -50,7 +41,15 @@ namespace webtest.Controllers
                 }
                 else
                 {
-  
+                    if (userData.Type)
+                    {
+                        Session["Admin"] = true;
+                    }
+                    else
+                    {
+                        Session["Admin"] = false;
+                    }
+
                     Session["User_id"] = userData.User_id;
                     Session["Name"] = userData.Name;
                     
