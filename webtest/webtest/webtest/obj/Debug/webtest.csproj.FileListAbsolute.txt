@@ -2540,3 +2540,4 @@ C:\Users\charl\Source\Repos\versie1\Project-C\webtest\webtest\webtest\obj\Debug\
 C:\Users\charl\Source\Repos\versie1\Project-C\webtest\webtest\webtest\obj\Debug\webtest.csproj.CopyComplete
 C:\Users\charl\Source\Repos\versie1\Project-C\webtest\webtest\webtest\obj\Debug\webtest.dll
 C:\Users\charl\Source\Repos\versie1\Project-C\webtest\webtest\webtest\obj\Debug\webtest.pdb
+C:\Users\malaz\Documents\GitHub\Project-C\webtest\webtest\webtest\bin\Rotativa.dll
