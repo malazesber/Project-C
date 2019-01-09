@@ -16,30 +16,6 @@
             DatabaseEntities1 db = new DatabaseEntities1();
             DateTime today = DateTime.Today;
 
-            // Kort de samenvattingen bij de slide show in
-            string SummaryFunction(string summary)
-            {
-                var mktText = summary;
-                if (mktText == null || mktText == "")
-                {
-                    mktText = "";
-                }
-                else
-                {
-                    if (mktText.Length > 800)
-                    {
-                        var pos = mktText.LastIndexOf(" ", 800);
-
-                        mktText = mktText.Substring(0, pos) + "...";
-                    }
-                    else
-                    {
-                        mktText = summary;
-                    }
-                }
-                return mktText;
-            }
-
             // Most populair books
             // Select all the order details
             Dictionary<Book, int> BookQuantity = new Dictionary<Book, int>();

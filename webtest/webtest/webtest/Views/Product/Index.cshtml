@@ -260,90 +260,103 @@
 
             @if (countTotal != 0)
             {
-
-                <!-- Star rating -->
-                <label id="miLabel" class="star-ratings-sprite">
-                    <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
-                </label>
-                <div style="margin-left:15px">@String.Format("{0:0.0}", rating) average based on @countTotal reviews.</div>
                 <hr style="border:3px solid #f1f1f1">
-                <div>
-                    <!-- Five star bar -->
-                    <div class="row">
-                        <div class="side left">
-                            <div>5 star</div>
-                        </div>
-                        <div class="middle">
-                            <div class="bar-container">
-                                <div class="bar-5" style="width: @percentRating5"></div>
+                <div class="grid-container">
+
+                    <div class="barRatings">
+                        <div>
+                            <!-- Five star bar -->
+                            <div class="row">
+                                <div class="side left">
+                                    <div>5 star</div>
+                                </div>
+                                <div class="middle">
+                                    <div class="bar-container">
+                                        <div class="bar-5" style="width: @percentRating5"></div>
+                                    </div>
+                                </div>
+                                <div class="side right">
+                                    <div>@count5 votes</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="side right">
-                            <div>@count5 votes</div>
+
+                            <!-- Four star bar -->
+                            <div class="row">
+                                <div class="side  left">
+                                    <div>4 star</div>
+                                </div>
+                                <div class="middle">
+                                    <div class="bar-container">
+                                        <div class="bar-4" style="width: @percentRating4"></div>
+                                    </div>
+                                </div>
+                                <div class="side right">
+                                    <div>@count4 votes</div>
+                                </div>
+                            </div>
+
+                            <!-- Three star bar -->
+                            <div class="row">
+                                <div class="side  left">
+                                    <div>3 star</div>
+                                </div>
+                                <div class="middle">
+                                    <div class="bar-container">
+                                        <div class="bar-3" style="width: @percentRating3"></div>
+                                    </div>
+                                </div>
+                                <div class="side right">
+                                    <div>@count3 votes</div>
+                                </div>
+                            </div>
+
+                            <!-- Two star bar -->
+                            <div class="row">
+                                <div class="side  left">
+                                    <div>2 star</div>
+                                </div>
+                                <div class="middle">
+                                    <div class="bar-container">
+                                        <div class="bar-2" style="width: @percentRating2"></div>
+                                    </div>
+                                </div>
+                                <div class="side right">
+                                    <div>@count2 votes</div>
+                                </div>
+                            </div>
+
+                            <!-- One star bar -->
+                            <div class="row">
+                                <div class="side  left">
+                                    <div>1 star</div>
+                                </div>
+                                <div class="middle">
+                                    <div class="bar-container">
+                                        <div class="bar-1" style="width:@percentRating1"></div>
+                                    </div>
+                                </div>
+                                <div class="side right">
+                                    <div>@count1 votes</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Four star bar -->
-                    <div class="row">
-                        <div class="side  left">
-                            <div>4 star</div>
-                        </div>
-                        <div class="middle">
-                            <div class="bar-container">
-                                <div class="bar-4" style="width: @percentRating4"></div>
-                            </div>
-                        </div>
-                        <div class="side right">
-                            <div>@count4 votes</div>
-                        </div>
-                    </div>
+                    <div class="overviewRating">
+                        <div class="overviewRatingBox">
+                            <div class="ratingAverage">@String.Format("{0:0.0}", rating)</div>
 
-                    <!-- Three star bar -->
-                    <div class="row">
-                        <div class="side  left">
-                            <div>3 star</div>
-                        </div>
-                        <div class="middle">
-                            <div class="bar-container">
-                                <div class="bar-3" style="width: @percentRating3"></div>
-                            </div>
-                        </div>
-                        <div class="side right">
-                            <div>@count3 votes</div>
-                        </div>
-                    </div>
+                            <!-- Star rating -->
+                            <label class="star-ratings-sprite starRatingPosition">
+                                <span style="width:@starsPerc" class="star-ratings-sprite-rating"></span>
+                            </label>
 
-                    <!-- Two star bar -->
-                    <div class="row">
-                        <div class="side  left">
-                            <div>2 star</div>
+                            <div>Based on @countTotal review(s)</div>
                         </div>
-                        <div class="middle">
-                            <div class="bar-container">
-                                <div class="bar-2" style="width: @percentRating2"></div>
-                            </div>
-                        </div>
-                        <div class="side right">
-                            <div>@count2 votes</div>
-                        </div>
-                    </div>
 
-                    <!-- One star bar -->
-                    <div class="row">
-                        <div class="side  left">
-                            <div>1 star</div>
-                        </div>
-                        <div class="middle">
-                            <div class="bar-container">
-                                <div class="bar-1" style="width:@percentRating1"></div>
-                            </div>
-                        </div>
-                        <div class="side right">
-                            <div>@count1 votes</div>
-                        </div>
                     </div>
-
                 </div>
+                <hr style="border:3px solid #f1f1f1">
 
                 var _db = new DatabaseEntities1();
                 var listReviews = _db.Reviews.Where(m => m.ISBN == Model.Item2.ISBN).ToList();

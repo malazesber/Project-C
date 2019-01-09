@@ -269,7 +269,6 @@ span {
     float: left;
     width: 15%;
     margin-top: 10px;
-    margin-left: 15px;
 }
 
 .middle {
@@ -283,6 +282,7 @@ span {
     text-align: left;
     width: 9%;
     margin-right: 25px;
+    margin-left: 20px;
 }
 
 .left {
@@ -407,6 +407,7 @@ span {
     padding: 8px 15px;
     border-radius: 6px;
     text-decoration: none;
+    border: none;
     width: 155px;
     margin-bottom: 15px;
     margin-left: 15px;
@@ -431,4 +432,37 @@ span {
     margin-top: 5px;
     display: block;
     margin-bottom: -60px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    margin-bottom: 15px;
+}
+
+.barRatings {
+    display: inline-grid;
+}
+
+.overviewRating {
+    display: inline-grid;
+}
+
+.overviewRatingBox {
+    width: 70%;
+    height: auto;
+    margin: auto;
+    text-align: center;
+}
+
+.starRatingPosition {
+    display: block;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 18%;
+    margin-bottom: 5px;
+}
+
+.ratingAverage {
+    font-size: 30px;
 }
