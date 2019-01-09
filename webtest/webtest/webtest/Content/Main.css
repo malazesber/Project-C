@@ -13,7 +13,11 @@ body {
     margin-left: 50px;
     margin-right: 25px;
 }
-
+.error {
+    margin-top: 2px;
+    margin-bottom: 3px;
+    color: red;
+}
 header {
     background: #8a3366;
     color: #FFF;
