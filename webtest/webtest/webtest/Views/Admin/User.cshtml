@@ -14,6 +14,7 @@
     <script src="~/Scripts/alertify/alertify.min.js"></script>
 </head>
 
+<body onkeydown="EnterKeyFilter"></body>
 <div id="container">
     <div class="sidenav">
         <a href="@Url.Action("ProductList", "Admin")">Products</a>
@@ -49,33 +50,42 @@
             <div class="title">Edit product information</div>
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
-                <div id="edit">
-                    <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Model.Name" /><br />
-                    <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Model.Surname" /><br />
-                    <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Model.Email" /><br />
-                    <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Model.Phone_number" /><br />
-                    <select id="TypeChange" , class="dropdownFilters inputField">
-                        <option>Select Type</option>
-                        <option value="true" @if (Model.Type == true) { <text> selected="selected" </text> }> true</option>
-                        <option value="false" @if (Model.Type == false) { <text> selected="selected" </text> }> false</option>
-                    </select><br />
-                    <select id="EmailVerifiedChange" , class="dropdownFilters inputField">
-                        <option>Select Email Verified</option>
-                        <option value="true" @if (Model.IsEmailVerified == true) { <text> selected="selected" </text> }> true</option>
-                        <option value="false" @if (Model.IsEmailVerified == false) { <text> selected="selected" </text> }> false</option>
-                    </select><br />
+            <div id="edit">
+                <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Model.Name"
+                       pattern="[A-Z][a-z]*" required
+                       title="Your name cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+                <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Model.Surname"
+                       pattern="[A-Z][a-z]*" required
+                       title="Your surname cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+                <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Model.Email" /><br />
+                <p id="emailError" , style="display:none" class="error">Please enter a valid email.</p>
+                <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Model.Phone_number"
+                       pattern="([0-9]{10})" required
+                               title="Pleas enter a valid phone number."/><br />
+                <select id="TypeChange" , class="dropdownFilters inputField">
+                    <option>Select Type</option>
+                    <option value="true" @if (Model.Type == true) { <text> selected="selected" </text> }> true</option>
+                    <option value="false" @if (Model.Type == false) { <text> selected="selected" </text> }> false</option>
+                </select><br />
+                <select id="EmailVerifiedChange" , class="dropdownFilters inputField">
+                    <option>Select Email Verified</option>
+                    <option value="true" @if (Model.IsEmailVerified == true) { <text> selected="selected" </text> }> true</option>
+                    <option value="false" @if (Model.IsEmailVerified == false) { <text> selected="selected" </text> }> false</option>
+                </select><br />
 
-                    <input id="TypeInputChange" type="text" name="Type" , style="display:none">
-                    <input id="EmailVerifiedInputChange" type="text" name="EmailVerified" , style="display:none">>
-                    <input name="User_id" , value="@Model.User_id" , style="display:none" />
+                <input id="TypeInputChange" type="text" name="Type" , style="display:none">
+                <input id="EmailVerifiedInputChange" type="text" name="EmailVerified" , style="display:none">>
+                <input name="User_id" , value="@Model.User_id" , style="display:none" />
 
-                    <button class="btn" , onclick="setChange()">Apply changes</button>
+                <button id="btnEdit" , style="display:none">Apply changes</button>
 
-                    <input type="hidden" name="change" value="true" />
+                <input type="hidden" name="change" value="true" />
 
-                    <a href="@Url.Action("User", "Admin", new {User_id = Model.User_id, cancel = true})" id="btnCancel" , onclick="return confirm('Are you sure you want to cancel?');">Cancel</a>
-                </div>
+                <a href="@Url.Action("User", "Admin", new {User_id = Model.User_id, cancel = true})" id="btnCancel" , onclick="return confirm('Are you sure you want to cancel?');">Cancel</a>
+            </div>
+
             }
+            <button class="btn" , onclick="setChange()">Apply changes</button>
         }
 
         @if (Session["Add_User"] != null)
@@ -102,7 +112,7 @@
 
                         <label for="Phone Number"> <b>Phone Number</b> </label>
                         <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" ,
-                               pattern="^[0-9-+s()]*$" required
+                               pattern="([0-9]{10})" required
                                title="Pleas enter a valid phone number." /><br />
 
                         <input type="text" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]"
@@ -172,16 +182,6 @@
             check = false;
         }
 
-        //CHECK CONFIRM PASSWORD
-        var pass = document.getElementsByName("Password")[0].value;
-        var confpass = document.getElementsByName("ConfirmPassword")[0].value;
-        if (pass === confpass) {
-            document.getElementById("confirmPassError").style.display = "none";
-        } else {
-            document.getElementById("confirmPassError").style.display = "block";
-            check = false;
-        }
-
 
         if (check) {
             document.getElementById('btnProceed').click();
@@ -194,6 +194,31 @@
 
         var EmailVerified = document.getElementById("EmailVerifiedChange");
         document.getElementById("EmailVerifiedInputChange").value = EmailVerified.options[EmailVerified.selectedIndex].value;
+
+        var check = true;
+        ////VALIDATE EMAIL
+
+        var emailre = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var email = document.getElementsByName("Email")[0].value;
+        if (email.match(emailre)) {
+            document.getElementById("emailError").style.display = "none";
+        } else {
+            document.getElementById("emailError").style.display = "block";
+            check = false;
+        }
+
+
+
+        if (check) {
+            document.getElementById('btnEdit').click();
+        }
+    }
+
+    function EnterKeyFilter() {
+        if (window.event.keyCode == 13) {
+            event.returnValue = false;
+            event.cancel = true;
+        }
     }
 
 </script>
