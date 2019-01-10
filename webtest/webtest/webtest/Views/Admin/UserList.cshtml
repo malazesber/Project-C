@@ -49,7 +49,7 @@
                     {
                         <tr>
                             <td style="width:10%">@m.User_id</td>
-                            <td style="width:40%">@m.Name</td>
+                            <td style="width:40%">@m.Name @m.Surname</td>
                             <td style="width:15%">@m.Email</td>
                             <td style="width:10%">
                                 <a href="@Url.Action("User", "Admin", new {User_id = m.User_id})" class="tooltip fa fa-eye">
