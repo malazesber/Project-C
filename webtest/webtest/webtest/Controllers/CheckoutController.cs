@@ -370,8 +370,16 @@ namespace webtest.Controllers
                 int currentuser_id = Convert.ToInt32(Session["User_id"]);
                 User currentuser = db.Users.Where(x => x.User_id == currentuser_id).FirstOrDefault();
 
-                string Email = Convert.ToString(currentuser.Email);
-                SendConEmail(Email, orderNumber);
+                if (Session["User_id"] != null)
+                {
+                    string Email = Convert.ToString(currentuser.Email);
+                    SendConEmail(Email, orderNumber);
+                }
+                else
+                {
+                    string Email = Convert.ToString(orderDetailObj.Email);
+                    SendConEmail(Email, orderNumber);
+                }
                 // GET PRODUCTS
                 string[] products = orderDetailObj.Products.Split('|');
 
