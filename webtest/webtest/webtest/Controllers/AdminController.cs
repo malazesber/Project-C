@@ -61,12 +61,15 @@ namespace webtest.Controllers
                     db.SaveChanges();
 
                     Session["Admin_Book"] = true;
+                    Session["Edit_Book"] = null;
                     Session["Add_Book"] = null;
                     add = false;
 
                     Book selectedBook = (from b in db.Books
                                        where b.ISBN == isbn
                                        select b).FirstOrDefault();
+
+                    TempData["AlertifyProduct"] = "<script>alertify.success('Succesfully added product !');</script>";
                     return View(selectedBook);
                 }
 
@@ -109,6 +112,7 @@ namespace webtest.Controllers
                     Session["Edit_Book"] = null;
                     change = false;
                     Session["Admin_Book"] = db.Books.Where(m => m.ISBN == isbn).FirstOrDefault();
+                    TempData["AlertifyProduct"] = "<script>alertify.success('Succesfully edited product !');</script>";
                     return View(db.Books.Where(m => m.ISBN == isbn).FirstOrDefault());
                 }
 
@@ -144,7 +148,8 @@ namespace webtest.Controllers
 
                 delete = false;
                 Session["Admin_BookList"] = null;
-                return View();
+                TempData["AlertifyProduct"] = "<script>alertify.success('Succesfully deleted product !');</script>";
+
             }
 
             // Find product by title and ISBN
@@ -171,10 +176,10 @@ namespace webtest.Controllers
             {
                 db.Users.Remove(db.Users.Where(m => m.User_id == User_id).FirstOrDefault());
                 db.SaveChanges();
-
+                TempData["AlertifyUser"] = "<script>alertify.success('Succesfully deleted user !');</script>";
                 delete = false;
                 Session["Admin_UserList"] = null;
-                return View();
+                
             }
 
             // Find product by title and ISBN
@@ -217,7 +222,7 @@ namespace webtest.Controllers
                     Session["Admin_User"] = null;
                     delete = false;
 
-                    TempData["Success"] = "<script>alertify.success('Succesfully deleted user !');</script>";
+                    TempData["AlertifyUser"] = "<script>alertify.success('Succesfully deleted user !');</script>";
                     return View();
                 }
 
@@ -249,12 +254,12 @@ namespace webtest.Controllers
 
                         db.SaveChanges();
 
-                        TempData["Success"] = "<script>alertify.success('Succesfully edited user !');</script>";
+                        TempData["AlertifyUser"] = "<script>alertify.success('Succesfully edited user !');</script>";
 
                     }
                     catch (Exception exception)
                     {
-                        TempData["Success"] = "<script>alertify.success('Problem adding !');</script>";
+                        TempData["AlertifyUser"] = "<script>alertify.success('Problem adding !');</script>";
                     }
 
                     Session["Edit_User"] = null;
@@ -300,11 +305,11 @@ namespace webtest.Controllers
 
                     db.Users.Add(addUser);
                     db.SaveChanges();
-                    TempData["Success"] = "<script>alertify.success('Added to database !');</script>";
+                    TempData["AlertifyUser"] = "<script>alertify.success('Added to database !');</script>";
                 }
                 else
                 {
-                    TempData["emailError"] = "<script>alertify.error('Email already exists');</script>";
+                    TempData["AlertifyUser"] = "<script>alertify.error('Email already exists');</script>";
 
                 }
 
