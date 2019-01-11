@@ -244,7 +244,7 @@
 
                     <!-- Input filed summary -->
                     <label class="labelreview" for="summary"> <b>Review</b> </label><br />
-                    <textarea type="text" name="review" placeholder="Review" class="inputFieldSummary" rows="6" maxlength="3000" minlength="10" value="@Request.QueryString["Review"]"></textarea><br />
+                    <textarea type="text" name="review" placeholder="Review" class="inputFieldSummary" rows="6" maxlength="1000" minlength="10" value="@Request.QueryString["Review"]"></textarea><br />
 
                     <!-- Input fields that are not visible for the users -->
                     <input type="hidden" name="ISBN" placeholder="ISBN" , value="@Model.Item1.ISBN"><br />
