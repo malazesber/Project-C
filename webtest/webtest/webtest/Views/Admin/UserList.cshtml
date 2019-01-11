@@ -41,16 +41,16 @@
                 <table>
                     <tr>
                         <th style="width:10%">User_id</th>
-                        <th style="width:40%">Name</th>
-                        <th style="width:15%">Email</th>
+                        <th style="width:25%">Name</th>
+                        <th style="width:30%">Email</th>
                         <th style="width:10%">Options</th>
                     </tr>
                     @foreach (var m in Model)
                     {
                         <tr>
                             <td style="width:10%">@m.User_id</td>
-                            <td style="width:40%">@m.Name @m.Surname</td>
-                            <td style="width:15%">@m.Email</td>
+                            <td style="width:25%">@m.Name @m.Surname</td>
+                            <td style="width:30%">@m.Email</td>
                             <td style="width:10%">
                                 <a href="@Url.Action("User", "Admin", new {User_id = m.User_id})" class="tooltip fa fa-eye">
                                     <span class="tooltiptext">View user</span>

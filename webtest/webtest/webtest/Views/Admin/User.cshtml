@@ -51,22 +51,33 @@
             using (Html.BeginForm("User", "Admin", FormMethod.Get))
             {
             <div id="edit">
+                <label for="Name"> <b>Name</b> </label>
                 <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Model.Name"
                        pattern="[A-Z][a-z]*" required
                        title="Your name cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+
+                <label for="Surname"> <b>Surname</b> </label>
                 <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Model.Surname"
                        pattern="[A-Z][a-z]*" required
                        title="Your surname cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+
+                <label for="Email"> <b>Email</b> </label>
                 <input type="text" name="Email" placeholder="Email" class="inputField" , value="@Model.Email" /><br />
                 <p id="emailError" , style="display:none" class="error">Please enter a valid email.</p>
+
+                <label for="Phone Number"> <b>Phone Number</b> </label>
                 <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Model.Phone_number"
                        pattern="([0-9]{10})" required
-                               title="Pleas enter a valid phone number."/><br />
+                       title="Pleas enter a valid phone number." /><br />
+
+                <label for="TypeAdd"> <b>Admin account</b> </label>
                 <select id="TypeChange" , class="dropdownFilters inputField">
                     <option>Select Type</option>
                     <option value="true" @if (Model.Type == true) { <text> selected="selected" </text> }> true</option>
                     <option value="false" @if (Model.Type == false) { <text> selected="selected" </text> }> false</option>
                 </select><br />
+
+                <label for="EmailVerifiedAdd"> <b>Account Verified</b> </label>
                 <select id="EmailVerifiedChange" , class="dropdownFilters inputField">
                     <option>Select Email Verified</option>
                     <option value="true" @if (Model.IsEmailVerified == true) { <text> selected="selected" </text> }> true</option>
@@ -76,16 +87,14 @@
                 <input id="TypeInputChange" type="text" name="Type" , style="display:none">
                 <input id="EmailVerifiedInputChange" type="text" name="EmailVerified" , style="display:none">
                 <input name="User_id" , value="@Model.User_id" , style="display:none" />
-
-                <button id="btnEdit" , style="display:none">Apply changes</button>
-
                 <input type="hidden" name="change" value="true" />
 
+                <a id="btnEdit" , style="display:none">Apply changes</a>
+                <button class="btn" , onclick="setChange()">Apply changes</button>
                 <a href="@Url.Action("User", "Admin", new {User_id = Model.User_id, cancel = true})" id="btnCancel" , onclick="return confirm('Are you sure you want to cancel?');">Cancel</a>
             </div>
 
-            }
-            <button class="btn" , onclick="setChange()">Apply changes</button>
+            } 
         }
 
         @if (Session["Add_User"] != null)
@@ -95,65 +104,69 @@
                 using (Html.BeginForm("User", "Admin", FormMethod.Get))
                 {
 
-                    <div id="add">
-                        <label for="Name"> <b>Name</b> </label>
-                        <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Request.QueryString["Name"]" ,
-                               pattern="[A-Z][a-z]*" required
-                               title="Your name cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+            <div id="add">
+                <label for="Name"> <b>Name</b> </label>
+                <input type="text" name="Name" placeholder="Name" class="inputField" , value="@Request.QueryString["Name"]" ,
+                       pattern="[A-Z][a-z]*" required
+                       title="Your name cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
 
-                        <label for="Surname"> <b>Surname</b> </label>
-                        <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Request.QueryString["Surname"]" ,
-                               pattern="[A-Z][a-z]*" required
-                               title="Your surname cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
+                <label for="Surname"> <b>Surname</b> </label>
+                <input type="text" name="Surname" placeholder="Surname" class="inputField" , value="@Request.QueryString["Surname"]" ,
+                       pattern="[A-Z][a-z]*" required
+                       title="Your surname cannot contain any numbers or characters. Please start the name with a capital letter." /><br />
 
-                        <label for="Email"> <b>Email</b> </label>
-                        <input type="email" name="Email" placeholder="Email" class="inputField" , value="@Request.QueryString["Email"]" /><br />
-                        <p id="emailError" , style="display:none" class="error">Please enter a valid email.</p>
+                <label for="Email"> <b>Email</b> </label>
+                <input type="email" name="Email" placeholder="Email" class="inputField" , value="@Request.QueryString["Email"]" /><br />
+                <p id="emailError" , style="display:none" class="error">Please enter a valid email.</p>
 
-                        <label for="Phone Number"> <b>Phone Number</b> </label>
-                        <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" ,
-                               pattern="([0-9]{10})" required
-                               title="Pleas enter a valid phone number." /><br />
+                <label for="Phone Number"> <b>Phone Number</b> </label>
+                <input type="text" name="Phone_number" placeholder="Phone_number" class="inputField" , value="@Request.QueryString["Phone_number"]" ,
+                       pattern="([0-9]{10})" required
+                       title="Pleas enter a valid phone number." /><br />
 
-                        <input type="text" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]"
-                               pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$" required
-                               title="Your password must contain at least one capital letter, one number and one small letter" /><br />
+                <label for="Password"> <b>Password</b> </label>
+                <input type="password" name="Password" placeholder="Password" class="inputField" , value="@Request.QueryString["Password"]"
+                       pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$" required
+                       title="Your password must contain at least one capital letter, one number and one small letter" /><br />
 
-                        <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" , value="@Request.QueryString["ConfirmPassword"]" /><br />
-                        <p id="confirmPassError" , style="display:none" class="error">Passwords do not match</p>
+                <label for="ConfirmPassword"> <b>Confirm Password</b> </label>
+                <input type="password" name="ConfirmPassword" placeholder="ConfirmPassword" class="inputField" , value="@Request.QueryString["ConfirmPassword"]" /><br />
+                <p id="confirmPassError" , style="display:none" class="error">Passwords do not match</p>
 
-                        <select id="TypeAdd" , class="dropdownFilters inputField">
-                            <option>Select Type</option>
-                            <option value="true" @if (@Request.QueryString["Type"] == "true") { <text> selected="selected" </text> }>
-                                true
-                            </option>
-                            <option value="false" @if (@Request.QueryString["Type"] == "false") { <text> selected="selected" </text> }>
-                                false
-                            </option>
-                        </select><br />
-                        <p id="typeError" , style="display:none" class="error">Please select a option.</p>
+                <label for="TypeAdd"> <b>Admin account</b> </label>
+                <select id="TypeAdd" , class="dropdownFilters inputField">
+                    <option>Select Type</option>
+                    <option value="true" @if (@Request.QueryString["Type"] == "true") { <text> selected="selected" </text> }>
+                        true
+                    </option>
+                    <option value="false" @if (@Request.QueryString["Type"] == "false") { <text> selected="selected" </text> }>
+                        false
+                    </option>
+                </select><br />
+                <p id="typeError" , style="display:none" class="error">Please select a option.</p>
 
-                        <select id="EmailVerifiedAdd" , class="dropdownFilters inputField">
-                            <option>Select Email Verified</option>
-                            <option value="true" @if (@Request.QueryString["EmailVerified"] == "true") { <text> selected="selected" </text> }>
-                                true
-                            </option>
-                            <option value="false" @if (@Request.QueryString["EmailVerified"] == "false") { <text> selected="selected" </text> }>
-                                false
-                            </option>
-                        </select><br />
-                        <p id="emailVerifiedError" , style="display:none" class="error">Please select a option.</p>
+                <label for="EmailVerifiedAdd"> <b>Account Verified</b> </label>
+                <select id="EmailVerifiedAdd" , class="dropdownFilters inputField">
+                    <option>Select Email Verified</option>
+                    <option value="true" @if (@Request.QueryString["EmailVerified"] == "true") { <text> selected="selected" </text> }>
+                        true
+                    </option>
+                    <option value="false" @if (@Request.QueryString["EmailVerified"] == "false") { <text> selected="selected" </text> }>
+                        false
+                    </option>
+                </select><br />
+                <p id="emailVerifiedError" , style="display:none" class="error">Please select a option.</p>
 
-                        <input id="TypeInputAdd" type="text" name="Type" , style="display:none">
-                        <input id="EmailVerifiedInputAdd" type="text" name="EmailVerified" , style="display:none">
-                        <input name="add" , value="true" , style="display:none" />
-
-
-
-                        <button id="btnProceed" , onclick="setAdd()" , style="display:none">Save new User</button>
+                <input id="TypeInputAdd" type="text" name="Type" , style="display:none">
+                <input id="EmailVerifiedInputAdd" type="text" name="EmailVerified" , style="display:none">
+                <input name="add" , value="true" , style="display:none" />
 
 
-                    </div>
+
+                <button id="btnProceed" , onclick="setAdd()" , style="display:none">Save new User</button>
+
+
+            </div>
                 }
                 <button class="btn" , onclick="setAdd()">Save new User</button>
             }
