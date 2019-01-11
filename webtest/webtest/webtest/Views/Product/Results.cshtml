@@ -335,18 +335,26 @@
         document.getElementById('submitOrderItems').click();
     }
 
+//Pricecheck will change the minprice in case it is larger than the maxprice. It will change it to 1 lower than maxprice, or 0.
     function Pricecheck() {
         var minimum = parseInt(document.getElementById("minPrice").value, 10);
         var maximum = parseInt(document.getElementById("maxPrice").value, 10);
 
-        if (minimum > maximum) {
-            minimum = maximum - 1;
+        if (minimum > maximum && minimum >= 1) {
+            NewMin = maximum - 1;
+
+            if (NewMin >= 0) {
+                minimum = NewMin;
+            }
+            else
+            {
+                minimum = 0;
+            }
         }
-
-        document.getElementById("minPrice").value = minimum;
-        document.getElementById("maxPrice").value = maximum;
-
-    }
+            //This updates the values that the user can see in the input fields.
+            document.getElementById("minPrice").value = minimum;
+            document.getElementById("maxPrice").value = maximum;
+        }
 
     // Mainstains scroll position
     $(document).scroll(function () {
