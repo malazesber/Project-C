@@ -125,11 +125,11 @@
                         foreach (var book in queryBooks)
                         {
                             <div class="productGrid">
-                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN})">
+                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN, url = Request.Url, urlBool = true})">
                                     <img class="productImg" src="@book.Image_src" />
                                 </a>
 
-                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN})" class="titleBook">@book.Name</a>
+                                <a href="@Url.Action("Index", "Product", new {isbn = book.ISBN, url = Request.Url, urlBool = true})" class="titleBook">@book.Name</a>
                                 <label class="author">@book.Author</label>
 
 
@@ -266,4 +266,13 @@
         slides[index - 1].style.display = "block";
         dots[index - 1].className += " active";
     }
+
+    // Mainstains scroll position
+    $(document).scroll(function () {
+        localStorage['scrollTop'] = $(document).scrollTop();
+    });
+
+    $(document).ready(function () {
+        $(document).scrollTop(localStorage['scrollTop']);
+    });
 </script>

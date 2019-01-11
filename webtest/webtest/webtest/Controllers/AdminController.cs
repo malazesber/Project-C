@@ -60,9 +60,14 @@ namespace webtest.Controllers
                     db.Books.Add(bookNew);
                     db.SaveChanges();
 
-                    Session["Admin_Book"] = null;
+                    Session["Admin_Book"] = true;
+                    Session["Add_Book"] = null;
                     add = false;
-                    return View();
+
+                    Book selectedBook = (from b in db.Books
+                                       where b.ISBN == isbn
+                                       select b).FirstOrDefault();
+                    return View(selectedBook);
                 }
 
                 else if (edit == true)
@@ -303,9 +308,15 @@ namespace webtest.Controllers
 
                 }
 
-                Session["Admin_User"] = null;
+                Session["Admin_User"] = true;
+                Session["Add_USer"] = null;
                 add = false;
-                return View();
+
+                User selectedUser = (from u in db.Users
+                                     where u.Email == Email
+                                     select u).FirstOrDefault();
+
+                return View(selectedUser);
             }
             else
             {

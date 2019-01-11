@@ -61,7 +61,7 @@
                                         <a href="@Url.Action("Product", "Admin", new { ISBN = m.ISBN, edit = true })" style="color: #bf9000" class="tooltip fa fa-pencil">
                                             <span class="tooltiptext">Edit product</span>
                                         </a>
-                                        <a href="@Url.Action("Product", "Admin", new { ISBN = m.ISBN, delete = true })" onclick="return confirm('Are you sure you want to delete this product?')" style="color: red" class="tooltip fa fa-trash">
+                                        <a href="@Url.Action("Product", "Admin", new { ISBN = m.ISBN, delete = true})" onclick="return confirm('Are you sure you want to delete this product?')" style="color: red" class="tooltip fa fa-trash">
                                             <span class="tooltiptext">Delete product</span>
                                         </a>
                                     </td>
