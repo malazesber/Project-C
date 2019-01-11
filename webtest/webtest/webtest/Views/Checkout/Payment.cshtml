@@ -12,7 +12,7 @@
         <div id="title">Payment</div>
 
         @{
-            decimal totalPrice = Convert.ToDecimal(0.01);
+            decimal totalPrice = Convert.ToDecimal(Session["TotalPrice"]);
         }
         <div id="Paypalbox">
             <div id="paypal-button-container"></div>
