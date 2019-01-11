@@ -143,7 +143,7 @@
                 {
                     <div id="subtitle">Add a new product</div>
                     {
-                        using (Html.BeginForm("Product", "Admin", FormMethod.Get, new { enctype = "multipart/form-data" }))
+                        using (Html.BeginForm("Product", "Admin", FormMethod.Get@*, new { enctype = "multipart/form-data" }*@))
                         {
                             <div id="add">
                                 <label for="isbn"> <b>ISBN</b> </label>
@@ -222,15 +222,15 @@
                                           title="The summary must be up to 500 characters long."></textarea><br />
 
                                 <label for="productImg"> <b>Image</b> </label>
-                                <div>
-                                    <img id="Img_src" height="110" width="100" style="border:solid" />
-                                </div>
-                                <div>
+                                @*<div>
+                                    <img id="Img_src" src="@" height="110" width="100" style="border:solid" />
+                                </div>*@
+                                @*<div>
                                     <input type="file" title="search_image" id="file" name="file" onchange="show(this)" required />
-                                </div>
-                                @*<input type="text" name="Image_src" placeholder="Image_src" class="inputField"
-                                    pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?"
-                                    title="Insert an URL here." />*@<br />
+                                </div>*@
+                                <input type="text" name="Image_src" placeholder="Image_src" class="inputField"
+                                    pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?" required
+                                    title="Insert an URL here." /><br />
 
                                 <label for="price"> <b>Price</b> </label>
                                 <input type="text" name="Price" placeholder="Price" class="inputField"
@@ -280,7 +280,7 @@ else
 
 }
 
-<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+@*<script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
     //gekozen foto tonen
     function show(input) {
@@ -292,4 +292,4 @@ else
             filerdr.readAsDataURL(input.files[0]);
         }
     }
-</script>
+</script>*@
