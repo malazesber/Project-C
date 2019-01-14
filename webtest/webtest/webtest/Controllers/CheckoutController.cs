@@ -503,7 +503,7 @@ namespace webtest.Controllers
             string subject = "";
             string body = "";
             
-                subject = "Your account is successfully created";
+                subject = "Order";
 
                 body = "<br/><br/> Thank you for shopping by BooksRus" +
                    " Where doing our best to deliver your books as soon as possible. If you click on the link below you will be directed to your order conformation" +
