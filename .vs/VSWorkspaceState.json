@@ -5,7 +5,9 @@
     "\\webtest\\webtest",
     "\\webtest\\webtest\\webtest",
     "\\webtest\\webtest\\webtest\\Controllers",
-    "\\webtest\\webtest\\webtest\\Views"
+    "\\webtest\\webtest\\webtest\\Views",
+    "\\webtest\\webtest\\webtest\\Views\\Home",
+    "\\webtest\\webtest\\webtest\\Views\\Product"
   ],
   "SelectedNode": "\\webtest\\webtest\\webtest.sln",
   "PreviewInSolutionExplorer": false
