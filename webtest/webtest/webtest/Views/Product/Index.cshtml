@@ -22,7 +22,7 @@
 <div id="container">
 
     <div id="navigation">
-        <a href="@Session["URL"]" class="fa fa-arrow-left backbtn"> Back to search results</a>
+        <a href="@Session["URL"]" class="fa fa-arrow-left backbtn"> Back</a>
     </div>
 
     @*Box waar de basis info van het boek staat*@
@@ -420,7 +420,7 @@
             else
             {
                 bool admin = Convert.ToBoolean(Session["Admin"]);
-                if (Session["ReviewInput"] != null || admin)
+                if (Session["ReviewInput"] != null || admin || Session["User_id"] != null)
                 {
                     <div style="margin-left: 15px">
                         Be the first one to submit a review for this book! <br />
